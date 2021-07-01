@@ -22,7 +22,7 @@ apply plugin: 'com.matthewprenger.cursegradle'
 apply plugin: 'com.wynprice.cursemaven'
 apply plugin: 'org.spongepowered.mixin'
 
-group = 'com.kotakotik' // TODO: change this!
+group = 'com.kotakotik'
 version = "${minecraft_version}-${mod_version}"
 archivesBaseName = modid
 
@@ -38,7 +38,7 @@ minecraft {
             workingDirectory project.file('run')
 
             jvmArgs "-Dmixin.env.disableRefMap=true"
-            arg "-mixin.config=youraddon.mixins.json" // TODO: change this
+            arg "-mixin.config=createautomated.mixins.json"
 
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
@@ -55,7 +55,7 @@ minecraft {
             workingDirectory project.file('server')
 
             jvmArgs "-Dmixin.env.disableRefMap=true"
-            arg "-mixin.config=youraddon.mixins.json" // TODO: change this
+            arg "-mixin.config=createautomated.mixins.json"
 
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
@@ -114,13 +114,13 @@ jar {
     manifest {
         attributes([
                 "Specification-Title"     : modid,
-                "Specification-Vendor"    : "You", // TODO: change this!
+                "Specification-Vendor"    : "kotakotik22",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.version,
-                "Implementation-Vendor"   : "You", // TODO: change this!
+                "Implementation-Vendor"   : "kotakotik22",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs"            : "${modid}.mixins.json" // TODO: change youraddon.mixins.json
+                "MixinConfigs"            : "${modid}.mixins.json"
         ])
     }
 }
