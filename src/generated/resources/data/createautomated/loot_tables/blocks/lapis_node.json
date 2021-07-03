@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "createautomated:lapis_node"
+          "name": "minecraft:air"
         }
       ],
       "conditions": [

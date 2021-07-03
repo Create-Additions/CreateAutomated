@@ -3,6 +3,8 @@ package com.kotakotik.createautomated.content.blocks;
 import com.kotakotik.createautomated.content.base.INode;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -46,5 +48,10 @@ public class NodeBlock extends Block implements INode {
     @Override
     public int getRequiredProgress(World world, BlockPos pos, BlockPos drillPos) {
         return requiredProgress;
+    }
+
+    @Override
+    public PushReaction getPushReaction(BlockState state) {
+        return PushReaction.DESTROY;
     }
 }

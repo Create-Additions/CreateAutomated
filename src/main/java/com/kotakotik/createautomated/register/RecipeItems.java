@@ -5,6 +5,7 @@ import com.kotakotik.createautomated.content.blocks.oreextractor.TopOreExtractor
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.builders.BlockBuilder;
@@ -65,8 +66,10 @@ public class RecipeItems {
 
         public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf) {
             NODE = conf.apply(reg.block(name + "_node", p -> new NodeBlock(p, ORE_PIECE, maxOre, minOre, progress.apply(new TopOreExtractorBlock.ExtractorProgressBuilder()))).blockstate(($, $$) -> {
-            }).tag(ModTags.Blocks.NODES).item().model(($, $$) -> {
-            }).build()).register();
+            }).tag(ModTags.Blocks.NODES, AllTags.AllBlockTags.NON_MOVABLE.tag).item().model(($, $$) -> {
+            }).build()).loot((p, b) -> {
+                p.registerDropping(b, Items.AIR);
+            }).register();
             return this;
         }
 
