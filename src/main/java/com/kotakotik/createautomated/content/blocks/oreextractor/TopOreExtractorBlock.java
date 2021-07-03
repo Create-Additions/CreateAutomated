@@ -1,5 +1,6 @@
-package com.kotakotik.createautomated.content.blocks;
+package com.kotakotik.createautomated.content.blocks.oreextractor;
 
+import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.tiles.OreExtractorTile;
 import com.kotakotik.createautomated.register.ModTiles;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
@@ -7,14 +8,20 @@ import com.simibubi.create.content.contraptions.relays.elementary.ICogWheel;
 import com.simibubi.create.foundation.block.ITE;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 
-public class OreExtractorBlock extends HorizontalKineticBlock implements ICogWheel, ITE<OreExtractorTile> {
-    public OreExtractorBlock(Properties properties) {
+import java.util.ArrayList;
+import java.util.List;
+
+public class TopOreExtractorBlock extends HorizontalKineticBlock implements ICogWheel, ITE<OreExtractorTile>, IOreExtractorBlock {
+    public TopOreExtractorBlock(Properties properties) {
         super(properties);
     }
 
@@ -44,39 +51,29 @@ public class OreExtractorBlock extends HorizontalKineticBlock implements ICogWhe
     }
 
     @Override
-    public PushReaction getPushReaction(BlockState p_149656_1_) {
-        return super.getPushReaction(p_149656_1_);
+    public PushReaction getPushReaction(BlockState state) {
+        return pushReaction(state);
+//        return super.getPushReaction(p_149656_1_);
 //        return PushReaction.BLOCK;
     }
 
-    public static class ExtractorProgressBuilder {
-        public int speed;
-        public int ticks;
+    @Override
+    public boolean isTop() {
+        return true;
+    }
 
-        public ExtractorProgressBuilder atSpeedOf(int speed) {
-            this.speed = speed;
-            return this;
+    @Override
+    public BlockState updatePostPlacement(BlockState state, Direction direction, BlockState updatingState, IWorld world, BlockPos pos, BlockPos updatingPos) {
+        state = checkForOther(state, direction, updatingState, world, pos, updatingPos);
+        if (state.isAir(world, pos)) {
+            return state;
         }
+        return super.updatePostPlacement(state, direction, updatingState, world, pos, updatingPos);
+    }
 
-        public static ExtractorProgressBuilder atSpeedOfS(int speed) {
-            return new ExtractorProgressBuilder().atSpeedOf(speed);
-        }
-
-        public ExtractorProgressBuilder takesTicks(int ticks) {
-            this.ticks = ticks;
-            return this;
-        }
-
-        public ExtractorProgressBuilder takesSeconds(int seconds) {
-            return takesTicks(seconds * 20);
-        }
-
-        public ExtractorProgressBuilder takesMinutes(int minutes) {
-            return takesMinutes(minutes * 60);
-        }
-
-        public int build() {
-            return speed * ticks;
-        }
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder loot) {
+        // TODO: breaking the top part in creative still drops it. shut i know why i just dont know how to fix it
+        return new ArrayList<>();
     }
 }

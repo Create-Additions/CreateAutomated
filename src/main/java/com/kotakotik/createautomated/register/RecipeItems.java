@@ -1,7 +1,7 @@
 package com.kotakotik.createautomated.register;
 
 import com.kotakotik.createautomated.content.blocks.NodeBlock;
-import com.kotakotik.createautomated.content.blocks.OreExtractorBlock;
+import com.kotakotik.createautomated.content.blocks.oreextractor.TopOreExtractorBlock;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
 import com.simibubi.create.content.contraptions.processing.HeatCondition;
@@ -58,14 +58,14 @@ public class RecipeItems {
             return oreGen(veinSize, 40, 256, frequency);
         }
 
-        public ExtractableResource node(int minOre, int maxOre, Function<OreExtractorBlock.ExtractorProgressBuilder, Integer> progress) {
-            NODE = reg.block(name + "_node", p -> new NodeBlock(p, ORE_PIECE, minOre, maxOre, progress.apply(new OreExtractorBlock.ExtractorProgressBuilder()))).blockstate(($, $$) -> {
+        public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress) {
+            NODE = reg.block(name + "_node", p -> new NodeBlock(p, ORE_PIECE, minOre, maxOre, progress.apply(new TopOreExtractorBlock.ExtractorProgressBuilder()))).blockstate(($, $$) -> {
             }).tag(ModTags.Blocks.NODES).item().model(($, $$) -> {
             }).build().register();
             return this;
         }
 
-        public ExtractableResource node(int ore, Function<OreExtractorBlock.ExtractorProgressBuilder, Integer> progress) {
+        public ExtractableResource node(int ore, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress) {
             return node(ore, ore, progress);
         }
 

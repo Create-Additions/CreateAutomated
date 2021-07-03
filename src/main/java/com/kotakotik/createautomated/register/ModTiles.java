@@ -13,7 +13,7 @@ public class ModTiles {
         ORE_EXTRACTOR = registrate.tileEntity("ore_extractor", OreExtractorTile::new)
 //                .instance(() -> ShaftInstance::new)
                 .instance(() -> HalfShaftCogInstance::new)
-                .validBlocks(ModBlocks.ORE_EXTRACTOR)
+                .validBlocks(ModBlocks.ORE_EXTRACTOR_TOP)
                 .renderer(() -> KineticTileEntityRenderer::new)
                 .register();
     }

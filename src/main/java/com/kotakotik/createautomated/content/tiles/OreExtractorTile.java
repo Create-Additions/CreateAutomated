@@ -33,15 +33,15 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
     @Override
     public BlockPos getBreakingPos() {
-        return getPos().down();
+        return getPos().down(2);
     }
 
     public boolean isBreakableOre(BlockPos pos) {
-        return getBlockBelow() instanceof OreBlock;
+        return getBlockToMine() instanceof OreBlock;
     }
 
     public boolean isExtractable(BlockPos pos) {
-        return getBlockBelow() instanceof IExtractable;
+        return getBlockToMine() instanceof IExtractable;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
         return isExtractable(getBreakingPos());
     }
 
-    public Block getBlockBelow() {
+    public Block getBlockToMine() {
         return world.getBlockState(getBreakingPos()).getBlock();
     }
 
@@ -67,7 +67,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
         super.tick();
 
         if (shouldRunExtracting()) {
-            Block below = getBlockBelow();
+            Block below = getBlockToMine();
             BlockPos belowBlock = getBreakingPos();
             ((IExtractable) below).extractTick(this);
             if (below instanceof INode) {
