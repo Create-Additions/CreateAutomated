@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "createautomated:lapis_ore_piece"
+    "createautomated:lapis_ore_piece",
+    "createautomated:iron_ore_piece",
+    "createautomated:zinc_ore_piece",
+    "createautomated:gold_ore_piece",
+    "createautomated:copper_ore_piece"
   ]
 }

@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "createautomated:lapis_node"
+    "createautomated:lapis_node",
+    "createautomated:iron_node",
+    "createautomated:zinc_node",
+    "createautomated:gold_node",
+    "createautomated:copper_node"
   ]
 }

@@ -1,6 +1,19 @@
 {
+  "block.createautomated.copper_node": "Copper Node",
+  "block.createautomated.gold_node": "Gold Node",
+  "block.createautomated.iron_node": "Iron Node",
   "block.createautomated.lapis_node": "Lapis Node",
   "block.createautomated.ore_extractor": "Ore Extractor",
+  "block.createautomated.ore_extractor_top": "Ore Extractor Top",
+  "block.createautomated.zinc_node": "Zinc Node",
+  "item.createautomated.copper_ingot_piece": "Copper Ingot Piece",
+  "item.createautomated.copper_ore_piece": "Copper Ore Piece",
+  "item.createautomated.gold_ingot_piece": "Gold Ingot Piece",
+  "item.createautomated.gold_ore_piece": "Gold Ore Piece",
+  "item.createautomated.iron_ingot_piece": "Iron Ingot Piece",
+  "item.createautomated.iron_ore_piece": "Iron Ore Piece",
   "item.createautomated.lapis_ore_piece": "Lapis Ore Piece",
+  "item.createautomated.zinc_ingot_piece": "Zinc Ingot Piece",
+  "item.createautomated.zinc_ore_piece": "Zinc Ore Piece",
   "itemGroup.createautomated": "Create Automated"
 }

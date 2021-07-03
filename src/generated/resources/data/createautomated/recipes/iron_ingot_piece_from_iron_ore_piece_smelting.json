@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "createautomated:iron_ore_piece"
+  },
+  "result": "createautomated:iron_ingot_piece",
+  "experience": 0.0,
+  "cookingtime": 200
+}

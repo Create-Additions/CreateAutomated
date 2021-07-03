@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "createautomated:iron_ingot_piece",
+    "createautomated:zinc_ingot_piece",
+    "createautomated:gold_ingot_piece",
+    "createautomated:copper_ingot_piece"
+  ]
+}

@@ -4,6 +4,7 @@ import com.kotakotik.createautomated.content.blocks.NodeBlock;
 import com.kotakotik.createautomated.content.blocks.oreextractor.TopOreExtractorBlock;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.providers.RegistrateRecipeProvider;
@@ -118,11 +119,31 @@ public class RecipeItems {
     }
 
     public static ExtractableResource LAPIS_EXTRACTABLE;
+    public static ExtractableResource IRON_EXTRACTABLE;
+    public static ExtractableResource ZINC_EXTRACTABLE;
+    public static ExtractableResource GOLD_EXTRACTABLE;
+    public static ExtractableResource COPPER_EXTRACTABLE;
 
     public static void register(CreateRegistrate registrate) {
         LAPIS_EXTRACTABLE = new GlueableExtractableResource("lapis", registrate, true, () -> Items.LAPIS_LAZULI)
-                .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(10).build())
-                .oreGen(10, 5);
+                .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(30).build())
+                .oreGen(10, 4);
+
+        IRON_EXTRACTABLE = new IngotExtractableResource("iron", registrate, true, () -> Items.IRON_INGOT)
+                .node(0, 2, (b) -> b.atSpeedOf(128).takesMinutes(3).build())
+                .oreGen(4, 1);
+
+        ZINC_EXTRACTABLE = new IngotExtractableResource("zinc", registrate, true, AllItems.ZINC_INGOT)
+                .node(1, 2, (b) -> b.atSpeedOf(128).takesSeconds(40).build())
+                .oreGen(9, 2);
+
+        GOLD_EXTRACTABLE = new IngotExtractableResource("gold", registrate, true, () -> Items.GOLD_INGOT)
+                .node(0, 2, (b) -> b.atSpeedOf(128).takesMinutes(2).build())
+                .oreGen(6, 1);
+
+        COPPER_EXTRACTABLE = new IngotExtractableResource("copper", registrate, true, AllItems.COPPER_INGOT)
+                .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(40).build())
+                .oreGen(16, 2);
     }
 
     public static ModMixingRecipes MIXING;

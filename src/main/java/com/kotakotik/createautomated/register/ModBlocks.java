@@ -22,8 +22,7 @@ public class ModBlocks {
                 .blockstate(($, $$) -> {
                 })
                 .addLayer(() -> RenderType::getCutoutMipped)
-                .transform(StressConfigDefaults.setCapacity(16.0))
-                .transform(StressConfigDefaults.setImpact(2.0))
+                .transform(StressConfigDefaults.setImpact(32.0))
                 .register();
 
         ORE_EXTRACTOR_BOTTOM = registrate.block("ore_extractor", BottomOreExtractorBlock::new)
@@ -33,6 +32,7 @@ public class ModBlocks {
                 .addLayer(() -> RenderType::getCutoutMipped)
                 .item().model(($, $$) -> {
                 }).build()
+                .transform(StressConfigDefaults.setImpact(32.0))
                 .register();
 
 //        LAPIS_NODE = registrate.block("lapis_node", p -> new NodeBlock(p, ModItems.LAPIS_ORE_PIECE, 1, OreExtractorBlock.ExtractorProgressBuilder.atSpeedOfS(128).takesSeconds(10).build())).tag(ModTags.Blocks.NODES).simpleItem().register();

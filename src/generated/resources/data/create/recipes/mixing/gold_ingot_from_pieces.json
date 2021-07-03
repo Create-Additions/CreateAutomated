@@ -1,0 +1,38 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "createautomated:gold_ingot_piece"
+    },
+    {
+      "item": "createautomated:gold_ingot_piece"
+    },
+    {
+      "item": "createautomated:gold_ingot_piece"
+    },
+    {
+      "item": "createautomated:gold_ingot_piece"
+    },
+    {
+      "item": "createautomated:gold_ingot_piece"
+    },
+    {
+      "item": "createautomated:gold_ingot_piece"
+    },
+    {
+      "item": "createautomated:gold_ingot_piece"
+    },
+    {
+      "item": "createautomated:gold_ingot_piece"
+    },
+    {
+      "item": "createautomated:gold_ingot_piece"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:gold_ingot"
+    }
+  ],
+  "heatRequirement": "superheated"
+}

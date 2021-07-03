@@ -1,0 +1,38 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "createautomated:iron_ingot_piece"
+    },
+    {
+      "item": "createautomated:iron_ingot_piece"
+    },
+    {
+      "item": "createautomated:iron_ingot_piece"
+    },
+    {
+      "item": "createautomated:iron_ingot_piece"
+    },
+    {
+      "item": "createautomated:iron_ingot_piece"
+    },
+    {
+      "item": "createautomated:iron_ingot_piece"
+    },
+    {
+      "item": "createautomated:iron_ingot_piece"
+    },
+    {
+      "item": "createautomated:iron_ingot_piece"
+    },
+    {
+      "item": "createautomated:iron_ingot_piece"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "heatRequirement": "superheated"
+}
