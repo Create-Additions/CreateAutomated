@@ -24,6 +24,9 @@ apply plugin: 'org.spongepowered.mixin'
 
 group = 'com.kotakotik'
 version = "${minecraft_version}-${mod_version}"
+if(System.getenv("CA_VERSION") != null) {
+    version = "${minecraft_version}-${System.getenv("CA_VERSION")}"
+}
 archivesBaseName = modid
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
