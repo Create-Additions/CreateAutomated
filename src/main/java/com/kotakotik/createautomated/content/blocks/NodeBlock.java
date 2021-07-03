@@ -35,7 +35,7 @@ public class NodeBlock extends Block implements INode {
 
     @Override
     public ItemStack getOrePieceStack(World world, BlockPos pos, BlockPos drillPos, Random random) {
-        return new ItemStack(orePiece.get(), minOre == maxOre ? minOre : random.nextInt(minOre + maxOre) - minOre);
+        return new ItemStack(orePiece.get(), minOre == maxOre ? minOre : random.nextInt((maxOre - minOre) + 1) + minOre);
     }
 
     @Override

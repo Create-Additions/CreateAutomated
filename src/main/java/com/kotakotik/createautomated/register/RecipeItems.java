@@ -59,7 +59,7 @@ public class RecipeItems {
         }
 
         public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress) {
-            NODE = reg.block(name + "_node", p -> new NodeBlock(p, ORE_PIECE, minOre, maxOre, progress.apply(new TopOreExtractorBlock.ExtractorProgressBuilder()))).blockstate(($, $$) -> {
+            NODE = reg.block(name + "_node", p -> new NodeBlock(p, ORE_PIECE, maxOre, minOre, progress.apply(new TopOreExtractorBlock.ExtractorProgressBuilder()))).blockstate(($, $$) -> {
             }).tag(ModTags.Blocks.NODES).item().model(($, $$) -> {
             }).build().register();
             return this;

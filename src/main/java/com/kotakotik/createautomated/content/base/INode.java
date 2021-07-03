@@ -17,7 +17,7 @@ public interface INode extends IExtractable {
     int getRequiredProgress(World world, BlockPos pos, BlockPos drillPos);
 
     default int getProgressToAdd(World world, BlockPos pos, BlockPos drillPos, int drillSpeed) {
-        return drillSpeed;
+        return Math.abs(drillSpeed);
     }
 
     @Override

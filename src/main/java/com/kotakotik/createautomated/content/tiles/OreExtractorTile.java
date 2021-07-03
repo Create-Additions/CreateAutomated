@@ -46,11 +46,11 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
     @Override
     public boolean shouldRun() {
-        return super.shouldRun() && isBreakableOre(getBreakingPos());
+        return super.shouldRun() && isBreakableOre(getBreakingPos()) && isSpeedRequirementFulfilled();
     }
 
     public boolean shouldRunExtracting() {
-        return isExtractable(getBreakingPos());
+        return isExtractable(getBreakingPos()) && isSpeedRequirementFulfilled();
     }
 
     public Block getBlockToMine() {
