@@ -1,7 +1,7 @@
-package com.kotakotik.createaddontemplate.content.blocks;
+package com.kotakotik.createautomated.content.blocks;
 
-import com.kotakotik.createaddontemplate.content.tiles.OreExtractorTile;
-import com.kotakotik.createaddontemplate.register.ModTiles;
+import com.kotakotik.createautomated.content.tiles.OreExtractorTile;
+import com.kotakotik.createautomated.register.ModTiles;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.ICogWheel;
 import com.simibubi.create.foundation.block.ITE;

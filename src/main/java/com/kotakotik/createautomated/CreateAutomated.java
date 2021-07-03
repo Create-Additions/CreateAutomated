@@ -1,7 +1,7 @@
-package com.kotakotik.createaddontemplate;
+package com.kotakotik.createautomated;
 
-import com.kotakotik.createaddontemplate.content.worldgen.WorldGen;
-import com.kotakotik.createaddontemplate.register.*;
+import com.kotakotik.createautomated.content.worldgen.WorldGen;
+import com.kotakotik.createautomated.register.*;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import com.simibubi.create.repack.registrate.util.OneTimeEventReceiver;

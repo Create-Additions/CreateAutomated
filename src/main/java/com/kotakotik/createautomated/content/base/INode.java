@@ -1,6 +1,6 @@
-package com.kotakotik.createaddontemplate.content.base;
+package com.kotakotik.createautomated.content.base;
 
-import com.kotakotik.createaddontemplate.content.tiles.OreExtractorTile;
+import com.kotakotik.createautomated.content.tiles.OreExtractorTile;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

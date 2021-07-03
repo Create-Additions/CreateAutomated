@@ -1,6 +1,6 @@
-package com.kotakotik.createaddontemplate.content.blocks;
+package com.kotakotik.createautomated.content.blocks;
 
-import com.kotakotik.createaddontemplate.content.base.INode;
+import com.kotakotik.createautomated.content.base.INode;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

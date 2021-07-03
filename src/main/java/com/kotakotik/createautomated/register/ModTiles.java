@@ -1,6 +1,6 @@
-package com.kotakotik.createaddontemplate.register;
+package com.kotakotik.createautomated.register;
 
-import com.kotakotik.createaddontemplate.content.tiles.OreExtractorTile;
+import com.kotakotik.createautomated.content.tiles.OreExtractorTile;
 import com.simibubi.create.content.contraptions.base.KineticTileEntityRenderer;
 import com.simibubi.create.content.contraptions.base.ShaftlessCogInstance;
 import com.simibubi.create.foundation.data.CreateRegistrate;

@@ -1,8 +1,8 @@
-package com.kotakotik.createaddontemplate.content.tiles;
+package com.kotakotik.createautomated.content.tiles;
 
-import com.kotakotik.createaddontemplate.content.base.IExtractable;
-import com.kotakotik.createaddontemplate.content.base.INode;
-import com.kotakotik.createaddontemplate.register.ModTags;
+import com.kotakotik.createautomated.content.base.IExtractable;
+import com.kotakotik.createautomated.content.base.INode;
+import com.kotakotik.createautomated.register.ModTags;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

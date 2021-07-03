@@ -1,6 +1,6 @@
-package com.kotakotik.createaddontemplate.register;
+package com.kotakotik.createautomated.register;
 
-import com.kotakotik.createaddontemplate.CreateAutomated;
+import com.kotakotik.createautomated.CreateAutomated;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.ItemEntry;

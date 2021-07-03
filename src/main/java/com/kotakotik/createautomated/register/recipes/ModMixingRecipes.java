@@ -1,4 +1,4 @@
-package com.kotakotik.createaddontemplate.register.recipes;
+package com.kotakotik.createautomated.register.recipes;
 
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipe;

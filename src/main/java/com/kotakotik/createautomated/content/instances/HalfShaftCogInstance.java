@@ -1,6 +1,6 @@
-package com.kotakotik.createaddontemplate.content.instances;
+package com.kotakotik.createautomated.content.instances;
 
-import com.kotakotik.createaddontemplate.register.ModBlockPartials;
+import com.kotakotik.createautomated.register.ModBlockPartials;
 import com.simibubi.create.content.contraptions.base.KineticRenderMaterials;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.content.contraptions.base.RotatingData;

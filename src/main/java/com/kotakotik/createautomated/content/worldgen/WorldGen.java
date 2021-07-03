@@ -1,6 +1,6 @@
-package com.kotakotik.createaddontemplate.content.worldgen;
+package com.kotakotik.createautomated.content.worldgen;
 
-import com.kotakotik.createaddontemplate.CreateAutomated;
+import com.kotakotik.createautomated.CreateAutomated;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.util.registry.Registry;

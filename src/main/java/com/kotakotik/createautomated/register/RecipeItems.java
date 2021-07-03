@@ -1,9 +1,9 @@
-package com.kotakotik.createaddontemplate.register;
+package com.kotakotik.createautomated.register;
 
-import com.kotakotik.createaddontemplate.content.blocks.NodeBlock;
-import com.kotakotik.createaddontemplate.content.blocks.OreExtractorBlock;
-import com.kotakotik.createaddontemplate.content.worldgen.WorldGen;
-import com.kotakotik.createaddontemplate.register.recipes.ModMixingRecipes;
+import com.kotakotik.createautomated.content.blocks.NodeBlock;
+import com.kotakotik.createautomated.content.blocks.OreExtractorBlock;
+import com.kotakotik.createautomated.content.worldgen.WorldGen;
+import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
 import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.providers.RegistrateRecipeProvider;

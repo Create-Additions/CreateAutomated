@@ -1,6 +1,6 @@
-package com.kotakotik.createaddontemplate.register;
+package com.kotakotik.createautomated.register;
 
-import com.kotakotik.createaddontemplate.CreateAutomated;
+import com.kotakotik.createautomated.CreateAutomated;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;

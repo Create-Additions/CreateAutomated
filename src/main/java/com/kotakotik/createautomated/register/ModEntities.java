@@ -1,4 +1,4 @@
-package com.kotakotik.createaddontemplate.register;
+package com.kotakotik.createautomated.register;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
 

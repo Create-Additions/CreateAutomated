@@ -1,4 +1,4 @@
-package com.kotakotik.createaddontemplate.register;
+package com.kotakotik.createautomated.register;
 
 public class ModActors {
     public static void register() {
