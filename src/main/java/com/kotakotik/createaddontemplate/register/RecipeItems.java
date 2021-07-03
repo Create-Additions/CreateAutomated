@@ -19,6 +19,8 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -30,14 +32,12 @@ public class RecipeItems {
         public BlockEntry<NodeBlock> NODE;
         public ItemEntry<Item> ORE_PIECE;
 
-        Consumer<RegistrateRecipeProvider> recipeGen = (r) -> {
-        };
-
+        List<Consumer<RegistrateRecipeProvider>> recipeGen = new ArrayList<>();
         public ExtractableResource(String name, CreateRegistrate reg) {
             this.name = name;
             this.reg = reg;
 
-            ORE_PIECE = reg.item(name + "_ore_piece", Item::new).recipe((ctx, prov) -> recipeGen.accept(prov)).tag(ModTags.Items.ORE_PIECES).model(($, $$) -> {
+            ORE_PIECE = reg.item(name + "_ore_piece", Item::new).recipe((ctx, prov) -> recipeGen.forEach(r -> r.accept(prov))).tag(ModTags.Items.ORE_PIECES).model(($, $$) -> {
             }).register();
         }
 
@@ -53,7 +53,7 @@ public class RecipeItems {
         }
 
         public ExtractableResource recipe(Consumer<RegistrateRecipeProvider> consumer) {
-            recipeGen = consumer;
+            recipeGen.add(consumer);
             return this;
         }
     }
