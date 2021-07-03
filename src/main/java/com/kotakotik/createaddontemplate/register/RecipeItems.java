@@ -2,6 +2,7 @@ package com.kotakotik.createaddontemplate.register;
 
 import com.kotakotik.createaddontemplate.content.blocks.NodeBlock;
 import com.kotakotik.createaddontemplate.content.blocks.OreExtractorBlock;
+import com.kotakotik.createaddontemplate.content.worldgen.WorldGen;
 import com.kotakotik.createaddontemplate.register.recipes.ModMixingRecipes;
 import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -15,6 +16,8 @@ import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.world.gen.feature.template.TagMatchRuleTest;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
 import javax.annotation.Nullable;
@@ -33,12 +36,26 @@ public class RecipeItems {
         public ItemEntry<Item> ORE_PIECE;
 
         List<Consumer<RegistrateRecipeProvider>> recipeGen = new ArrayList<>();
+        public WorldGen.FeatureToRegister oreGenFeature;
+
         public ExtractableResource(String name, CreateRegistrate reg) {
             this.name = name;
             this.reg = reg;
 
             ORE_PIECE = reg.item(name + "_ore_piece", Item::new).recipe((ctx, prov) -> recipeGen.forEach(r -> r.accept(prov))).tag(ModTags.Items.ORE_PIECES).model(($, $$) -> {
             }).register();
+        }
+
+        public ExtractableResource oreGen(int veinSize, int minHeight, int maxHeight, int frequency) {
+            oreGenFeature = WorldGen.add(name + "_node", NODE::get, veinSize, minHeight, maxHeight, frequency, new TagMatchRuleTest(Tags.Blocks.DIRT));
+            return this;
+//            WorldGen.register(name + "_node", f);
+//            this.oreGenFeature = f;
+//            return this;
+        }
+
+        public ExtractableResource oreGen(int veinSize, int frequency) {
+            return oreGen(veinSize, 40, 256, frequency);
         }
 
         public ExtractableResource node(int minOre, int maxOre, Function<OreExtractorBlock.ExtractorProgressBuilder, Integer> progress) {
@@ -104,7 +121,8 @@ public class RecipeItems {
 
     public static void register(CreateRegistrate registrate) {
         LAPIS_EXTRACTABLE = new GlueableExtractableResource("lapis", registrate, true, () -> Items.LAPIS_LAZULI)
-                .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(10).build());
+                .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(10).build())
+                .oreGen(10, 5);
     }
 
     public static ModMixingRecipes MIXING;
