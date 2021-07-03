@@ -50,7 +50,7 @@ public interface IOreExtractorBlock {
         }
 
         public ExtractorProgressBuilder takesMinutes(int minutes) {
-            return takesMinutes(minutes * 60);
+            return takesSeconds(minutes * 60);
         }
 
         public int build() {
