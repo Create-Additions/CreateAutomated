@@ -31,6 +31,7 @@ public class CreateAutomated {
         modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         CreateRegistrate r = registrate.get();
         modEventBus.addListener(RecipeItems::gatherData);
+        ModBlockPartials.register();
         ModItems.register(r);
         ModBlocks.register(r);
         ModEntities.register(r);
@@ -40,6 +41,8 @@ public class CreateAutomated {
             WorldGen.reg(e);
             ModActors.register();
         });
+        modEventBus.addListener(ModBlockPartials::onModelBake);
+        modEventBus.addListener(ModBlockPartials::onModelRegistry);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGen::gen);
     }
 }
