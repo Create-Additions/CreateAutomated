@@ -1,4 +1,5 @@
 {
+  "block.createautomated.cinder_flour_node": "Cinder Flour Node",
   "block.createautomated.copper_node": "Copper Node",
   "block.createautomated.gold_node": "Gold Node",
   "block.createautomated.iron_node": "Iron Node",
@@ -6,6 +7,7 @@
   "block.createautomated.ore_extractor": "Ore Extractor",
   "block.createautomated.ore_extractor_top": "Ore Extractor Top",
   "block.createautomated.zinc_node": "Zinc Node",
+  "item.createautomated.cinder_flour_ore_piece": "Cinder Flour Ore Piece",
   "item.createautomated.copper_ingot_piece": "Copper Ingot Piece",
   "item.createautomated.copper_ore_piece": "Copper Ore Piece",
   "item.createautomated.gold_ingot_piece": "Gold Ingot Piece",

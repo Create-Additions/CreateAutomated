@@ -16,6 +16,7 @@ public class ModBlocks {
     public static BlockEntry<NodeBlock> LAPIS_NODE;
 
     public static void register(CreateRegistrate registrate) {
+
         ORE_EXTRACTOR_TOP = registrate.block("ore_extractor_top", TopOreExtractorBlock::new)
                 .initialProperties(SharedProperties::stone)
 //                .blockstate(BlockStateGen.directionalBlockProvider(true))

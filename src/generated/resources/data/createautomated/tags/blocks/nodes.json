@@ -5,6 +5,7 @@
     "createautomated:iron_node",
     "createautomated:zinc_node",
     "createautomated:gold_node",
-    "createautomated:copper_node"
+    "createautomated:copper_node",
+    "createautomated:cinder_flour_node"
   ]
 }

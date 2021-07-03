@@ -1,4 +1,5 @@
 {
+  "block.createautomated.cinder_flour_node": "\u01DDpoN \u0279no\u05DF\u2132 \u0279\u01DDpu\u0131\u0186",
   "block.createautomated.copper_node": "\u01DDpoN \u0279\u01DDddo\u0186",
   "block.createautomated.gold_node": "\u01DDpoN p\u05DFo\u2141",
   "block.createautomated.iron_node": "\u01DDpoN uo\u0279I",
@@ -6,6 +7,7 @@
   "block.createautomated.ore_extractor": "\u0279o\u0287\u0254\u0250\u0279\u0287x\u018E \u01DD\u0279O",
   "block.createautomated.ore_extractor_top": "do\u27D8 \u0279o\u0287\u0254\u0250\u0279\u0287x\u018E \u01DD\u0279O",
   "block.createautomated.zinc_node": "\u01DDpoN \u0254u\u0131Z",
+  "item.createautomated.cinder_flour_ore_piece": "\u01DD\u0254\u01DD\u0131\u0500 \u01DD\u0279O \u0279no\u05DF\u2132 \u0279\u01DDpu\u0131\u0186",
   "item.createautomated.copper_ingot_piece": "\u01DD\u0254\u01DD\u0131\u0500 \u0287obuI \u0279\u01DDddo\u0186",
   "item.createautomated.copper_ore_piece": "\u01DD\u0254\u01DD\u0131\u0500 \u01DD\u0279O \u0279\u01DDddo\u0186",
   "item.createautomated.gold_ingot_piece": "\u01DD\u0254\u01DD\u0131\u0500 \u0287obuI p\u05DFo\u2141",

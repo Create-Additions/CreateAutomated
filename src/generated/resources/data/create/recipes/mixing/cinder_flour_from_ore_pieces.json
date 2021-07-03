@@ -1,0 +1,37 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "createautomated:cinder_flour_ore_piece"
+    },
+    {
+      "item": "createautomated:cinder_flour_ore_piece"
+    },
+    {
+      "item": "createautomated:cinder_flour_ore_piece"
+    },
+    {
+      "item": "createautomated:cinder_flour_ore_piece"
+    },
+    {
+      "item": "createautomated:cinder_flour_ore_piece"
+    },
+    {
+      "item": "createautomated:cinder_flour_ore_piece"
+    },
+    {
+      "item": "createautomated:cinder_flour_ore_piece"
+    },
+    {
+      "item": "createautomated:cinder_flour_ore_piece"
+    },
+    {
+      "item": "createautomated:cinder_flour_ore_piece"
+    }
+  ],
+  "results": [
+    {
+      "item": "create:cinder_flour"
+    }
+  ]
+}

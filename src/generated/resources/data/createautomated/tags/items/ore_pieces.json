@@ -5,6 +5,7 @@
     "createautomated:iron_ore_piece",
     "createautomated:zinc_ore_piece",
     "createautomated:gold_ore_piece",
-    "createautomated:copper_ore_piece"
+    "createautomated:copper_ore_piece",
+    "createautomated:cinder_flour_ore_piece"
   ]
 }
