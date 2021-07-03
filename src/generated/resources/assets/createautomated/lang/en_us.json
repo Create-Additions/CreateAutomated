@@ -1,0 +1,6 @@
+{
+  "block.createautomated.lapis_node": "Lapis Node",
+  "block.createautomated.ore_extractor": "Ore Extractor",
+  "item.createautomated.lapis_ore_piece": "Lapis Ore Piece",
+  "itemGroup.createautomated": "Create Automated"
+}

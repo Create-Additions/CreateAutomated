@@ -30,6 +30,7 @@ public class CreateAutomated {
     public CreateAutomated() {
         modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         CreateRegistrate r = registrate.get();
+        modEventBus.addListener(RecipeItems::gatherData);
         ModItems.register(r);
         ModBlocks.register(r);
         ModEntities.register(r);

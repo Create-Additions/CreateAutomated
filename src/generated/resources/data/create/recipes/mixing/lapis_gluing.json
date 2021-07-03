@@ -1,0 +1,38 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "createautomated:lapis_ore_piece"
+    },
+    {
+      "item": "createautomated:lapis_ore_piece"
+    },
+    {
+      "item": "createautomated:lapis_ore_piece"
+    },
+    {
+      "item": "createautomated:lapis_ore_piece"
+    },
+    {
+      "item": "createautomated:lapis_ore_piece"
+    },
+    {
+      "item": "createautomated:lapis_ore_piece"
+    },
+    {
+      "item": "createautomated:lapis_ore_piece"
+    },
+    {
+      "item": "createautomated:lapis_ore_piece"
+    },
+    {
+      "item": "minecraft:slime_ball"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:lapis_lazuli"
+    }
+  ],
+  "heatRequirement": "superheated"
+}

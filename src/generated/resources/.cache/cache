@@ -1,0 +1,7 @@
+5e3d49517d9a267e8f3880f0a0ec159f165a23bc assets/createautomated/lang/en_ud.json
+051f295ed9581c6ef8c188c4a384a28cad6e5154 assets/createautomated/lang/en_us.json
+3044036ccd443fa3d516f383a36720b2caadff44 data/create/recipes/mixing/lapis_gluing.json
+128faf0125d32051f7848ce003cd74857c2693f7 data/createautomated/loot_tables/blocks/lapis_node.json
+16148a63a7e54d6520a2c242dcdc1bf2f97509d7 data/createautomated/loot_tables/blocks/ore_extractor.json
+a57ac804bdc48562690a861b26f83d56f625e0f4 data/createautomated/tags/blocks/nodes.json
+1591482134a88c3cbd5376e99561eaf86740be9a data/createautomated/tags/items/ore_pieces.json
