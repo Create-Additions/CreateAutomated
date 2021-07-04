@@ -8,20 +8,24 @@ jobs:
       - uses: actions/checkout@master
         with:
           fetch-depth: 0
-      - name: Get commits
-        id: commits
-        run: echo "::set-output name=commits::" >> git diff --name-only ${{ github.event.before }} ${{ github.event.after }}
+      - name: Get branch name
+        shell: bash
+        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+        id: get_branch
+      - name: Get latest commit short
+        run: echo "::set-output name=commit::$(git rev-parse --short HEAD)"
+        id: get_commit
       - name: Send building message to discord
         uses: fateyan/action-discord-notifier@v1.2.0
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message-title: "Building mod ${{ github.ref }} ${{ steps.commits.outputs.commits }}"
+          message-title: "Building mod from branch ${{ steps.get_branch.outputs.branch }}"
       - uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-8
         name: Build jar
         with:
           args: jar
         env:
-          CA_VERSION: preview-${{ github.event.after }}
+          CA_VERSION: preview-${{ steps.get_commit.outputs.commit }}
       - name: Send built file to discord
         uses: sinshutu/upload-to-discord@master
         env:
