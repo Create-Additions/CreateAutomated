@@ -1,5 +1,6 @@
 package com.kotakotik.createautomated.content.tiles;
 
+import com.kotakotik.createautomated.content.base.IDrillHead;
 import com.kotakotik.createautomated.content.base.IExtractable;
 import com.kotakotik.createautomated.content.base.INode;
 import com.kotakotik.createautomated.register.ModTags;
@@ -7,7 +8,9 @@ import com.simibubi.create.content.contraptions.components.actors.BlockBreakingK
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.OreBlock;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.IParticleData;
@@ -15,6 +18,8 @@ import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.capabilities.Capability;
@@ -35,7 +40,10 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
     public final ItemStackHandler inventory = new Inv();
     //    private NonNullList<ItemStack> inventory = NonNullList.withSize(1, ItemStack.EMPTY);
     public int extractProgress = 0;
+    public int durability = 0;
     protected LazyOptional<IItemHandler> invHandler = LazyOptional.of(() -> this.inventory);
+
+    public int maxDurability;
 
     @Override
     public BlockPos getBreakingPos() {
@@ -52,11 +60,11 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
     @Override
     public boolean shouldRun() {
-        return super.shouldRun() && isBreakableOre(getBreakingPos()) && isSpeedRequirementFulfilled();
+        return false && super.shouldRun() && isBreakableOre(getBreakingPos()) && isSpeedRequirementFulfilled();
     }
 
     public boolean shouldRunExtracting() {
-        return isExtractable(getBreakingPos()) && isSpeedRequirementFulfilled();
+        return isExtractable(getBreakingPos()) && isSpeedRequirementFulfilled() && durability > 0;
     }
 
     public Block getBlockToMine() {
@@ -70,7 +78,8 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
     @Override
     public void tick() {
-        if (!world.isAirBlock(getBreakingPos())) {
+        assert world != null;
+        if (world.isRemote && !world.isAirBlock(getBreakingPos())) {
             particles();
         }
 
@@ -85,6 +94,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
                 int progress = this.extractProgress + node.getProgressToAdd(world, belowBlock, this.getPos(), (int) getSpeed());
                 if (progress >= node.getRequiredProgress(world, belowBlock, this.getPos())) {
                     progress = 0;
+                    updateDurability(durability - 1);
                     ItemStack stack = inventory.getStackInSlot(0);
                     ItemStack toAdd = node.getOrePieceStack(world, belowBlock, this.getPos(), new Random());
                     if (stack.getItem().getRegistryName().equals(toAdd.getItem().getRegistryName())) {
@@ -94,10 +104,26 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
                     }
                 }
                 extractProgress = progress;
+                notifyUpdate();
             }
-        } else {
+        } else if (extractProgress != 0) {
             extractProgress = 0;
+            notifyUpdate();
         }
+    }
+
+    public void updateDurability() {
+        // dunno if any of the libraries have a clamp method so
+        if (durability < 0) {
+            durability = 0;
+        } else if (durability > maxDurability) {
+            durability = maxDurability;
+        }
+    }
+
+    public void updateDurability(int value) {
+        durability = value;
+        updateDurability();
     }
 
     @Override
@@ -106,6 +132,8 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 //        ItemStackHelper.saveAllItems(compound, inventory);
         compound.put("Inventory", inventory.serializeNBT());
         compound.putInt("ExtractProgress", extractProgress);
+        compound.putInt("Durability", durability);
+        compound.putInt("MaxDurability", maxDurability);
     }
 
     @Override
@@ -115,6 +143,8 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 //        ItemStackHelper.loadAllItems(compound, inventory);
         inventory.deserializeNBT(compound.getCompound("Inventory"));
         extractProgress = compound.getInt("ExtractProgress");
+        durability = compound.getInt("Durability");
+        maxDurability = compound.getInt("MaxDurability");
     }
 
     @Override
@@ -146,6 +176,12 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
         @Nonnull
         @Override
         public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+            if (stack.getItem() instanceof IDrillHead && durability == 0) {
+                IDrillHead d = (IDrillHead) stack.getItem();
+                maxDurability = d.getDurability();
+                durability = maxDurability;
+                stack.setCount(0);
+            }
             return stack;
         }
     }
@@ -165,27 +201,37 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
         for (int i = 0; i < amount; i++) {
             particle(new ItemParticleData(ParticleTypes.ITEM, stack));
         }
-        ;
     }
 
     int timeToParticle = 5;
+    int lastRenderDurability = durability;
 
     public void particles() {
-        float s = Math.abs(getSpeed());
-        int t = 0;
-        if (s >= 192) {
-            t = 9;
-        } else if (s >= 128) {
-            t = 6;
-        } else if (s >= 64) {
-            t = 3;
-        } else if (s >= 16) {
-            t = 2;
+        if (durability > 0) {
+            float s = Math.abs(getSpeed());
+            int t = 0;
+            if (s >= 192) {
+                t = 9;
+            } else if (s >= 128) {
+                t = 6;
+            } else if (s >= 64) {
+                t = 3;
+            } else if (s >= 16) {
+                t = 2;
+            }
+            timeToParticle -= t;
+            if (timeToParticle <= 0) {
+                timeToParticle = RandomUtils.nextInt(15, 17);
+                particles(RandomUtils.nextInt(3, 8), new ItemStack(getBlockToMine()));
+            }
+        } else {
+            if (lastRenderDurability != durability && durability == 0) {
+                // TODO: subtitle shows item breaking instead of drill breaking
+                // TODO: probably just make a custom sound for this
+                world.playSound(Minecraft.getInstance().player, pos, SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS, 1, 10);
+                particles(RandomUtils.nextInt(30, 50), new ItemStack(Blocks.IRON_BLOCK)); // SUMMON **ALL** THE PARTICLES!!!
+            }
         }
-        timeToParticle -= t;
-        if (timeToParticle <= 0) {
-            timeToParticle = RandomUtils.nextInt(15, 17);
-            particles(RandomUtils.nextInt(3, 8), new ItemStack(getBlockToMine()));
-        }
+        lastRenderDurability = durability;
     }
 }

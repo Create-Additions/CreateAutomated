@@ -2,6 +2,7 @@ package com.kotakotik.createautomated.register;
 
 import com.kotakotik.createautomated.content.blocks.NodeBlock;
 import com.kotakotik.createautomated.content.blocks.oreextractor.TopOreExtractorBlock;
+import com.kotakotik.createautomated.content.items.DrillHead;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
 import com.simibubi.create.AllItems;
@@ -17,6 +18,7 @@ import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.world.gen.feature.template.TagMatchRuleTest;
@@ -61,8 +63,8 @@ public class RecipeItems {
             return oreGen(veinSize, 40, 256, frequency, dimension);
         }
 
-        public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf) {
-            NODE = conf.apply(reg.block(name + "_node", p -> new NodeBlock(p, ORE_PIECE, maxOre, minOre, progress.apply(new TopOreExtractorBlock.ExtractorProgressBuilder()))).blockstate(($, $$) -> {
+        public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage) {
+            NODE = conf.apply(reg.block(name + "_node", p -> new NodeBlock(p, ORE_PIECE, maxOre, minOre, progress.apply(new TopOreExtractorBlock.ExtractorProgressBuilder()), drillDamage)).blockstate(($, $$) -> {
             }).tag(ModTags.Blocks.NODES, AllTags.AllBlockTags.NON_MOVABLE.tag).item().model(($, $$) -> {
             }).build()).loot((p, b) -> {
                 p.registerDropping(b, Items.AIR);
@@ -70,8 +72,8 @@ public class RecipeItems {
             return this;
         }
 
-        public ExtractableResource node(int ore, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf) {
-            return node(ore, ore, progress, conf);
+        public ExtractableResource node(int ore, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage) {
+            return node(ore, ore, progress, conf, drillDamage);
         }
 
         public ExtractableResource recipe(BiConsumer<RegistrateRecipeProvider, ExtractableResource> consumer) {
@@ -129,29 +131,32 @@ public class RecipeItems {
     public static ExtractableResource COPPER_EXTRACTABLE;
     public static ExtractableResource CINDER_FLOUR_EXTRACTABLE;
 
+    public static ItemEntry<DrillHead> DRILL_HEAD;
+    public static ItemEntry<Item> DIAMOND_BITS;
+
     public static void register(CreateRegistrate registrate) {
         LAPIS_EXTRACTABLE = new GlueableExtractableResource("lapis", registrate, true, () -> Items.LAPIS_LAZULI, c -> c)
-                .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(30).build(), c -> c)
+                .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(30).build(), c -> c, 1)
                 .oreGen(10, 4, WorldGen.NodeDimension.OVERWORLD);
 
         IRON_EXTRACTABLE = new IngotExtractableResource("iron", registrate, true, () -> Items.IRON_INGOT, c -> c, c -> c)
-                .node(0, 2, (b) -> b.atSpeedOf(128).takesMinutes(3).build(), c -> c)
+                .node(0, 2, (b) -> b.atSpeedOf(128).takesMinutes(3).build(), c -> c, 5)
                 .oreGen(4, 1, WorldGen.NodeDimension.OVERWORLD);
 
         ZINC_EXTRACTABLE = new IngotExtractableResource("zinc", registrate, true, AllItems.ZINC_INGOT, c -> c, c -> c)
-                .node(1, 2, (b) -> b.atSpeedOf(128).takesSeconds(40).build(), c -> c)
+                .node(1, 2, (b) -> b.atSpeedOf(128).takesSeconds(40).build(), c -> c, 3)
                 .oreGen(9, 2, WorldGen.NodeDimension.OVERWORLD);
 
         GOLD_EXTRACTABLE = new IngotExtractableResource("gold", registrate, true, () -> Items.GOLD_INGOT, c -> c, c -> c)
-                .node(0, 2, (b) -> b.atSpeedOf(128).takesMinutes(2).build(), c -> c)
+                .node(0, 2, (b) -> b.atSpeedOf(128).takesMinutes(2).build(), c -> c, 4)
                 .oreGen(6, 1, WorldGen.NodeDimension.OVERWORLD);
 
         COPPER_EXTRACTABLE = new IngotExtractableResource("copper", registrate, true, AllItems.COPPER_INGOT, c -> c, c -> c)
-                .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(40).build(), c -> c)
+                .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(40).build(), c -> c, 3)
                 .oreGen(16, 2, WorldGen.NodeDimension.OVERWORLD);
 
         CINDER_FLOUR_EXTRACTABLE = new ExtractableResource("cinder_flour", registrate, c -> c.lang("Cinder Flour Dust"))
-                .node(1, 3, b -> b.atSpeedOf(128).takesSeconds(15).build(), c -> c)
+                .node(1, 3, b -> b.atSpeedOf(128).takesSeconds(15).build(), c -> c, 2)
                 .oreGen(16, 0, 256, 10, WorldGen.NodeDimension.NETHER)
                 .recipe((prov, r) -> {
                     MIXING.add("cinder_flour_from_ore_pieces", b -> {
@@ -167,6 +172,28 @@ public class RecipeItems {
                         return b.requiresHeat(HeatCondition.NONE).output(Blocks.NETHERRACK);
                     });
                 });
+
+        DRILL_HEAD = registrate.item("drill_head", DrillHead::new)
+                .model(($, $$) -> {
+                })
+                .tag(ModTags.Items.DRILL_HEADS)
+                .properties(p -> p.maxStackSize(1))
+                .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
+                        .patternLine("bbb")
+                        .patternLine("rbr")
+                        .patternLine("drd")
+                        .key('b', Blocks.IRON_BLOCK)
+                        .key('r', Items.IRON_INGOT)
+                        .key('d', DIAMOND_BITS.get())
+                        .addCriterion("has_extractor", RegistrateRecipeProvider.hasItem(ModBlocks.ORE_EXTRACTOR_BOTTOM.get()))
+                        .build(prov))
+                .register();
+
+        // TODO: add recipe
+        DIAMOND_BITS = registrate.item("diamond_bits", Item::new)
+                .model(($, $$) -> {
+                })
+                .register();
     }
 
     public static ModMixingRecipes MIXING;

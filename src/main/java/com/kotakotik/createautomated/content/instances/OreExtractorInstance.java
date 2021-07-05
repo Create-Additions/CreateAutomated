@@ -8,7 +8,7 @@ import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRen
 import net.minecraft.util.Direction;
 
 public class OreExtractorInstance extends HalfShaftCogInstance implements IDynamicInstance {
-    public final RotatingData drill;
+    public RotatingData drill;
 
     public OreExtractorTile getTile() {
         return (OreExtractorTile) tile;
@@ -17,14 +17,32 @@ public class OreExtractorInstance extends HalfShaftCogInstance implements IDynam
     public OreExtractorInstance(InstancedTileRenderer<?> modelManager, OreExtractorTile tile) {
         super(modelManager, tile);
 
+        createDrill();
+    }
+
+    public RotatingData createDrill() {
         drill = getRotatingMaterial().getModel(ModBlockPartials.DRILL_ORE_EXTRACTOR, blockState).createInstance();
         drill.setRotationAxis(Direction.Axis.Y);
+        return drill;
     }
+
+    boolean drillRemoved = false;
 
     @Override
     public void beginFrame() {
-        drill.setRotationalSpeed(getTileSpeed());
-        drill.setPosition(getInstancePosition());
+        if (getTile().durability <= 0) {
+            if (!drillRemoved) {
+                drill.delete();
+            }
+            drillRemoved = true;
+        } else {
+            if (drillRemoved) {
+                createDrill();
+            }
+            drillRemoved = false;
+            drill.setRotationalSpeed(getTileSpeed());
+            drill.setPosition(getInstancePosition());
+        }
     }
 
     @Override

@@ -17,17 +17,19 @@ public class NodeBlock extends Block implements INode {
     public final int maxOre;
     public final int minOre;
     public final int requiredProgress;
+    public final int drillDamage;
 
-    public NodeBlock(Properties properties, NonNullSupplier<Item> orePiece, int maxOre, int minOre, int requiredProgress) {
+    public NodeBlock(Properties properties, NonNullSupplier<Item> orePiece, int maxOre, int minOre, int requiredProgress, int drillDamage) {
         super(properties);
         this.orePiece = orePiece;
         this.maxOre = maxOre;
         this.minOre = minOre;
         this.requiredProgress = requiredProgress;
+        this.drillDamage = drillDamage;
     }
 
-    public NodeBlock(Properties properties, NonNullSupplier<Item> orePiece, int ore, int progressRequired) {
-        this(properties, orePiece, ore, ore, progressRequired);
+    public NodeBlock(Properties properties, NonNullSupplier<Item> orePiece, int ore, int progressRequired, int drillDamage) {
+        this(properties, orePiece, ore, ore, progressRequired, drillDamage);
     }
 
     @Override
@@ -48,6 +50,11 @@ public class NodeBlock extends Block implements INode {
     @Override
     public int getRequiredProgress(World world, BlockPos pos, BlockPos drillPos) {
         return requiredProgress;
+    }
+
+    @Override
+    public int getDrillDamage(World world, BlockPos pos, BlockPos drillPos) {
+        return drillDamage;
     }
 
     @Override

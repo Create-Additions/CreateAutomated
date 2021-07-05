@@ -24,6 +24,7 @@ public class ModTags {
     public static class Items {
         public static final Tags.IOptionalNamedTag<Item> ORE_PIECES = tag("ore_pieces");
         public static final Tags.IOptionalNamedTag<Item> INGOT_PIECES = tag("ingot_pieces");
+        public static final Tags.IOptionalNamedTag<Item> DRILL_HEADS = tag("drill_heads");
 
         protected static Tags.IOptionalNamedTag<Item> tag(String name, Supplier<Item>... defaults) {
             return ItemTags.createOptional(new ResourceLocation(CreateAutomated.modid, name), Arrays.stream(defaults).collect(Collectors.toSet()));
