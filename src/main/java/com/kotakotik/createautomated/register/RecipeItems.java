@@ -47,7 +47,12 @@ public class RecipeItems {
             this.name = name;
             this.reg = reg;
 
-            ORE_PIECE = orePieceConf.apply(reg.item(name + "_ore_piece", Item::new).recipe((ctx, prov) -> recipeGen.forEach(r -> r.accept(prov, this))).tag(ModTags.Items.ORE_PIECES).model(($, $$) -> {
+            ORE_PIECE = orePieceConf.apply(reg.item(name + "_ore_piece", Item::new).recipe((ctx, prov) -> recipeGen.forEach(r -> r.accept(prov, this))).tag(ModTags.Items.ORE_PIECES).model((ctx, prov) -> {
+                prov.singleTexture(
+                        ctx.getName(),
+                        prov.mcLoc("item/generated"),
+                        "layer0",
+                        prov.modLoc("item/ore_pieces/" + name));
             })).register();
         }
 
@@ -64,11 +69,10 @@ public class RecipeItems {
         }
 
         public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage) {
-            NODE = conf.apply(reg.block(name + "_node", p -> new NodeBlock(p, ORE_PIECE, maxOre, minOre, progress.apply(new TopOreExtractorBlock.ExtractorProgressBuilder()), drillDamage)).blockstate(($, $$) -> {
-            }).tag(ModTags.Blocks.NODES, AllTags.AllBlockTags.NON_MOVABLE.tag).item().model(($, $$) -> {
-            }).build()).loot((p, b) -> {
-                p.registerDropping(b, Items.AIR);
-            }).register();
+            NODE = conf.apply(reg.block(name + "_node", p -> new NodeBlock(p, ORE_PIECE, maxOre, minOre, progress.apply(new TopOreExtractorBlock.ExtractorProgressBuilder()), drillDamage))
+                    .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, AllTags.AllBlockTags.NON_MOVABLE.tag).loot((p, b) -> {
+                        p.registerDropping(b, Items.AIR);
+                    }).simpleItem()).register();
             return this;
         }
 

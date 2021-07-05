@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "createautomated:block/cinder_flour_node"
+    }
+  }
+}
