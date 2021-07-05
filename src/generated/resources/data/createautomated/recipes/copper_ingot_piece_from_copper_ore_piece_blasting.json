@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:blasting",
-  "ingredient": {
-    "item": "createautomated:copper_ore_piece"
-  },
-  "result": "createautomated:copper_ingot_piece",
-  "experience": 0.0,
-  "cookingtime": 100
-}

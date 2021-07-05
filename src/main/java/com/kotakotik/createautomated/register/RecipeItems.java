@@ -12,10 +12,10 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.builders.BlockBuilder;
 import com.simibubi.create.repack.registrate.builders.ItemBuilder;
 import com.simibubi.create.repack.registrate.providers.RegistrateRecipeProvider;
-import com.simibubi.create.repack.registrate.util.DataIngredient;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ShapedRecipeBuilder;
@@ -39,6 +39,9 @@ public class RecipeItems {
         public BlockEntry<NodeBlock> NODE;
         public ItemEntry<Item> ORE_PIECE;
 
+        public final Tags.IOptionalNamedTag<Block> NODE_TAG;
+        public final Tags.IOptionalNamedTag<Item> ORE_PIECE_TAG;
+
         List<BiConsumer<RegistrateRecipeProvider, ExtractableResource>> recipeGen = new ArrayList<>();
         public WorldGen.FeatureToRegister oreGenFeature;
         public Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> nodeConf = c -> c;
@@ -47,7 +50,10 @@ public class RecipeItems {
             this.name = name;
             this.reg = reg;
 
-            ORE_PIECE = orePieceConf.apply(reg.item(name + "_ore_piece", Item::new).recipe((ctx, prov) -> recipeGen.forEach(r -> r.accept(prov, this))).tag(ModTags.Items.ORE_PIECES).model((ctx, prov) -> {
+            NODE_TAG = ModTags.Blocks.tag("nodes/" + name);
+            ORE_PIECE_TAG = ModTags.Items.tag("ore_pieces/" + name);
+
+            ORE_PIECE = orePieceConf.apply(reg.item(name + "_ore_piece", Item::new).recipe((ctx, prov) -> recipeGen.forEach(r -> r.accept(prov, this))).tag(ModTags.Items.ORE_PIECES, ORE_PIECE_TAG).model((ctx, prov) -> {
                 prov.singleTexture(
                         ctx.getName(),
                         prov.mcLoc("item/generated"),
@@ -70,7 +76,7 @@ public class RecipeItems {
 
         public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage) {
             NODE = conf.apply(reg.block(name + "_node", p -> new NodeBlock(p, ORE_PIECE, maxOre, minOre, progress.apply(new TopOreExtractorBlock.ExtractorProgressBuilder()), drillDamage))
-                    .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, AllTags.AllBlockTags.NON_MOVABLE.tag).loot((p, b) -> {
+                    .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, AllTags.AllBlockTags.NON_MOVABLE.tag, NODE_TAG).loot((p, b) -> {
                         p.registerDropping(b, Items.AIR);
                     }).simpleItem()).register();
             return this;
@@ -88,23 +94,16 @@ public class RecipeItems {
 
     public static class IngotExtractableResource extends ExtractableResource {
         public final boolean autoCreateRecipes;
-        public ItemEntry<Item> INGOT_PIECE;
 
         public IngotExtractableResource(String name, CreateRegistrate reg, boolean autoCreateRecipes, @Nullable NonNullSupplier<Item> ingot, Function<ItemBuilder<Item, CreateRegistrate>, ItemBuilder<Item, CreateRegistrate>> orePieceConf, Function<ItemBuilder<Item, CreateRegistrate>, ItemBuilder<Item, CreateRegistrate>> ingotPieceConf) {
             super(name, reg, orePieceConf);
             this.autoCreateRecipes = autoCreateRecipes;
 
-            INGOT_PIECE = ingotPieceConf.apply(reg.item(name + "_ingot_piece", Item::new)
-                    .tag(ModTags.Items.INGOT_PIECES)
-                    .model(($, $$) -> {
-                    })).register();
-
             if (autoCreateRecipes) {
                 recipe((provider, $) -> {
-                    provider.smeltingAndBlasting(DataIngredient.items(ORE_PIECE.get()), INGOT_PIECE, 0);
                     MIXING.add(name + "_ingot_from_pieces", b -> {
                         for (int i = 0; i < 9; i++) {
-                            b.require(INGOT_PIECE.get());
+                            b.require(ORE_PIECE_TAG);
                         }
                         return b.output(ingot.get()).requiresHeat(HeatCondition.SUPERHEATED);
                     });
@@ -120,7 +119,7 @@ public class RecipeItems {
             if (autoCreateRecipes) {
                 recipe((provider, $) -> MIXING.add(name + "_gluing", b -> {
                     for (int i = 0; i < 8; i++) {
-                        b.require(ORE_PIECE.get());
+                        b.require(ORE_PIECE_TAG);
                     }
                     return b.require(Items.SLIME_BALL).output(output.get()).requiresHeat(HeatCondition.SUPERHEATED);
                 }));

@@ -2,31 +2,31 @@
   "type": "create:mixing",
   "ingredients": [
     {
-      "item": "createautomated:gold_ingot_piece"
+      "tag": "createautomated:ore_pieces/gold"
     },
     {
-      "item": "createautomated:gold_ingot_piece"
+      "tag": "createautomated:ore_pieces/gold"
     },
     {
-      "item": "createautomated:gold_ingot_piece"
+      "tag": "createautomated:ore_pieces/gold"
     },
     {
-      "item": "createautomated:gold_ingot_piece"
+      "tag": "createautomated:ore_pieces/gold"
     },
     {
-      "item": "createautomated:gold_ingot_piece"
+      "tag": "createautomated:ore_pieces/gold"
     },
     {
-      "item": "createautomated:gold_ingot_piece"
+      "tag": "createautomated:ore_pieces/gold"
     },
     {
-      "item": "createautomated:gold_ingot_piece"
+      "tag": "createautomated:ore_pieces/gold"
     },
     {
-      "item": "createautomated:gold_ingot_piece"
+      "tag": "createautomated:ore_pieces/gold"
     },
     {
-      "item": "createautomated:gold_ingot_piece"
+      "tag": "createautomated:ore_pieces/gold"
     }
   ],
   "results": [

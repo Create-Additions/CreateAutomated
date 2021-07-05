@@ -2,28 +2,28 @@
   "type": "create:mixing",
   "ingredients": [
     {
-      "item": "createautomated:lapis_ore_piece"
+      "tag": "createautomated:ore_pieces/lapis"
     },
     {
-      "item": "createautomated:lapis_ore_piece"
+      "tag": "createautomated:ore_pieces/lapis"
     },
     {
-      "item": "createautomated:lapis_ore_piece"
+      "tag": "createautomated:ore_pieces/lapis"
     },
     {
-      "item": "createautomated:lapis_ore_piece"
+      "tag": "createautomated:ore_pieces/lapis"
     },
     {
-      "item": "createautomated:lapis_ore_piece"
+      "tag": "createautomated:ore_pieces/lapis"
     },
     {
-      "item": "createautomated:lapis_ore_piece"
+      "tag": "createautomated:ore_pieces/lapis"
     },
     {
-      "item": "createautomated:lapis_ore_piece"
+      "tag": "createautomated:ore_pieces/lapis"
     },
     {
-      "item": "createautomated:lapis_ore_piece"
+      "tag": "createautomated:ore_pieces/lapis"
     },
     {
       "item": "minecraft:slime_ball"

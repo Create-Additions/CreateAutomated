@@ -2,31 +2,31 @@
   "type": "create:mixing",
   "ingredients": [
     {
-      "item": "createautomated:copper_ingot_piece"
+      "tag": "createautomated:ore_pieces/copper"
     },
     {
-      "item": "createautomated:copper_ingot_piece"
+      "tag": "createautomated:ore_pieces/copper"
     },
     {
-      "item": "createautomated:copper_ingot_piece"
+      "tag": "createautomated:ore_pieces/copper"
     },
     {
-      "item": "createautomated:copper_ingot_piece"
+      "tag": "createautomated:ore_pieces/copper"
     },
     {
-      "item": "createautomated:copper_ingot_piece"
+      "tag": "createautomated:ore_pieces/copper"
     },
     {
-      "item": "createautomated:copper_ingot_piece"
+      "tag": "createautomated:ore_pieces/copper"
     },
     {
-      "item": "createautomated:copper_ingot_piece"
+      "tag": "createautomated:ore_pieces/copper"
     },
     {
-      "item": "createautomated:copper_ingot_piece"
+      "tag": "createautomated:ore_pieces/copper"
     },
     {
-      "item": "createautomated:copper_ingot_piece"
+      "tag": "createautomated:ore_pieces/copper"
     }
   ],
   "results": [
