@@ -5,8 +5,8 @@ import com.kotakotik.createautomated.content.blocks.oreextractor.BottomOreExtrac
 import com.kotakotik.createautomated.content.blocks.oreextractor.TopOreExtractorBlock;
 import com.simibubi.create.foundation.config.StressConfigDefaults;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.client.renderer.RenderType;
 
 public class ModBlocks {
@@ -18,21 +18,18 @@ public class ModBlocks {
     public static void register(CreateRegistrate registrate) {
 
         ORE_EXTRACTOR_TOP = registrate.block("ore_extractor_top", TopOreExtractorBlock::new)
-                .initialProperties(SharedProperties::stone)
+                .properties(AbstractBlock.Properties::nonOpaque)
 //                .blockstate(BlockStateGen.directionalBlockProvider(true))
-                .blockstate(($, $$) -> {
-                })
+                .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.itemModels().getExistingFile(prov.modLoc("block/ore_extractor/top"))))
                 .addLayer(() -> RenderType::getCutoutMipped)
                 .transform(StressConfigDefaults.setImpact(32.0))
                 .register();
 
         ORE_EXTRACTOR_BOTTOM = registrate.block("ore_extractor", BottomOreExtractorBlock::new)
-                .initialProperties(SharedProperties::stone)
-                .blockstate(($, $$) -> {
-                })
+                .properties(AbstractBlock.Properties::nonOpaque)
+                .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.itemModels().getExistingFile(prov.modLoc("block/ore_extractor/bottom"))))
                 .addLayer(() -> RenderType::getCutoutMipped)
-                .item().model(($, $$) -> {
-                }).build()
+                .simpleItem()
                 .transform(StressConfigDefaults.setImpact(32.0))
                 .register();
 

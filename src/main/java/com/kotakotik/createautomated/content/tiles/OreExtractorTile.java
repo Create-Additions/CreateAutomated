@@ -4,19 +4,25 @@ import com.kotakotik.createautomated.content.base.IExtractable;
 import com.kotakotik.createautomated.content.base.INode;
 import com.kotakotik.createautomated.register.ModTags;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
+import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.OreBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ItemParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.apache.commons.lang3.RandomUtils;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -64,6 +70,10 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
     @Override
     public void tick() {
+        if (!world.isAirBlock(getBreakingPos())) {
+            particles();
+        }
+
         super.tick();
 
         if (shouldRunExtracting()) {
@@ -85,6 +95,8 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
                 }
                 extractProgress = progress;
             }
+        } else {
+            extractProgress = 0;
         }
     }
 
@@ -135,6 +147,45 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
         @Override
         public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
             return stack;
+        }
+    }
+
+    public void particle(IParticleData data) {
+        float angle = world.rand.nextFloat() * 360;
+        Vector3d offset = new Vector3d(0, 0, 0.25f);
+        offset = VecHelper.rotate(offset, angle, Direction.Axis.Y);
+        Vector3d target = VecHelper.rotate(offset, getSpeed() > 0 ? 25 : -25, Direction.Axis.Y)
+                .add(0, .25f, 0);
+        Vector3d center = offset.add(VecHelper.getCenterOf(pos));
+        target = VecHelper.offsetRandomly(target.subtract(offset), world.rand, 1 / 128f);
+        world.addParticle(data, center.x, center.y - 1.75f, center.z, target.x, target.y, target.z);
+    }
+
+    public void particles(int amount, ItemStack stack) {
+        for (int i = 0; i < amount; i++) {
+            particle(new ItemParticleData(ParticleTypes.ITEM, stack));
+        }
+        ;
+    }
+
+    int timeToParticle = 5;
+
+    public void particles() {
+        float s = Math.abs(getSpeed());
+        int t = 0;
+        if (s >= 192) {
+            t = 9;
+        } else if (s >= 128) {
+            t = 6;
+        } else if (s >= 64) {
+            t = 3;
+        } else if (s >= 16) {
+            t = 2;
+        }
+        timeToParticle -= t;
+        if (timeToParticle <= 0) {
+            timeToParticle = RandomUtils.nextInt(15, 17);
+            particles(RandomUtils.nextInt(3, 8), new ItemStack(getBlockToMine()));
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.kotakotik.createautomated.register;
 
-import com.kotakotik.createautomated.content.instances.HalfShaftCogInstance;
+import com.kotakotik.createautomated.content.instances.OreExtractorInstance;
 import com.kotakotik.createautomated.content.tiles.OreExtractorTile;
 import com.simibubi.create.content.contraptions.base.KineticTileEntityRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -12,7 +12,7 @@ public class ModTiles {
     public static void register(CreateRegistrate registrate) {
         ORE_EXTRACTOR = registrate.tileEntity("ore_extractor", OreExtractorTile::new)
 //                .instance(() -> ShaftInstance::new)
-                .instance(() -> HalfShaftCogInstance::new)
+                .instance(() -> OreExtractorInstance::new)
                 .validBlocks(ModBlocks.ORE_EXTRACTOR_TOP)
                 .renderer(() -> KineticTileEntityRenderer::new)
                 .register();

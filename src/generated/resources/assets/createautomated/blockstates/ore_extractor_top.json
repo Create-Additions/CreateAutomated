@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "createautomated:block/ore_extractor/top"
+    }
+  }
+}

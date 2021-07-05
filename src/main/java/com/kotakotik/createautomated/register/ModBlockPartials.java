@@ -19,6 +19,7 @@ import java.util.Objects;
 
 public abstract class ModBlockPartials {
     public static AllBlockPartials HALF_SHAFT_COGWHEEL = get("half_shaft_cogwheel");
+    public static AllBlockPartials DRILL_ORE_EXTRACTOR = get("ore_extractor/drill");
     public static List<AllBlockPartials> all;
 
     //    protected static final Method BlockPartialsGet = ObfuscationReflectionHelper.findMethod(AllBlockPartials.class, "get", String.class);
