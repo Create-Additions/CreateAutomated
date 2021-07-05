@@ -17,8 +17,6 @@ import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DirectoryCache;
-import net.minecraft.data.IDataProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.world.gen.feature.template.TagMatchRuleTest;
@@ -26,7 +24,6 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
 import javax.annotation.Nullable;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -177,14 +174,6 @@ public class RecipeItems {
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
         MIXING = new ModMixingRecipes(gen);
-        gen.addProvider(new IDataProvider() {
-            public String getName() {
-                return "CreateAutomated Processing Recipes";
-            }
-
-            public void act(DirectoryCache dc) throws IOException {
-                MIXING.act(dc);
-            }
-        });
+        gen.addProvider(MIXING);
     }
 }
