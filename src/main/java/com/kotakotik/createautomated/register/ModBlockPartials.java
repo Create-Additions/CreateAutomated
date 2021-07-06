@@ -1,6 +1,7 @@
 package com.kotakotik.createautomated.register;
 
 import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.Create;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
@@ -18,6 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public abstract class ModBlockPartials {
+    public static AllBlockPartials COGWHEEL = get(new ResourceLocation(Create.ID, "block/cogwheel"));
     public static AllBlockPartials HALF_SHAFT_COGWHEEL = get("half_shaft_cogwheel");
     public static AllBlockPartials DRILL_ORE_EXTRACTOR = get("ore_extractor/drill");
     public static List<AllBlockPartials> all;
