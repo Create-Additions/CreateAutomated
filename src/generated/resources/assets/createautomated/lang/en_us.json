@@ -5,7 +5,7 @@
   "block.createautomated.iron_node": "Iron Node",
   "block.createautomated.lapis_node": "Lapis Node",
   "block.createautomated.ore_extractor": "Ore Extractor",
-  "block.createautomated.ore_extractor_top": "Ore Extractor Top",
+  "block.createautomated.ore_extractor_bottom": "Ore Extractor",
   "block.createautomated.zinc_node": "Zinc Node",
   "item.createautomated.cinder_flour_ore_piece": "Cinder Dust",
   "item.createautomated.copper_ore_piece": "Copper Ore Piece",

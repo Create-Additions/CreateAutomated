@@ -1,5 +1,6 @@
 package com.kotakotik.createautomated.content.blocks.oreextractor;
 
+import com.kotakotik.createautomated.content.base.IDrillHead;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.tiles.OreExtractorTile;
 import com.kotakotik.createautomated.register.ModTiles;
@@ -8,14 +9,20 @@ import com.simibubi.create.content.contraptions.relays.elementary.ICogWheel;
 import com.simibubi.create.foundation.block.ITE;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,5 +82,22 @@ public class TopOreExtractorBlock extends HorizontalKineticBlock implements ICog
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder loot) {
         // TODO: breaking the top part in creative still drops it. shut i know why i just dont know how to fix it
         return new ArrayList<>();
+    }
+
+    @Override
+    public ActionResultType onUse(BlockState state, World world, BlockPos pos, PlayerEntity plr, Hand hand, BlockRayTraceResult rayTraceResult) {
+        if (plr.getHeldItem(hand).getItem() instanceof IDrillHead) {
+            IDrillHead drill = (IDrillHead) plr.getHeldItem(hand).getItem();
+            OreExtractorTile tile = ((OreExtractorTile) world.getTileEntity(pos));
+            if (!(plr instanceof FakePlayer) || tile.durability == 0) { // if fakeplayer, only use when durability is ran out, like the blaze burner
+                tile.durability = drill.getDurability();
+                tile.maxDurability = tile.durability;
+                if (!plr.isCreative()) {
+                    plr.getHeldItem(hand).shrink(1);
+                }
+                return ActionResultType.SUCCESS; // dunno if i should use CONSUME but iirc it disables the animation and i dont want that
+            }
+        }
+        return super.onUse(state, world, pos, plr, hand, rayTraceResult);
     }
 }

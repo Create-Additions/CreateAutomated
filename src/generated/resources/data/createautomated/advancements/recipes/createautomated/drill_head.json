@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "createautomated:ore_extractor"
+            "item": "minecraft:air"
           }
         ]
       }

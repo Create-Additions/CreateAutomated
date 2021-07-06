@@ -234,4 +234,8 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
         }
         lastRenderDurability = durability;
     }
+
+    public static int getDefaultStress() {
+        return 64;
+    }
 }

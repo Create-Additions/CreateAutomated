@@ -1,15 +1,22 @@
 package com.kotakotik.createautomated.content.blocks;
 
 import com.kotakotik.createautomated.content.base.INode;
+import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Random;
 
 public class NodeBlock extends Block implements INode {
@@ -60,5 +67,11 @@ public class NodeBlock extends Block implements INode {
     @Override
     public PushReaction getPushReaction(BlockState state) {
         return PushReaction.DESTROY;
+    }
+
+    @Override
+    public void addInformation(ItemStack p_190948_1_, @Nullable IBlockReader p_190948_2_, List<ITextComponent> p_190948_3_, ITooltipFlag p_190948_4_) {
+        p_190948_3_.add(new StringTextComponent(String.valueOf(AllConfigs.SERVER.kinetics.stressValues.getImpactOf(this))));
+        super.addInformation(p_190948_1_, p_190948_2_, p_190948_3_, p_190948_4_);
     }
 }
