@@ -140,27 +140,27 @@ public class RecipeItems {
 
     public static void register(CreateRegistrate registrate) {
         LAPIS_EXTRACTABLE = new GlueableExtractableResource("lapis", registrate, true, () -> Items.LAPIS_LAZULI, c -> c)
-                .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(30).build(), c -> c, 1)
+                .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(10).build(), c -> c, 1)
                 .oreGen(10, 4, WorldGen.NodeDimension.OVERWORLD);
 
         IRON_EXTRACTABLE = new IngotExtractableResource("iron", registrate, true, () -> Items.IRON_INGOT, c -> c, c -> c)
-                .node(0, 2, (b) -> b.atSpeedOf(128).takesMinutes(3).build(), c -> c, 5)
+                .node(0, 2, (b) -> b.atSpeedOf(128).takesSeconds(40).build(), c -> c, 5)
                 .oreGen(4, 1, WorldGen.NodeDimension.OVERWORLD);
 
         ZINC_EXTRACTABLE = new IngotExtractableResource("zinc", registrate, true, AllItems.ZINC_INGOT, c -> c, c -> c)
-                .node(1, 2, (b) -> b.atSpeedOf(128).takesSeconds(40).build(), c -> c, 3)
+                .node(1, 2, (b) -> b.atSpeedOf(128).takesSeconds(20).build(), c -> c, 3)
                 .oreGen(9, 2, WorldGen.NodeDimension.OVERWORLD);
 
         GOLD_EXTRACTABLE = new IngotExtractableResource("gold", registrate, true, () -> Items.GOLD_INGOT, c -> c, c -> c)
-                .node(0, 2, (b) -> b.atSpeedOf(128).takesMinutes(2).build(), c -> c, 4)
+                .node(0, 2, (b) -> b.atSpeedOf(128).takesSeconds(35).build(), c -> c, 4)
                 .oreGen(6, 1, WorldGen.NodeDimension.OVERWORLD);
 
         COPPER_EXTRACTABLE = new IngotExtractableResource("copper", registrate, true, AllItems.COPPER_INGOT, c -> c, c -> c)
-                .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(40).build(), c -> c, 3)
+                .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(10).build(), c -> c, 3)
                 .oreGen(16, 2, WorldGen.NodeDimension.OVERWORLD);
 
         CINDER_FLOUR_EXTRACTABLE = new ExtractableResource("cinder_flour", registrate, c -> c.lang("Cinder Dust"))
-                .node(1, 3, b -> b.atSpeedOf(128).takesSeconds(15).build(), c -> c, 2)
+                .node(1, 3, b -> b.atSpeedOf(128).takesSeconds(5).build(), c -> c, 2)
                 .oreGen(16, 0, 256, 10, WorldGen.NodeDimension.NETHER)
                 .recipe((prov, r) -> {
                     MIXING.add("cinder_flour_from_ore_pieces", b -> {
