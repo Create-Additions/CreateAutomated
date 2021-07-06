@@ -2,31 +2,35 @@
   "type": "create:mixing",
   "ingredients": [
     {
-      "item": "createautomated:cinder_flour_ore_piece"
+      "tag": "createautomated:ore_pieces/cinder_flour"
     },
     {
-      "item": "createautomated:cinder_flour_ore_piece"
+      "tag": "createautomated:ore_pieces/cinder_flour"
     },
     {
-      "item": "createautomated:cinder_flour_ore_piece"
+      "tag": "createautomated:ore_pieces/cinder_flour"
     },
     {
-      "item": "createautomated:cinder_flour_ore_piece"
+      "tag": "createautomated:ore_pieces/cinder_flour"
     },
     {
-      "item": "createautomated:cinder_flour_ore_piece"
+      "tag": "createautomated:ore_pieces/cinder_flour"
     },
     {
-      "item": "createautomated:cinder_flour_ore_piece"
+      "tag": "createautomated:ore_pieces/cinder_flour"
     },
     {
-      "item": "createautomated:cinder_flour_ore_piece"
+      "tag": "createautomated:ore_pieces/cinder_flour"
     },
     {
-      "item": "createautomated:cinder_flour_ore_piece"
+      "tag": "createautomated:ore_pieces/cinder_flour"
     },
     {
-      "item": "createautomated:cinder_flour_ore_piece"
+      "tag": "createautomated:ore_pieces/cinder_flour"
+    },
+    {
+      "fluidTag": "minecraft:water",
+      "amount": 10
     }
   ],
   "results": [

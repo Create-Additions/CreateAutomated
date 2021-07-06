@@ -21,6 +21,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.gen.feature.template.TagMatchRuleTest;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -158,20 +159,24 @@ public class RecipeItems {
                 .node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(40).build(), c -> c, 3)
                 .oreGen(16, 2, WorldGen.NodeDimension.OVERWORLD);
 
-        CINDER_FLOUR_EXTRACTABLE = new ExtractableResource("cinder_flour", registrate, c -> c.lang("Cinder Flour Dust"))
+        CINDER_FLOUR_EXTRACTABLE = new ExtractableResource("cinder_flour", registrate, c -> c.lang("Cinder Dust"))
                 .node(1, 3, b -> b.atSpeedOf(128).takesSeconds(15).build(), c -> c, 2)
                 .oreGen(16, 0, 256, 10, WorldGen.NodeDimension.NETHER)
                 .recipe((prov, r) -> {
                     MIXING.add("cinder_flour_from_ore_pieces", b -> {
                         for (int i = 0; i < 9; i++) {
-                            b.require(r.ORE_PIECE.get());
+                            b.require(r.ORE_PIECE_TAG);
                         }
+                        // yes using the water tag lets you use chocolate and stuff but maybe i can just keep it that way
+                        // i really dont wanna run datagen again
+                        b.require(FluidTags.WATER, 10);
                         return b.requiresHeat(HeatCondition.NONE).output(AllItems.CINDER_FLOUR.get());
                     });
                     MIXING.add("netherrack_from_cinder_flour", b -> {
                         for (int i = 0; i < 5; i++) {
                             b.require(AllItems.CINDER_FLOUR.get());
                         }
+                        b.require(FluidTags.WATER, 100);
                         return b.requiresHeat(HeatCondition.NONE).output(Blocks.NETHERRACK);
                     });
                 });

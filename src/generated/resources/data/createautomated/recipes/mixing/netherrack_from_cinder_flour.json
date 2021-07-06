@@ -15,6 +15,10 @@
     },
     {
       "item": "create:cinder_flour"
+    },
+    {
+      "fluidTag": "minecraft:water",
+      "amount": 100
     }
   ],
   "results": [
