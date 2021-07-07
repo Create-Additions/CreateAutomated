@@ -102,13 +102,17 @@ public class ExtractingRecipe implements IRecipe<IInventory> { // help
 
     @Override
     public ItemStack getCraftingResult(@Nullable IInventory p_77572_1_) {
-        ItemStack stack = getRecipeOutput();
+        ItemStack stack = getCraftingResult1Size();
         stack.setCount(minOre == maxOre ? minOre : RandomUtils.nextInt(minOre, maxOre));
         return stack;
     }
 
     public ItemStack getCraftingResult() {
         return getCraftingResult(null);
+    }
+
+    public ItemStack getCraftingResult1Size() {
+        return getRecipeOutput();
     }
 
     @Override
