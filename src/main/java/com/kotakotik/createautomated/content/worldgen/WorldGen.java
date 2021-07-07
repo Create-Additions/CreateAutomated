@@ -66,7 +66,6 @@ public class WorldGen {
 
     public static void gen(BiomeLoadingEvent e) {
         BiomeGenerationSettingsBuilder gen = e.getGeneration();
-        System.out.println(e.getCategory().getName());
         if (e.getCategory() == Biome.Category.NETHER) {
             NETHER_NODES.forEach(n -> gen.feature(GenerationStage.Decoration.SURFACE_STRUCTURES, n));
         } else if (e.getName() != Biomes.THE_END.getRegistryName()) {

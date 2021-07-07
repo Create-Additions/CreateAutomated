@@ -61,7 +61,6 @@ public abstract class ModBlockPartials {
 //            return (AllBlockPartials) BlockPartialsGet.invoke(null, "");
         } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
             e.printStackTrace();
-            System.out.println(e.getClass().getSimpleName());
         }
         return null;
     }
@@ -112,7 +111,6 @@ public abstract class ModBlockPartials {
         Map<ResourceLocation, IBakedModel> modelRegistry = event.getModelRegistry();
 
         for (AllBlockPartials partials : getAllList()) {
-            System.out.println(getModel(partials));
             setBakedModel(partials, modelRegistry.get(getModel(partials)));
         }
     }

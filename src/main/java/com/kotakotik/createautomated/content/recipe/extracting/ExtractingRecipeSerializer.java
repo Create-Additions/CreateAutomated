@@ -14,7 +14,6 @@ public class ExtractingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerial
 
     @Override
     public ExtractingRecipe read(ResourceLocation id, JsonObject json) {
-        System.out.println(json.toString());
         return new ExtractingRecipe(id,
                 Ingredient.deserialize(json.get("node")),
                 json.get("output").getAsString(),
