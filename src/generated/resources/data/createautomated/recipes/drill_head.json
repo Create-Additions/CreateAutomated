@@ -3,7 +3,7 @@
   "pattern": [
     "bbb",
     "rbr",
-    "drd"
+    " r "
   ],
   "key": {
     "b": {
@@ -11,9 +11,6 @@
     },
     "r": {
       "item": "minecraft:iron_ingot"
-    },
-    "d": {
-      "item": "createautomated:diamond_bits"
     }
   },
   "result": {

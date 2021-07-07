@@ -140,7 +140,6 @@ public class RecipeItems {
     public static ExtractableResource CINDER_FLOUR_EXTRACTABLE;
 
     public static ItemEntry<DrillHead> DRILL_HEAD;
-    public static ItemEntry<Item> DIAMOND_BITS;
 
     public static void register(CreateRegistrate registrate) {
         LAPIS_EXTRACTABLE = new GlueableExtractableResource("lapis", registrate, true, () -> Items.LAPIS_LAZULI, c -> c)
@@ -186,25 +185,16 @@ public class RecipeItems {
                 });
 
         DRILL_HEAD = registrate.item("drill_head", DrillHead::new)
-                .model(($, $$) -> {
-                })
                 .tag(ModTags.Items.DRILL_HEADS)
                 .properties(p -> p.maxStackSize(1))
                 .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
                         .patternLine("bbb")
                         .patternLine("rbr")
-                        .patternLine("drd")
+                        .patternLine(" r ")
                         .key('b', Blocks.IRON_BLOCK)
                         .key('r', Items.IRON_INGOT)
-                        .key('d', DIAMOND_BITS.get())
                         .addCriterion("has_extractor", RegistrateRecipeProvider.hasItem(ModBlocks.ORE_EXTRACTOR_BOTTOM.get()))
                         .build(prov))
-                .register();
-
-        // TODO: add recipe
-        DIAMOND_BITS = registrate.item("diamond_bits", Item::new)
-                .model(($, $$) -> {
-                })
                 .register();
     }
 

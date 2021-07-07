@@ -36,9 +36,7 @@ public class ModBlocks {
                         BlockState blockstate = ORE_EXTRACTOR_BOTTOM.get().getStateForPlacement(p_195945_1_);
                         return blockstate != null && this.canPlace(p_195945_1_, blockstate) ? blockstate : null;
                     }
-                }).model(($, $$) -> {
-                }).build() // we have a custom item model so
-                // pretty sure theres a better way to do this but research is hard, if we call looking into the AllBlocks class research
+                }).model((ctx, prov) -> prov.withExistingParent(ctx.getName(), prov.modLoc("block/ore_extractor/item"))).build()
                 .register();
 
         ORE_EXTRACTOR_BOTTOM = registrate.block("ore_extractor_bottom", BottomOreExtractorBlock::new)
