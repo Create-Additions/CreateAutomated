@@ -3,6 +3,8 @@ package com.kotakotik.createautomated.content.tiles;
 import com.kotakotik.createautomated.content.base.IDrillHead;
 import com.kotakotik.createautomated.content.base.IExtractable;
 import com.kotakotik.createautomated.content.base.INode;
+import com.kotakotik.createautomated.content.recipe.extracting.ExtractingRecipe;
+import com.kotakotik.createautomated.register.ModRecipeTypes;
 import com.kotakotik.createautomated.register.ModTags;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
 import com.simibubi.create.foundation.utility.VecHelper;
@@ -27,9 +29,11 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.apache.commons.lang3.RandomUtils;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 import java.util.Random;
 
 public class OreExtractorTile extends BlockBreakingKineticTileEntity {
@@ -88,15 +92,21 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
         if (shouldRunExtracting()) {
             Block below = getBlockToMine();
             BlockPos belowBlock = getBreakingPos();
-            ((IExtractable) below).extractTick(this);
+            Optional<ExtractingRecipe> recipe = world.getRecipeManager().getRecipe(ModRecipeTypes.EXTRACTING, new RecipeWrapper(inventory) {
+                @Override
+                public ItemStack getStackInSlot(int slot) {
+                    return new ItemStack(below); // probably not the best way of doing this but idc
+                }
+            }, world);
+            ((IExtractable) below).extractTick(this, recipe);
             if (below instanceof INode) {
                 INode node = (INode) below;
-                int progress = this.extractProgress + node.getProgressToAdd(world, belowBlock, this.getPos(), (int) getSpeed());
-                if (progress >= node.getRequiredProgress(world, belowBlock, this.getPos())) {
+                int progress = this.extractProgress + node.getProgressToAdd(world, belowBlock, this.getPos(), (int) getSpeed(), recipe);
+                if (progress >= node.getRequiredProgress(world, belowBlock, this.getPos(), recipe)) {
                     progress = 0;
                     updateDurability(durability - 1);
                     ItemStack stack = inventory.getStackInSlot(0);
-                    ItemStack toAdd = node.getOrePieceStack(world, belowBlock, this.getPos(), new Random());
+                    ItemStack toAdd = node.getOrePieceStack(world, belowBlock, this.getPos(), new Random(), recipe);
                     if (stack.getItem().getRegistryName().equals(toAdd.getItem().getRegistryName())) {
                         stack.setCount(Math.min(stack.getMaxStackSize(), stack.getCount() + toAdd.getCount()));
                     } else if (stack.isEmpty()) {

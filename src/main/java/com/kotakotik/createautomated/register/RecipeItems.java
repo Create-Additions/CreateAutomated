@@ -1,8 +1,10 @@
 package com.kotakotik.createautomated.register;
 
+import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.blocks.NodeBlock;
 import com.kotakotik.createautomated.content.blocks.oreextractor.TopOreExtractorBlock;
 import com.kotakotik.createautomated.content.items.DrillHead;
+import com.kotakotik.createautomated.content.recipe.extracting.ExtractingRecipeGen;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
 import com.simibubi.create.AllItems;
@@ -76,7 +78,9 @@ public class RecipeItems {
         }
 
         public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage) {
-            NODE = conf.apply(reg.block(name + "_node", p -> new NodeBlock(p, ORE_PIECE, maxOre, minOre, progress.apply(new TopOreExtractorBlock.ExtractorProgressBuilder()), drillDamage))
+            NODE = conf.apply(reg.block(name + "_node", NodeBlock::new).recipe((ctx, prov) -> {
+                EXTRACTING.add(name, e -> e.output(ORE_PIECE).node(ctx.get()).ore(minOre, maxOre).requiredProgress(progress.apply(new IOreExtractorBlock.ExtractorProgressBuilder())).drillDamage(drillDamage));
+            })
                     .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, AllTags.AllBlockTags.NON_MOVABLE.tag, NODE_TAG).loot((p, b) -> {
                         p.registerDropping(b, Items.AIR);
                     }).simpleItem()).register();
@@ -205,10 +209,13 @@ public class RecipeItems {
     }
 
     public static ModMixingRecipes MIXING;
+    public static ExtractingRecipeGen EXTRACTING;
 
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
         MIXING = new ModMixingRecipes(gen);
+        EXTRACTING = new ExtractingRecipeGen(gen);
         gen.addProvider(MIXING);
+        gen.addProvider(EXTRACTING);
     }
 }

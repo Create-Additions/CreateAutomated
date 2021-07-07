@@ -1,0 +1,11 @@
+{
+  "type": "createautomated:extracting",
+  "node": {
+    "item": "createautomated:iron_node"
+  },
+  "output": "createautomated:iron_ore_piece",
+  "drill_damage": 5,
+  "required_progress": 102400,
+  "min_ore": 0,
+  "max_ore": 2
+}

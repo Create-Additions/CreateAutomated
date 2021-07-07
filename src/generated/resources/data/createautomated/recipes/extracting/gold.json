@@ -1,0 +1,11 @@
+{
+  "type": "createautomated:extracting",
+  "node": {
+    "item": "createautomated:gold_node"
+  },
+  "output": "createautomated:gold_ore_piece",
+  "drill_damage": 4,
+  "required_progress": 89600,
+  "min_ore": 0,
+  "max_ore": 2
+}

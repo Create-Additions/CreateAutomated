@@ -5,6 +5,7 @@ import com.kotakotik.createautomated.register.*;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import com.simibubi.create.repack.registrate.util.OneTimeEventReceiver;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -31,12 +32,14 @@ public class CreateAutomated {
         modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         CreateRegistrate r = registrate.get();
         modEventBus.addListener(RecipeItems::gatherData);
+        ModRecipeTypes.reg(r);
         ModBlockPartials.register();
         ModItems.register(r);
         ModBlocks.register(r);
         ModEntities.register(r);
         ModTiles.register(r);
         WorldGen.register();
+        modEventBus.addGenericListener(IRecipeSerializer.class, ModRecipeTypes::register);
         OneTimeEventReceiver.addListener(modEventBus, FMLCommonSetupEvent.class, (e) -> {
             WorldGen.reg(e);
             ModActors.register();

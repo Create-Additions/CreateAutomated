@@ -1,0 +1,11 @@
+{
+  "type": "createautomated:extracting",
+  "node": {
+    "item": "createautomated:cinder_flour_node"
+  },
+  "output": "createautomated:cinder_flour_ore_piece",
+  "drill_damage": 2,
+  "required_progress": 12800,
+  "min_ore": 1,
+  "max_ore": 3
+}
