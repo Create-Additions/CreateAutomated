@@ -59,7 +59,7 @@ public class OreExtractionCategory implements IRecipeCategory<ExtractingRecipe> 
 
     @Override
     public String getTitle() {
-        return CALocalization.JEI_ORE_EXTRACTOR_TITLE.translate(); // TODO: use translation keys
+        return CALocalization.JEI_ORE_EXTRACTOR_TITLE.translate();
     }
 
     @Override
@@ -89,7 +89,6 @@ public class OreExtractionCategory implements IRecipeCategory<ExtractingRecipe> 
         guiItemStacks.addTooltipCallback((i, input, stack, tooltip) -> {
             if (!input) {
                 if (recipe.minOre != recipe.maxOre) {
-                    // TODO: use translation keys
                     tooltip.add(CALocalization.JEI_ORE_EXTRACTOR_BETWEEN.getComponent(recipe.minOre, recipe.maxOre).formatted(TextFormatting.GOLD));
 //                    tooltip.add(new StringTextComponent("From " + recipe.minOre + " to " + recipe.maxOre).formatted(TextFormatting.GOLD));
                 } else {
