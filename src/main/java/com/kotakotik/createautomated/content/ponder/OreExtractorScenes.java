@@ -37,7 +37,7 @@ public class OreExtractorScenes {
         scene.idle(80);
 
         // Ore extractors
-        scene.world.showSection(util.select.layersFrom(1), Direction.UP);
+        scene.world.showSection(util.select.layersFrom(1), Direction.DOWN);
         scene.overlay.showText(80)
                 .attachKeyFrame().placeNearTarget().pointAt(util.vector.centerOf(extractorTop))
                 .text("Ore Extractors can be used to extract from resource nodes");

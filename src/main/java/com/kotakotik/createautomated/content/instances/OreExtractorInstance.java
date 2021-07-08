@@ -23,8 +23,14 @@ public class OreExtractorInstance extends CogInstance implements IDynamicInstanc
     public RotatingData createDrill() {
         drill = getRotatingMaterial().getModel(ModBlockPartials.DRILL_ORE_EXTRACTOR, blockState).createInstance();
         drill.setRotationAxis(Direction.Axis.Y);
+        updateDrillRotation();
         drill.setPosition(getInstancePosition().down());
         return drill;
+    }
+
+    public void updateDrillRotation() {
+        drill.setRotationalSpeed(tile.getSpeed());
+        drill.setRotationAxis(super.getRotationAxis());
     }
 
     boolean drillRemoved = false;
@@ -36,8 +42,7 @@ public class OreExtractorInstance extends CogInstance implements IDynamicInstanc
 
     @Override
     public void update() {
-        drill.setRotationalSpeed(tile.getSpeed());
-        drill.setRotationAxis(super.getRotationAxis());
+        updateDrillRotation();
         if (getTile().durability <= 0) {
             if (!drillRemoved) {
                 drill.delete();
