@@ -31,6 +31,13 @@ public class OreExtractorInstance extends CogInstance implements IDynamicInstanc
 
     @Override
     public void beginFrame() {
+
+    }
+
+    @Override
+    public void update() {
+        drill.setRotationalSpeed(tile.getSpeed());
+        drill.setRotationAxis(super.getRotationAxis());
         if (getTile().durability <= 0) {
             if (!drillRemoved) {
                 drill.delete();
@@ -41,8 +48,8 @@ public class OreExtractorInstance extends CogInstance implements IDynamicInstanc
                 createDrill();
             }
             drillRemoved = false;
-            drill.setRotationalSpeed(getTileSpeed());
         }
+        super.update();
     }
 
     @Override
