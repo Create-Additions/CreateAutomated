@@ -50,6 +50,7 @@ public class CreateAutomated {
         modEventBus.addListener(ModBlockPartials::onModelRegistry);
         if (DatagenModLoader.isRunningDataGen()) {
             modEventBus.addListener((GatherDataEvent g) -> ModPonder.generateLang(r, g));
+            CALocalization.register(r);
         }
         modEventBus.addListener(ModPonder::register);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGen::gen);
