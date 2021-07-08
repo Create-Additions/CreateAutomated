@@ -3,7 +3,7 @@ name: Upload jar to testing channel
 jobs:
   build-and-send:
     name: Build Jar and send to Discord
-    runs-on: windows-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@master
         with:
