@@ -15,7 +15,8 @@ public class ModPonder {
 
     protected static void register() {
         PonderRegistry.forComponents(ModBlocks.ORE_EXTRACTOR_TOP)
-                .addStoryBoard("createautomated/extractor/intro", OreExtractorScenes::intro);
+                .addStoryBoard("createautomated/extractor/intro", OreExtractorScenes::intro)
+                .addStoryBoard("createautomated/extractor/automation", OreExtractorScenes::automation);
 
         PonderRegistry.tags.forTag(PonderTag.KINETIC_APPLIANCES)
                 .add(ModBlocks.ORE_EXTRACTOR_TOP);
