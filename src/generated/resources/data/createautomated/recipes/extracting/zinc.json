@@ -4,8 +4,8 @@
     "item": "createautomated:zinc_node"
   },
   "output": "createautomated:zinc_ore_piece",
-  "drill_damage": 3,
-  "required_progress": 51200,
-  "min_ore": 1,
-  "max_ore": 2
+  "drillDamage": 3,
+  "requiredProgress": 51200,
+  "minOre": 1,
+  "maxOre": 2
 }

@@ -4,8 +4,8 @@
     "item": "createautomated:copper_node"
   },
   "output": "createautomated:copper_ore_piece",
-  "drill_damage": 3,
-  "required_progress": 25600,
-  "min_ore": 1,
-  "max_ore": 4
+  "drillDamage": 3,
+  "requiredProgress": 25600,
+  "minOre": 1,
+  "maxOre": 4
 }

@@ -17,10 +17,10 @@ public class ExtractingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerial
         return new ExtractingRecipe(id,
                 Ingredient.deserialize(json.get("node")),
                 json.get("output").getAsString(),
-                json.get("drill_damage").getAsInt(),
-                json.get("required_progress").getAsInt(),
-                json.get("min_ore").getAsInt(),
-                json.get("max_ore").getAsInt());
+                json.get("drillDamage").getAsInt(),
+                json.get("requiredProgress").getAsInt(),
+                json.get("minOre").getAsInt(),
+                json.get("maxOre").getAsInt());
     }
 
     @Nullable
@@ -39,10 +39,10 @@ public class ExtractingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerial
     public void write(JsonObject json, ExtractingRecipe recipe) {
         json.add("node", recipe.node.serialize());
         json.addProperty("output", recipe.output);
-        json.addProperty("drill_damage", recipe.drillDamage);
-        json.addProperty("required_progress", recipe.requiredProgress);
-        json.addProperty("min_ore", recipe.minOre);
-        json.addProperty("max_ore", recipe.maxOre);
+        json.addProperty("drillDamage", recipe.drillDamage);
+        json.addProperty("requiredProgress", recipe.requiredProgress);
+        json.addProperty("minOre", recipe.minOre);
+        json.addProperty("maxOre", recipe.maxOre);
     }
 
     @Override
