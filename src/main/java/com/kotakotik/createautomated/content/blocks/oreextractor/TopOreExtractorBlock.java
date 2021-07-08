@@ -28,6 +28,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TopOreExtractorBlock extends HorizontalKineticBlock implements ICogWheel, ITE<OreExtractorTile>, IOreExtractorBlock {
+    @Override
+    public boolean isLargeCog() {
+        return !isSmallCog();
+    }
+
+    @Override
+    public boolean isSmallCog() {
+        return true;
+    }
+
     public TopOreExtractorBlock(Properties properties) {
         super(properties);
     }
