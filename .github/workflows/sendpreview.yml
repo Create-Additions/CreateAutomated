@@ -30,7 +30,7 @@ jobs:
       - name: Build jar
         run: ./gradlew jar
         env:
-          CA: preview-${{ steps.get_commit.outputs.commit }}
+          CA_VERSION: preview-${{ steps.get_commit.outputs.commit }}
       - name: Send built file to discord
         uses: sinshutu/upload-to-discord@master
         env:
