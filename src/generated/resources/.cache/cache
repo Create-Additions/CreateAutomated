@@ -60,6 +60,7 @@ be4c8b810b43bed0b3d35fda86c0f2d35651e32b data/createautomated/tags/blocks/nodes/
 a57ac804bdc48562690a861b26f83d56f625e0f4 data/createautomated/tags/blocks/nodes/lapis.json
 55a80be5221a305a732779a8ed15d8fcd1a70edb data/createautomated/tags/blocks/nodes/zinc.json
 c065b96d9a3adab60f8509693848e7f6cd9ab0f5 data/createautomated/tags/items/drill_heads.json
+c065b96d9a3adab60f8509693848e7f6cd9ab0f5 data/createautomated/tags/items/drill_heads/iron.json
 c31d7eb03caa5634184d137dcab603ba1d52f6d5 data/createautomated/tags/items/ore_pieces.json
 37724ef2e81f1ac0b7616982b717866ba44b4e58 data/createautomated/tags/items/ore_pieces/cinder_flour.json
 c1739e13f8573e87a39e6bbd2efaa7d370628922 data/createautomated/tags/items/ore_pieces/copper.json

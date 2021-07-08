@@ -13,9 +13,13 @@ import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.builders.BlockBuilder;
 import com.simibubi.create.repack.registrate.builders.ItemBuilder;
+import com.simibubi.create.repack.registrate.providers.DataGenContext;
 import com.simibubi.create.repack.registrate.providers.RegistrateRecipeProvider;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
+import com.simibubi.create.repack.registrate.util.nullness.NonNullBiConsumer;
+import com.simibubi.create.repack.registrate.util.nullness.NonNullConsumer;
+import com.simibubi.create.repack.registrate.util.nullness.NonNullFunction;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -24,6 +28,8 @@ import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.feature.template.TagMatchRuleTest;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -33,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 public class RecipeItems {
     public static class ExtractableResource {
@@ -132,6 +139,66 @@ public class RecipeItems {
         }
     }
 
+    public static class RecipeItem<T extends Item> {
+        public final String name;
+        public final CreateRegistrate reg;
+        public ItemEntry<T> item;
+
+        ItemBuilder<T, CreateRegistrate> builder;
+
+        @Nullable
+        public Tags.IOptionalNamedTag itemTag;
+
+        protected List<UnaryOperator<Item.Properties>> propertiesConfig = new ArrayList<>();
+
+        RecipeItem(String name, CreateRegistrate reg, NonNullFunction<Item.Properties, T> factory) {
+            this.name = name;
+            this.reg = reg;
+
+            builder = reg.item(name, factory);
+        }
+
+        public static RecipeItem<Item> createBasic(String name, CreateRegistrate reg) {
+            return new RecipeItem<>(name, reg, Item::new);
+        }
+
+        RecipeItem<T> recipe(NonNullBiConsumer<DataGenContext<Item, T>, RegistrateRecipeProvider> cons) {
+            builder.recipe(cons);
+            return this;
+        }
+
+        RecipeItem<T> quickTag(Tags.IOptionalNamedTag<Item> tag, String s) {
+//            itemTag = ModTags.Items.tag(tag.getId().getPath() + "/" + s);
+            itemTag = ItemTags.createOptional(new ResourceLocation(tag.getId().getNamespace(), tag.getId().getPath() + "/" + s));
+            builder.tag(tag, itemTag);
+            return this;
+        }
+
+        RecipeItem<T> configureBuilder(NonNullConsumer<ItemBuilder<T, CreateRegistrate>> consumer) {
+            consumer.accept(builder);
+            return this;
+        }
+
+        RecipeItem<T> nonStackable() {
+            return configureProperties(p -> p.maxStackSize(1));
+        }
+
+        RecipeItem<T> configureProperties(UnaryOperator<Item.Properties> f) {
+            propertiesConfig.add(f);
+            return this;
+        }
+
+        RecipeItem<T> register() {
+            item = builder.properties((p) -> {
+                for (UnaryOperator<Item.Properties> c : propertiesConfig) {
+                    p = c.apply(p);
+                }
+                return p;
+            }).register();
+            return this;
+        }
+    }
+
     public static ExtractableResource LAPIS_EXTRACTABLE;
     public static ExtractableResource IRON_EXTRACTABLE;
     public static ExtractableResource ZINC_EXTRACTABLE;
@@ -139,7 +206,8 @@ public class RecipeItems {
     public static ExtractableResource COPPER_EXTRACTABLE;
     public static ExtractableResource CINDER_FLOUR_EXTRACTABLE;
 
-    public static ItemEntry<DrillHead> DRILL_HEAD;
+    //    public static ItemEntry<DrillHead> DRILL_HEAD;
+    public static RecipeItem<DrillHead> DRILL_HEAD;
 
     public static void register(CreateRegistrate registrate) {
         LAPIS_EXTRACTABLE = new GlueableExtractableResource("lapis", registrate, true, () -> Items.LAPIS_LAZULI, c -> c)
@@ -184,9 +252,22 @@ public class RecipeItems {
                     });
                 });
 
-        DRILL_HEAD = registrate.item("drill_head", DrillHead::new)
-                .tag(ModTags.Items.DRILL_HEADS)
-                .properties(p -> p.maxStackSize(1))
+//        DRILL_HEAD = registrate.item("drill_head", DrillHead::new)
+//                .tag(ModTags.Items.DRILL_HEADS)
+//                .properties(p -> p.maxStackSize(1))
+//                .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
+//                        .patternLine("bbb")
+//                        .patternLine("rbr")
+//                        .patternLine(" r ")
+//                        .key('b', Blocks.IRON_BLOCK)
+//                        .key('r', Items.IRON_INGOT)
+//                        .addCriterion("has_extractor", RegistrateRecipeProvider.hasItem(ModBlocks.ORE_EXTRACTOR_BOTTOM.get()))
+//                        .build(prov))
+//                .register();
+
+        DRILL_HEAD = new RecipeItem<>("drill_head", registrate, DrillHead::new)
+                .quickTag(ModTags.Items.DRILL_HEADS, "iron")
+                .nonStackable()
                 .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
                         .patternLine("bbb")
                         .patternLine("rbr")

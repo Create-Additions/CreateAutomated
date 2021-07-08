@@ -53,7 +53,7 @@ public class OreExtractorScenes {
         scene.idle(60);
 
         // Drill head insertion
-        scene.overlay.showControls((new InputWindowElement(util.vector.centerOf(extractorTop), Pointing.DOWN)).rightClick().withItem(new ItemStack(RecipeItems.DRILL_HEAD.get())), 60);
+        scene.overlay.showControls((new InputWindowElement(util.vector.centerOf(extractorTop), Pointing.DOWN)).rightClick().withItem(new ItemStack(RecipeItems.DRILL_HEAD.item.get())), 60);
         scene.idle(10);
         scene.overlay.showText(160).attachKeyFrame().pointAt(util.vector.centerOf(extractorTop)).placeNearTarget().text("Extractors require drill heads to operate, which can be inserted by players by right clicking");
         scene.world.setKineticSpeed(util.select.everywhere(), 128);
@@ -81,7 +81,7 @@ public class OreExtractorScenes {
         BlockPos funnelIn = util.grid.at(2, 2, 1);
         BlockPos funnelOut = funnelIn.down();
         BlockPos chute = extractorTop.up();
-        ItemStack drill = new ItemStack(RecipeItems.DRILL_HEAD.get());
+        ItemStack drill = new ItemStack(RecipeItems.DRILL_HEAD.item.get());
 
         // Configure
         scene.title(CreateAutomated.modid + ".ore_extractor.automation", "Automating ore extraction");
@@ -95,12 +95,12 @@ public class OreExtractorScenes {
         scene.world.showSection(util.select.position(deployer), Direction.UP);
         scene.idle(5);
         scene.overlay.showControls((new InputWindowElement(util.vector.centerOf(deployer), Pointing.DOWN)).rightClick()
-                .withItem(new ItemStack(RecipeItems.DRILL_HEAD.get())), 60);
+                .withItem(new ItemStack(RecipeItems.DRILL_HEAD.item.get())), 60);
         scene.overlay.showText(60)
                 .placeNearTarget().pointAt(util.vector.centerOf(deployer))
                 .text("Deployers can insert drill heads into Ore Extractors");
         scene.world.modifyTileNBT(util.select.position(deployer), DeployerTileEntity.class, (nbt) -> {
-            nbt.put("HeldItem", new ItemStack(RecipeItems.DRILL_HEAD.get()).serializeNBT());
+            nbt.put("HeldItem", new ItemStack(RecipeItems.DRILL_HEAD.item.get()).serializeNBT());
         });
         scene.idle(61);
         scene.world.moveDeployer(deployer, .7f, 25);
