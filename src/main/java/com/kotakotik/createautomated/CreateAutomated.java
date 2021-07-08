@@ -9,8 +9,10 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DatagenModLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,6 +48,10 @@ public class CreateAutomated {
         });
         modEventBus.addListener(ModBlockPartials::onModelBake);
         modEventBus.addListener(ModBlockPartials::onModelRegistry);
+        if (DatagenModLoader.isRunningDataGen()) {
+            modEventBus.addListener((GatherDataEvent g) -> ModPonder.generateLang(r, g));
+        }
+        modEventBus.addListener(ModPonder::register);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGen::gen);
     }
 }
