@@ -19,9 +19,9 @@ import net.minecraft.util.math.vector.Vector3d;
 public class OreExtractorScenes {
     public static void intro(SceneBuilder scene, SceneBuildingUtil util) {
         // Positions
-        BlockPos extractorBottom = util.grid.at(2, 1, 2);
+        BlockPos extractorBottom = util.grid.at(1, 1, 1);
         BlockPos extractorTop = extractorBottom.up();
-        BlockPos funnel = util.grid.at(2, 2, 1);
+        BlockPos funnel = util.grid.at(1, 2, 0);
 
         // Configure
         scene.title(CreateAutomated.modid + ".ore_extractor.intro", "Extracting from nodes using Ore Extractors");
@@ -66,7 +66,10 @@ public class OreExtractorScenes {
         scene.idle(60);
 
         scene.world.flapFunnel(funnel, true);
-        scene.world.createItemEntity(util.vector.centerOf(funnel), Vector3d.ZERO, new ItemStack(RecipeItems.LAPIS_EXTRACTABLE.ORE_PIECE.get()));
+        ElementLink<EntityElement> piece = scene.world.createItemEntity(util.vector.centerOf(funnel), Vector3d.ZERO, new ItemStack(RecipeItems.LAPIS_EXTRACTABLE.ORE_PIECE.get()));
+
+        scene.idle(40);
+        scene.world.modifyEntity(piece, Entity::remove);
     }
 
     public static void automation(SceneBuilder scene, SceneBuildingUtil util) {
