@@ -6,6 +6,7 @@ import com.kotakotik.createautomated.content.blocks.oreextractor.TopOreExtractor
 import com.kotakotik.createautomated.content.items.DrillHead;
 import com.kotakotik.createautomated.content.recipe.extracting.ExtractingRecipeGen;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
+import com.kotakotik.createautomated.register.recipes.ModCrushingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
@@ -148,6 +149,8 @@ public class RecipeItems {
 
         @Nullable
         public Tags.IOptionalNamedTag itemTag;
+        @Nullable
+        public Tags.IOptionalNamedTag generalTag;
 
         protected List<UnaryOperator<Item.Properties>> propertiesConfig = new ArrayList<>();
 
@@ -171,6 +174,19 @@ public class RecipeItems {
 //            itemTag = ModTags.Items.tag(tag.getId().getPath() + "/" + s);
             itemTag = ItemTags.createOptional(new ResourceLocation(tag.getId().getNamespace(), tag.getId().getPath() + "/" + s));
             builder.tag(tag, itemTag);
+            generalTag = tag;
+            return this;
+        }
+
+        RecipeItem<T> quickTag(String tag, String s) {
+            generalTag = ModTags.Items.tag(tag);
+            builder.tag(generalTag);
+            return quickTag(generalTag, s);
+        }
+
+        RecipeItem<T> quickTag(String tag) {
+            generalTag = ModTags.Items.tag(tag);
+            builder.tag(generalTag);
             return this;
         }
 
@@ -208,6 +224,7 @@ public class RecipeItems {
 
     //    public static ItemEntry<DrillHead> DRILL_HEAD;
     public static RecipeItem<DrillHead> DRILL_HEAD;
+    public static RecipeItem<Item> CRUSHED_PRISMARINE;
 
     public static void register(CreateRegistrate registrate) {
         LAPIS_EXTRACTABLE = new GlueableExtractableResource("lapis", registrate, true, () -> Items.LAPIS_LAZULI, c -> c)
@@ -277,16 +294,25 @@ public class RecipeItems {
                         .addCriterion("has_extractor", RegistrateRecipeProvider.hasItem(ModBlocks.ORE_EXTRACTOR_BOTTOM.get()))
                         .build(prov))
                 .register();
+        CRUSHED_PRISMARINE = RecipeItem.createBasic("crushed_prismarine", registrate)
+                .quickTag("crushed_prismarine", "vanilla")
+                .recipe((ctx, prov) -> CRUSHING.add("crushed_prismarine", b -> b.duration(150).require(Tags.Items.DUSTS_PRISMARINE).output(.3f, ctx.get(), 1).output(.1f, ctx.get(), 2)))
+                .configureBuilder(b -> b.model(($, $$) -> {
+                }))
+                .register();
     }
 
     public static ModMixingRecipes MIXING;
+    public static ModCrushingRecipes CRUSHING;
     public static ExtractingRecipeGen EXTRACTING;
 
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
         MIXING = new ModMixingRecipes(gen);
         EXTRACTING = new ExtractingRecipeGen(gen);
+        CRUSHING = new ModCrushingRecipes(gen);
         gen.addProvider(MIXING);
+        gen.addProvider(CRUSHING);
         gen.addProvider(EXTRACTING);
     }
 }
