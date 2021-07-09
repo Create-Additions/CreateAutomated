@@ -1,9 +1,8 @@
-package com.kotakotik.createautomated.content.tiles;
+package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
 import com.kotakotik.createautomated.content.base.IDrillHead;
 import com.kotakotik.createautomated.content.base.IExtractable;
 import com.kotakotik.createautomated.content.base.INode;
-import com.kotakotik.createautomated.content.recipe.extracting.ExtractingRecipe;
 import com.kotakotik.createautomated.register.ModRecipeTypes;
 import com.kotakotik.createautomated.register.ModTags;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;

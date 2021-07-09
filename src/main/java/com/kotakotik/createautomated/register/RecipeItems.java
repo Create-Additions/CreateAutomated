@@ -1,10 +1,10 @@
 package com.kotakotik.createautomated.register;
 
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
-import com.kotakotik.createautomated.content.blocks.NodeBlock;
-import com.kotakotik.createautomated.content.blocks.oreextractor.TopOreExtractorBlock;
-import com.kotakotik.createautomated.content.items.DrillHead;
-import com.kotakotik.createautomated.content.recipe.extracting.ExtractingRecipeGen;
+import com.kotakotik.createautomated.content.kinetic.oreExtractor.ExtractingRecipeGen;
+import com.kotakotik.createautomated.content.kinetic.oreExtractor.TopOreExtractorBlock;
+import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
+import com.kotakotik.createautomated.content.simple.node.NodeBlock;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.recipes.ModCrushingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
@@ -223,7 +223,7 @@ public class RecipeItems {
     public static ExtractableResource CINDER_FLOUR_EXTRACTABLE;
 
     //    public static ItemEntry<DrillHead> DRILL_HEAD;
-    public static RecipeItem<DrillHead> DRILL_HEAD;
+    public static RecipeItem<DrillHeadItem> DRILL_HEAD;
     public static RecipeItem<Item> CRUSHED_PRISMARINE;
 
     public static void register(CreateRegistrate registrate) {
@@ -282,7 +282,7 @@ public class RecipeItems {
 //                        .build(prov))
 //                .register();
 
-        DRILL_HEAD = new RecipeItem<>("drill_head", registrate, DrillHead::new)
+        DRILL_HEAD = new RecipeItem<>("drill_head", registrate, DrillHeadItem::new)
                 .quickTag(ModTags.Items.DRILL_HEADS, "iron")
                 .nonStackable()
                 .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())

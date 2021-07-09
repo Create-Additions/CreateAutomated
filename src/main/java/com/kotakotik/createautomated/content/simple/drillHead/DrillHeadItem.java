@@ -1,10 +1,10 @@
-package com.kotakotik.createautomated.content.items;
+package com.kotakotik.createautomated.content.simple.drillHead;
 
 import com.kotakotik.createautomated.content.base.IDrillHead;
 import net.minecraft.item.Item;
 
-public class DrillHead extends Item implements IDrillHead {
-    public DrillHead(Properties p_i48487_1_) {
+public class DrillHeadItem extends Item implements IDrillHead {
+    public DrillHeadItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
     }
 

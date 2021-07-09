@@ -1,7 +1,7 @@
 package com.kotakotik.createautomated.content.base;
 
-import com.kotakotik.createautomated.content.recipe.extracting.ExtractingRecipe;
-import com.kotakotik.createautomated.content.tiles.OreExtractorTile;
+import com.kotakotik.createautomated.content.kinetic.oreExtractor.ExtractingRecipe;
+import com.kotakotik.createautomated.content.kinetic.oreExtractor.OreExtractorTile;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

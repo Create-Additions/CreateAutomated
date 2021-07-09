@@ -1,7 +1,7 @@
-package com.kotakotik.createautomated.content.blocks;
+package com.kotakotik.createautomated.content.simple.node;
 
 import com.kotakotik.createautomated.content.base.INode;
-import com.kotakotik.createautomated.content.recipe.extracting.ExtractingRecipe;
+import com.kotakotik.createautomated.content.kinetic.oreExtractor.ExtractingRecipe;
 import com.simibubi.create.foundation.config.AllConfigs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

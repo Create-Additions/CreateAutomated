@@ -1,6 +1,6 @@
-package com.kotakotik.createautomated.content.instances;
+package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
-import com.kotakotik.createautomated.content.tiles.OreExtractorTile;
+import com.kotakotik.createautomated.content.base.instances.CogInstance;
 import com.kotakotik.createautomated.register.ModBlockPartials;
 import com.simibubi.create.content.contraptions.base.RotatingData;
 import com.simibubi.create.foundation.render.backend.instancing.IDynamicInstance;

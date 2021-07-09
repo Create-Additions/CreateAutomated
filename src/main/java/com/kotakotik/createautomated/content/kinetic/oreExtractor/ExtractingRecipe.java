@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.content.recipe.extracting;
+package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
 import com.google.gson.JsonObject;
 import com.kotakotik.createautomated.register.ModRecipeTypes;

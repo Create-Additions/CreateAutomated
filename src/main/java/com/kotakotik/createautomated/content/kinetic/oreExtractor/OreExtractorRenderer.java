@@ -1,6 +1,5 @@
-package com.kotakotik.createautomated.content.renderers;
+package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
-import com.kotakotik.createautomated.content.tiles.OreExtractorTile;
 import com.kotakotik.createautomated.register.ModBlockPartials;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;

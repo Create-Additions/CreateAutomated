@@ -1,10 +1,10 @@
-package com.kotakotik.createautomated.jei.categories;
+package com.kotakotik.createautomated.compat.jei.categories;
 
 import com.google.common.collect.Lists;
 import com.kotakotik.createautomated.CALocalization;
 import com.kotakotik.createautomated.CreateAutomated;
-import com.kotakotik.createautomated.content.recipe.extracting.ExtractingRecipe;
-import com.kotakotik.createautomated.jei.animations.AnimatedOreExtractor;
+import com.kotakotik.createautomated.compat.jei.animations.AnimatedOreExtractor;
+import com.kotakotik.createautomated.content.kinetic.oreExtractor.ExtractingRecipe;
 import com.kotakotik.createautomated.register.ModBlocks;
 import com.kotakotik.createautomated.register.ModRecipeTypes;
 import com.mojang.blaze3d.matrix.MatrixStack;

@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.content.blocks.oreextractor;
+package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.register.ModBlocks;

@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.content.tiles;
+package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;

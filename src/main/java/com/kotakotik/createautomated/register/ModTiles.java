@@ -1,9 +1,9 @@
 package com.kotakotik.createautomated.register;
 
-import com.kotakotik.createautomated.content.instances.OreExtractorInstance;
-import com.kotakotik.createautomated.content.renderers.OreExtractorRenderer;
-import com.kotakotik.createautomated.content.tiles.BottomOreExtractorTile;
-import com.kotakotik.createautomated.content.tiles.OreExtractorTile;
+import com.kotakotik.createautomated.content.kinetic.oreExtractor.BottomOreExtractorTile;
+import com.kotakotik.createautomated.content.kinetic.oreExtractor.OreExtractorInstance;
+import com.kotakotik.createautomated.content.kinetic.oreExtractor.OreExtractorRenderer;
+import com.kotakotik.createautomated.content.kinetic.oreExtractor.OreExtractorTile;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.TileEntityEntry;
 

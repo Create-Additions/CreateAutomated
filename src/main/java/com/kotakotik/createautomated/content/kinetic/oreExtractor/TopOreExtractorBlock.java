@@ -1,8 +1,7 @@
-package com.kotakotik.createautomated.content.blocks.oreextractor;
+package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
 import com.kotakotik.createautomated.content.base.IDrillHead;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
-import com.kotakotik.createautomated.content.tiles.OreExtractorTile;
 import com.kotakotik.createautomated.register.ModTiles;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.ICogWheel;

@@ -1,7 +1,7 @@
-package com.kotakotik.createautomated.jei;
+package com.kotakotik.createautomated.compat.jei;
 
 import com.kotakotik.createautomated.CreateAutomated;
-import com.kotakotik.createautomated.jei.categories.OreExtractionCategory;
+import com.kotakotik.createautomated.compat.jei.categories.OreExtractionCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;

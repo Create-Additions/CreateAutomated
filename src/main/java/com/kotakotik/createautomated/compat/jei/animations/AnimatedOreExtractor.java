@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.jei.animations;
+package com.kotakotik.createautomated.compat.jei.animations;
 
 import com.kotakotik.createautomated.register.ModBlockPartials;
 import com.kotakotik.createautomated.register.ModBlocks;

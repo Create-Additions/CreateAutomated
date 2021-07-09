@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.content.recipe.extracting;
+package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
