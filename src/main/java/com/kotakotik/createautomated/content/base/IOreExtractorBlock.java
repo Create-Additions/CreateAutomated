@@ -18,10 +18,13 @@ public interface IOreExtractorBlock {
         return isTop ? Direction.DOWN : Direction.UP;
     }
 
-    default BlockState checkForOther(BlockState state, Direction direction, BlockState updatingState, IWorld world, BlockPos pos, BlockPos updatingPos) {
+    default BlockState checkForOther(BlockState state, Direction direction, BlockState updatingState, IWorld world, BlockPos pos, BlockPos updatingPos, boolean drop) {
         if (direction == getDirectionToOther(isTop())) {
             if (!(updatingState.getBlock() instanceof IOreExtractorBlock)) {
-                return Blocks.AIR.getDefaultState();
+                if (drop) {
+                    return Blocks.AIR.getDefaultState();
+                }
+                world.breakBlock(pos, false, null);
             }
         }
         return state;

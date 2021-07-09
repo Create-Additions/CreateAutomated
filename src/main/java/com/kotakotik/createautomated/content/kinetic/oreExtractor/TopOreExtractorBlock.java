@@ -9,8 +9,6 @@ import com.simibubi.create.foundation.block.ITE;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -22,9 +20,6 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TopOreExtractorBlock extends HorizontalKineticBlock implements ICogWheel, ITE<OreExtractorTile>, IOreExtractorBlock {
     @Override
@@ -80,17 +75,11 @@ public class TopOreExtractorBlock extends HorizontalKineticBlock implements ICog
 
     @Override
     public BlockState updatePostPlacement(BlockState state, Direction direction, BlockState updatingState, IWorld world, BlockPos pos, BlockPos updatingPos) {
-        state = checkForOther(state, direction, updatingState, world, pos, updatingPos);
+        state = checkForOther(state, direction, updatingState, world, pos, updatingPos, false);
         if (state.isAir(world, pos)) {
             return state;
         }
         return super.updatePostPlacement(state, direction, updatingState, world, pos, updatingPos);
-    }
-
-    @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder loot) {
-        // TODO: breaking the top part in creative still drops it. shut i know why i just dont know how to fix it
-        return new ArrayList<>();
     }
 
     @Override
@@ -108,5 +97,13 @@ public class TopOreExtractorBlock extends HorizontalKineticBlock implements ICog
             }
         }
         return super.onUse(state, world, pos, plr, hand, rayTraceResult);
+    }
+
+    @Override
+    public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity plr) {
+        Direction d = IOreExtractorBlock.getDirectionToOther(false);
+        BlockPos updatingPos = pos.offset(d);
+        checkForOther(state, d, world.getBlockState(updatingPos), world, pos, updatingPos, !plr.isCreative());
+        super.onBlockHarvested(world, pos, state, plr);
     }
 }

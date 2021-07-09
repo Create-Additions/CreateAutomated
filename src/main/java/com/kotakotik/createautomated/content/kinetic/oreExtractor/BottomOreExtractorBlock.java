@@ -18,6 +18,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -26,8 +27,16 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.stream.Stream;
 
 public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock {
+    public static final VoxelShape shape = Stream.of(
+            Block.makeCuboidShape(0, 0, 0, 3, 16, 3),
+            Block.makeCuboidShape(0, 0, 13, 3, 16, 16),
+            Block.makeCuboidShape(13, 0, 13, 16, 16, 16),
+            Block.makeCuboidShape(13, 0, 0, 16, 16, 3)
+    ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get();
+
     public BottomOreExtractorBlock(Properties p_i48440_1_) {
         super(p_i48440_1_);
     }
@@ -44,7 +53,7 @@ public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock
 
     @Override
     public BlockState updatePostPlacement(BlockState state, Direction direction, BlockState updatingState, IWorld world, BlockPos pos, BlockPos updatingPos) {
-        state = checkForOther(state, direction, updatingState, world, pos, updatingPos);
+        state = checkForOther(state, direction, updatingState, world, pos, updatingPos, false);
         if (state.isAir(world, pos)) {
             return state;
         }
@@ -71,7 +80,7 @@ public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock
 
     @Override
     public VoxelShape getCollisionShape(BlockState p_220071_1_, IBlockReader p_220071_2_, BlockPos p_220071_3_, ISelectionContext p_220071_4_) {
-        return VoxelShapes.empty(); //TODO: better shape
+        return shape;
     }
 
     @Override
@@ -95,5 +104,13 @@ public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock
     @Override
     public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
         return new ItemStack(ModBlocks.ORE_EXTRACTOR_TOP.get().asItem());
+    }
+
+    @Override
+    public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity plr) {
+        Direction d = IOreExtractorBlock.getDirectionToOther(false);
+        BlockPos updatingPos = pos.offset(d);
+        checkForOther(state, d, world.getBlockState(updatingPos), world, pos, updatingPos, !plr.isCreative());
+        super.onBlockHarvested(world, pos, state, plr);
     }
 }

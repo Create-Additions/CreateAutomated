@@ -44,6 +44,7 @@ public class ModBlocks {
                 .lang("Ore Extractor")
                 .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.itemModels().getExistingFile(prov.modLoc("block/ore_extractor/bottom"))))
                 .addLayer(() -> RenderType::getCutoutMipped)
+                .loot((cons, block) -> cons.registerDropping(block, ORE_EXTRACTOR_TOP.get()))
                 .register();
 
 //        LAPIS_NODE = registrate.block("lapis_node", p -> new NodeBlock(p, ModItems.LAPIS_ORE_PIECE, 1, OreExtractorBlock.ExtractorProgressBuilder.atSpeedOfS(128).takesSeconds(10).build())).tag(ModTags.Blocks.NODES).simpleItem().register();
