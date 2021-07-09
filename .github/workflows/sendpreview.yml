@@ -42,4 +42,4 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          args: ./build/libs/*.*
+          args: ./build/libs/*-${{ steps.get_commit.outputs.commit }}.*
