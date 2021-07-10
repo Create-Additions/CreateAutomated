@@ -21,14 +21,20 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           message-title: "Building mod from branch ${{ steps.get_branch.outputs.branch }}"
       - name: Set up JDK 8
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v1
         with:
-          java-version: '8'
-          distribution: 'adopt'
+          java-version: 1.8
+          java-package: jdk
+          architecture: x64
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build jar
-        run: ./gradlew jar
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: build --max-workers 1
+          wrapper-cache-enabled: true
+          dependencies-cache-enabled: true
+          configuration-cache-enabled: true
         env:
           CA_VERSION: preview-${{ steps.get_branch.outputs.branch }}-${{ steps.get_commit.outputs.commit }}
       - name: Send built file to discord
@@ -36,4 +42,4 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          args: ./build/libs/*.*
+          args: ./build/libs/*-${{ steps.get_commit.outputs.commit }}.*
