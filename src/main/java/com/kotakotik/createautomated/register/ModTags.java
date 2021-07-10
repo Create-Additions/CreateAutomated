@@ -13,20 +13,20 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class ModTags {
-    public static class Blocks {
-        public static final Tags.IOptionalNamedTag<Block> NODES = tag("nodes");
+	public static class Blocks {
+		public static final Tags.IOptionalNamedTag<Block> NODES = tag("nodes");
 
-        static Tags.IOptionalNamedTag<Block> tag(String name, Supplier<Block>... defaults) {
-            return BlockTags.createOptional(new ResourceLocation(CreateAutomated.modid, name), Arrays.stream(defaults).collect(Collectors.toSet()));
-        }
-    }
+		static Tags.IOptionalNamedTag<Block> tag(String name, Supplier<Block>... defaults) {
+			return BlockTags.createOptional(new ResourceLocation(CreateAutomated.modid, name), Arrays.stream(defaults).collect(Collectors.toSet()));
+		}
+	}
 
-    public static class Items {
-        public static final Tags.IOptionalNamedTag<Item> ORE_PIECES = tag("ore_pieces");
-        public static final Tags.IOptionalNamedTag<Item> DRILL_HEADS = tag("drill_heads");
+	public static class Items {
+		public static final Tags.IOptionalNamedTag<Item> ORE_PIECES = tag("ore_pieces");
+		public static final Tags.IOptionalNamedTag<Item> DRILL_HEADS = tag("drill_heads");
 
-        static Tags.IOptionalNamedTag<Item> tag(String name, Supplier<Item>... defaults) {
-            return ItemTags.createOptional(new ResourceLocation(CreateAutomated.modid, name), Arrays.stream(defaults).collect(Collectors.toSet()));
-        }
-    }
+		static Tags.IOptionalNamedTag<Item> tag(String name, Supplier<Item>... defaults) {
+			return ItemTags.createOptional(new ResourceLocation(CreateAutomated.modid, name), Arrays.stream(defaults).collect(Collectors.toSet()));
+		}
+	}
 }

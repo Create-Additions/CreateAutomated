@@ -6,38 +6,38 @@ import net.minecraft.util.Util;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public enum CALocalization {
-    JEI_ORE_EXTRACTOR_BETWEEN("jei.ore_extractor", "between", "From %d to %d"),
-    JEI_ORE_EXTRACTOR_TITLE("jei.ore_extractor", "title", "Ore Extraction"),
-    JEI_ORE_EXTRACTOR_DRILL_DAMAGE("jei.ore_extractor", "drill_damage", "Drill damage: %d"),
-    JEI_ORE_EXTRACTOR_TIME("jei.ore_extractor", "time", "%f seconds at 128 RPM");
+	JEI_ORE_EXTRACTOR_BETWEEN("jei.ore_extractor", "between", "From %d to %d"),
+	JEI_ORE_EXTRACTOR_TITLE("jei.ore_extractor", "title", "Ore Extraction"),
+	JEI_ORE_EXTRACTOR_DRILL_DAMAGE("jei.ore_extractor", "drill_damage", "Drill damage: %d"),
+	JEI_ORE_EXTRACTOR_TIME("jei.ore_extractor", "time", "%f seconds at 128 RPM");
 
-    public final String key;
-    public final String english;
+	public final String key;
+	public final String english;
 
-    static void register(CreateRegistrate reg) {
-        for (CALocalization loc : values()) {
-            reg.addRawLang(loc.key, loc.english);
-        }
-    }
+	static void register(CreateRegistrate reg) {
+		for (CALocalization loc : values()) {
+			reg.addRawLang(loc.key, loc.english);
+		}
+	}
 
-    CALocalization(String key, String english) {
-        this.key = key;
-        this.english = english;
-    }
+	CALocalization(String key, String english) {
+		this.key = key;
+		this.english = english;
+	}
 
-    CALocalization(String type, String id, String suffix, String localizedName) {
-        this(Util.makeTranslationKey(type, new ResourceLocation(CreateAutomated.modid, id)) + "." + suffix, localizedName);
-    }
+	CALocalization(String type, String id, String suffix, String localizedName) {
+		this(Util.makeTranslationKey(type, new ResourceLocation(CreateAutomated.modid, id)) + "." + suffix, localizedName);
+	}
 
-    CALocalization(String type, String id, String localizedName) {
-        this(Util.makeTranslationKey(type, new ResourceLocation(CreateAutomated.modid, id)), localizedName);
-    }
+	CALocalization(String type, String id, String localizedName) {
+		this(Util.makeTranslationKey(type, new ResourceLocation(CreateAutomated.modid, id)), localizedName);
+	}
 
-    public TranslationTextComponent getComponent(Object... args) {
-        return new TranslationTextComponent(key, args);
-    }
+	public TranslationTextComponent getComponent(Object... args) {
+		return new TranslationTextComponent(key, args);
+	}
 
-    public String translate(Object... args) {
-        return getComponent(args).getString();
-    }
+	public String translate(Object... args) {
+		return getComponent(args).getString();
+	}
 }

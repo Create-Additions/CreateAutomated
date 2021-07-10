@@ -13,21 +13,21 @@ import java.util.Map;
 import java.util.Objects;
 
 public class AddonStressConfigDefaults {
-    protected static Field registeredDefaultImpactsField = ObfuscationReflectionHelper.findField(StressConfigDefaults.class, "registeredDefaultImpacts");
+	protected static Field registeredDefaultImpactsField = ObfuscationReflectionHelper.findField(StressConfigDefaults.class, "registeredDefaultImpacts");
 
-    protected static Map<ResourceLocation, Double> getRegisteredDefaultImpacts() {
-        try {
-            return (Map<ResourceLocation, Double>) registeredDefaultImpactsField.get(null);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+	protected static Map<ResourceLocation, Double> getRegisteredDefaultImpacts() {
+		try {
+			return (Map<ResourceLocation, Double>) registeredDefaultImpactsField.get(null);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> setImpact(double impact) {
-        return (b) -> {
-            Objects.requireNonNull(getRegisteredDefaultImpacts()).put(new ResourceLocation(CreateAutomated.modid, b.getName()), impact);
-            return b;
-        };
-    }
+	public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> setImpact(double impact) {
+		return (b) -> {
+			Objects.requireNonNull(getRegisteredDefaultImpacts()).put(new ResourceLocation(CreateAutomated.modid, b.getName()), impact);
+			return b;
+		};
+	}
 }

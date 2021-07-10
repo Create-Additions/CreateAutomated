@@ -30,87 +30,87 @@ import javax.annotation.Nullable;
 import java.util.stream.Stream;
 
 public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock {
-    public static final VoxelShape shape = Stream.of(
-            Block.makeCuboidShape(0, 0, 0, 3, 16, 3),
-            Block.makeCuboidShape(0, 0, 13, 3, 16, 16),
-            Block.makeCuboidShape(13, 0, 13, 16, 16, 16),
-            Block.makeCuboidShape(13, 0, 0, 16, 16, 3)
-    ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get();
+	public static final VoxelShape shape = Stream.of(
+			Block.makeCuboidShape(0, 0, 0, 3, 16, 3),
+			Block.makeCuboidShape(0, 0, 13, 3, 16, 16),
+			Block.makeCuboidShape(13, 0, 13, 16, 16, 16),
+			Block.makeCuboidShape(13, 0, 0, 16, 16, 3)
+	).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get();
 
-    public BottomOreExtractorBlock(Properties p_i48440_1_) {
-        super(p_i48440_1_);
-    }
+	public BottomOreExtractorBlock(Properties p_i48440_1_) {
+		super(p_i48440_1_);
+	}
 
-    @Override
-    public boolean isTop() {
-        return false;
-    }
+	@Override
+	public boolean isTop() {
+		return false;
+	}
 
-    @Override
-    public PushReaction getPushReaction(BlockState state) {
-        return pushReaction(state);
-    }
+	@Override
+	public PushReaction getPushReaction(BlockState state) {
+		return pushReaction(state);
+	}
 
-    @Override
-    public BlockState updatePostPlacement(BlockState state, Direction direction, BlockState updatingState, IWorld world, BlockPos pos, BlockPos updatingPos) {
-        state = checkForOther(state, direction, updatingState, world, pos, updatingPos, false);
-        if (state.isAir(world, pos)) {
-            return state;
-        }
-        return super.updatePostPlacement(state, direction, updatingState, world, pos, updatingPos);
-    }
+	@Override
+	public BlockState updatePostPlacement(BlockState state, Direction direction, BlockState updatingState, IWorld world, BlockPos pos, BlockPos updatingPos) {
+		state = checkForOther(state, direction, updatingState, world, pos, updatingPos, false);
+		if (state.isAir(world, pos)) {
+			return state;
+		}
+		return super.updatePostPlacement(state, direction, updatingState, world, pos, updatingPos);
+	}
 
-    @Override
-    public BlockState getStateForPlacement(BlockItemUseContext ctx) {
-        BlockPos bottom = ctx.getPos();
-        BlockPos top = bottom.up();
-        return ctx.getWorld().getBlockState(top).isReplaceable(ctx) ? super.getStateForPlacement(ctx) : null;
-    }
+	@Override
+	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
+		BlockPos bottom = ctx.getPos();
+		BlockPos top = bottom.up();
+		return ctx.getWorld().getBlockState(top).isReplaceable(ctx) ? super.getStateForPlacement(ctx) : null;
+	}
 
-    @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        super.onBlockPlacedBy(world, pos, state, placer, stack);
-        if (!world.isRemote) {
-            BlockPos top = pos.up();
-            world.setBlockState(top, ModBlocks.ORE_EXTRACTOR_TOP.getDefaultState(), 3);
-            world.updateNeighbors(pos, Blocks.AIR);
-            state.updateNeighbors(world, pos, 3);
-        }
-    }
+	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+		super.onBlockPlacedBy(world, pos, state, placer, stack);
+		if (!world.isRemote) {
+			BlockPos top = pos.up();
+			world.setBlockState(top, ModBlocks.ORE_EXTRACTOR_TOP.getDefaultState(), 3);
+			world.updateNeighbors(pos, Blocks.AIR);
+			state.updateNeighbors(world, pos, 3);
+		}
+	}
 
-    @Override
-    public VoxelShape getCollisionShape(BlockState p_220071_1_, IBlockReader p_220071_2_, BlockPos p_220071_3_, ISelectionContext p_220071_4_) {
-        return shape;
-    }
+	@Override
+	public VoxelShape getCollisionShape(BlockState p_220071_1_, IBlockReader p_220071_2_, BlockPos p_220071_3_, ISelectionContext p_220071_4_) {
+		return shape;
+	}
 
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
+	@Override
+	public boolean hasTileEntity(BlockState state) {
+		return true;
+	}
 
-    @Nullable
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return ModTiles.BOTTOM_ORE_EXTRACTOR.create();
-    }
+	@Nullable
+	@Override
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+		return ModTiles.BOTTOM_ORE_EXTRACTOR.create();
+	}
 
-    @Override
-    public ActionResultType onUse(BlockState state, World world, BlockPos pos, PlayerEntity plr, Hand hand, BlockRayTraceResult rayTraceResult) {
-        // redirect to top block's onUse method
-        BlockState upState = world.getBlockState(pos.up());
-        return upState.getBlock().onUse(upState, world, pos.up(), plr, hand, rayTraceResult);
-    }
+	@Override
+	public ActionResultType onUse(BlockState state, World world, BlockPos pos, PlayerEntity plr, Hand hand, BlockRayTraceResult rayTraceResult) {
+		// redirect to top block's onUse method
+		BlockState upState = world.getBlockState(pos.up());
+		return upState.getBlock().onUse(upState, world, pos.up(), plr, hand, rayTraceResult);
+	}
 
-    @Override
-    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-        return new ItemStack(ModBlocks.ORE_EXTRACTOR_TOP.get().asItem());
-    }
+	@Override
+	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
+		return new ItemStack(ModBlocks.ORE_EXTRACTOR_TOP.get().asItem());
+	}
 
-    @Override
-    public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity plr) {
-        Direction d = IOreExtractorBlock.getDirectionToOther(false);
-        BlockPos updatingPos = pos.offset(d);
-        checkForOther(state, d, world.getBlockState(updatingPos), world, pos, updatingPos, !plr.isCreative());
-        super.onBlockHarvested(world, pos, state, plr);
-    }
+	@Override
+	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity plr) {
+		Direction d = IOreExtractorBlock.getDirectionToOther(false);
+		BlockPos updatingPos = pos.offset(d);
+		checkForOther(state, d, world.getBlockState(updatingPos), world, pos, updatingPos, !plr.isCreative());
+		super.onBlockHarvested(world, pos, state, plr);
+	}
 }

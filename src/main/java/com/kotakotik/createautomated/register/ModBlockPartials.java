@@ -19,104 +19,104 @@ import java.util.Map;
 import java.util.Objects;
 
 public abstract class ModBlockPartials {
-    public static AllBlockPartials COGWHEEL = get(new ResourceLocation(Create.ID, "block/cogwheel"));
-    public static AllBlockPartials HALF_SHAFT_COGWHEEL = get("half_shaft_cogwheel");
-    public static AllBlockPartials DRILL_ORE_EXTRACTOR = get("ore_extractor/drill");
-    public static List<AllBlockPartials> all;
+	public static AllBlockPartials COGWHEEL = get(new ResourceLocation(Create.ID, "block/cogwheel"));
+	public static AllBlockPartials HALF_SHAFT_COGWHEEL = get("half_shaft_cogwheel");
+	public static AllBlockPartials DRILL_ORE_EXTRACTOR = get("ore_extractor/drill");
+	public static List<AllBlockPartials> all;
 
-    //    protected static final Method BlockPartialsGet = ObfuscationReflectionHelper.findMethod(AllBlockPartials.class, "get", String.class);
-    protected static Field BlockPartialsModelLocation;
-    protected static Constructor<AllBlockPartials> BlockPartialsConstructor;
-    protected static Field BlockPartialsBakedModel;
+	//    protected static final Method BlockPartialsGet = ObfuscationReflectionHelper.findMethod(AllBlockPartials.class, "get", String.class);
+	protected static Field BlockPartialsModelLocation;
+	protected static Constructor<AllBlockPartials> BlockPartialsConstructor;
+	protected static Field BlockPartialsBakedModel;
 
-    public static Constructor<AllBlockPartials> createConstructor() {
-        if (BlockPartialsConstructor != null) return BlockPartialsConstructor;
-        Constructor<AllBlockPartials> BlockPartialsConstructor1;
-        try {
-            BlockPartialsConstructor1 = AllBlockPartials.class.getDeclaredConstructor();
-            BlockPartialsConstructor1.setAccessible(true);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            BlockPartialsConstructor1 = null;
-        }
-        BlockPartialsConstructor = BlockPartialsConstructor1;
-        return BlockPartialsConstructor;
-    }
+	public static Constructor<AllBlockPartials> createConstructor() {
+		if (BlockPartialsConstructor != null) return BlockPartialsConstructor;
+		Constructor<AllBlockPartials> BlockPartialsConstructor1;
+		try {
+			BlockPartialsConstructor1 = AllBlockPartials.class.getDeclaredConstructor();
+			BlockPartialsConstructor1.setAccessible(true);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+			BlockPartialsConstructor1 = null;
+		}
+		BlockPartialsConstructor = BlockPartialsConstructor1;
+		return BlockPartialsConstructor;
+	}
 
-    public static Field createBlockPartialsModelLocationReflection() {
-        if (BlockPartialsModelLocation != null) return BlockPartialsModelLocation;
-        BlockPartialsModelLocation = ObfuscationReflectionHelper.findField(AllBlockPartials.class, "modelLocation");
-        return BlockPartialsModelLocation;
-    }
+	public static Field createBlockPartialsModelLocationReflection() {
+		if (BlockPartialsModelLocation != null) return BlockPartialsModelLocation;
+		BlockPartialsModelLocation = ObfuscationReflectionHelper.findField(AllBlockPartials.class, "modelLocation");
+		return BlockPartialsModelLocation;
+	}
 
-    public static Field createBlockPartialsBakedModelReflection() {
-        if (BlockPartialsBakedModel != null) return BlockPartialsBakedModel;
-        BlockPartialsBakedModel = ObfuscationReflectionHelper.findField(AllBlockPartials.class, "bakedModel");
-        return BlockPartialsBakedModel;
-    }
+	public static Field createBlockPartialsBakedModelReflection() {
+		if (BlockPartialsBakedModel != null) return BlockPartialsBakedModel;
+		BlockPartialsBakedModel = ObfuscationReflectionHelper.findField(AllBlockPartials.class, "bakedModel");
+		return BlockPartialsBakedModel;
+	}
 
-    protected static AllBlockPartials createBlockPartials() {
-        try {
-            return createConstructor().newInstance();
+	protected static AllBlockPartials createBlockPartials() {
+		try {
+			return createConstructor().newInstance();
 //            return (AllBlockPartials) BlockPartialsGet.invoke(null, "");
-        } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+		} catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-    protected static AllBlockPartials get(ResourceLocation loc) {
-        AllBlockPartials p = createBlockPartials();
-        try {
-            createBlockPartialsModelLocationReflection().set(p, loc);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        getAllList().add(p);
-        return p;
-    }
+	protected static AllBlockPartials get(ResourceLocation loc) {
+		AllBlockPartials p = createBlockPartials();
+		try {
+			createBlockPartialsModelLocationReflection().set(p, loc);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		getAllList().add(p);
+		return p;
+	}
 
-    protected static List<AllBlockPartials> getAllList() {
-        if (all != null) return all;
-        all = new ArrayList<>();
-        return all;
-    }
+	protected static List<AllBlockPartials> getAllList() {
+		if (all != null) return all;
+		all = new ArrayList<>();
+		return all;
+	}
 
-    protected static ResourceLocation getModel(AllBlockPartials p) {
-        try {
-            return (ResourceLocation) createBlockPartialsModelLocationReflection().get(p);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+	protected static ResourceLocation getModel(AllBlockPartials p) {
+		try {
+			return (ResourceLocation) createBlockPartialsModelLocationReflection().get(p);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-    protected static void setBakedModel(AllBlockPartials p, IBakedModel b) {
-        try {
-            createBlockPartialsBakedModelReflection().set(p, b);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
+	protected static void setBakedModel(AllBlockPartials p, IBakedModel b) {
+		try {
+			createBlockPartialsBakedModelReflection().set(p, b);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+	}
 
-    public static AllBlockPartials get(String name) {
-        return get(new ResourceLocation("createautomated", "block/" + name));
-    }
+	public static AllBlockPartials get(String name) {
+		return get(new ResourceLocation("createautomated", "block/" + name));
+	}
 
-    // load class
-    public static void register() {
-    }
+	// load class
+	public static void register() {
+	}
 
-    public static void onModelBake(@Nonnull ModelBakeEvent event) {
-        Map<ResourceLocation, IBakedModel> modelRegistry = event.getModelRegistry();
+	public static void onModelBake(@Nonnull ModelBakeEvent event) {
+		Map<ResourceLocation, IBakedModel> modelRegistry = event.getModelRegistry();
 
-        for (AllBlockPartials partials : getAllList()) {
-            setBakedModel(partials, modelRegistry.get(getModel(partials)));
-        }
-    }
+		for (AllBlockPartials partials : getAllList()) {
+			setBakedModel(partials, modelRegistry.get(getModel(partials)));
+		}
+	}
 
-    public static void onModelRegistry(ModelRegistryEvent event) {
-        for (AllBlockPartials partials : getAllList())
-            ModelLoader.addSpecialModel(Objects.requireNonNull(getModel(partials)));
-    }
+	public static void onModelRegistry(ModelRegistryEvent event) {
+		for (AllBlockPartials partials : getAllList())
+			ModelLoader.addSpecialModel(Objects.requireNonNull(getModel(partials)));
+	}
 }

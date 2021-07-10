@@ -10,17 +10,17 @@ import net.minecraft.util.registry.Registry;
 import net.minecraftforge.event.RegistryEvent;
 
 public class ModRecipeTypes {
-    protected static ResourceLocation ExtractingLoc = new ResourceLocation(CreateAutomated.modid, "extracting");
-    public static ExtractingRecipeType EXTRACTING;
+	protected static ResourceLocation ExtractingLoc = new ResourceLocation(CreateAutomated.modid, "extracting");
+	public static ExtractingRecipeType EXTRACTING;
 
-    public static void reg(CreateRegistrate registrate) {
-        EXTRACTING = Registry.register(Registry.RECIPE_TYPE, ExtractingLoc, new ExtractingRecipeType());
-    }
+	public static void reg(CreateRegistrate registrate) {
+		EXTRACTING = Registry.register(Registry.RECIPE_TYPE, ExtractingLoc, new ExtractingRecipeType());
+	}
 
-    public static void register(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-        event.getRegistry()
-                .register(ExtractingRecipeSerializer.get().setRegistryName(ExtractingLoc));
+	public static void register(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+		event.getRegistry()
+				.register(ExtractingRecipeSerializer.get().setRegistryName(ExtractingLoc));
 //        AllRecipeTypes
 //        Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(CreateAutomated.modid, "extracting"), ExtractingRecipeType.class);
-    }
+	}
 }

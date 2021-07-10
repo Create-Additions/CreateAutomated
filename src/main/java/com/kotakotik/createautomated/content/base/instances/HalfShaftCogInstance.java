@@ -9,12 +9,12 @@ import com.simibubi.create.foundation.render.backend.instancing.InstancedModel;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
 
 public class HalfShaftCogInstance extends ShaftlessCogInstance {
-    public HalfShaftCogInstance(InstancedTileRenderer<?> modelManager, KineticTileEntity tile) {
-        super(modelManager, tile);
-    }
+	public HalfShaftCogInstance(InstancedTileRenderer<?> modelManager, KineticTileEntity tile) {
+		super(modelManager, tile);
+	}
 
-    @Override
-    protected InstancedModel<RotatingData> getModel() {
-        return this.renderer.getMaterial(KineticRenderMaterials.ROTATING).getModel(ModBlockPartials.HALF_SHAFT_COGWHEEL, this.tile.getBlockState());
-    }
+	@Override
+	protected InstancedModel<RotatingData> getModel() {
+		return this.renderer.getMaterial(KineticRenderMaterials.ROTATING).getModel(ModBlockPartials.HALF_SHAFT_COGWHEEL, this.tile.getBlockState());
+	}
 }

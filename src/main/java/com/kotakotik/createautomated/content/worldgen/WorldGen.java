@@ -24,78 +24,78 @@ import java.util.HashMap;
 import java.util.List;
 
 public class WorldGen {
-    //    public static ConfiguredFeature<?, ?> LAPIS_NODE;
-    public static List<ConfiguredFeature<?, ?>> NODES = new ArrayList<>();
-    public static List<ConfiguredFeature<?, ?>> NETHER_NODES = new ArrayList<>();
-    protected static HashMap<String, FeatureToRegister> toReg = new HashMap<>();
+	//    public static ConfiguredFeature<?, ?> LAPIS_NODE;
+	public static List<ConfiguredFeature<?, ?>> NODES = new ArrayList<>();
+	public static List<ConfiguredFeature<?, ?>> NETHER_NODES = new ArrayList<>();
+	protected static HashMap<String, FeatureToRegister> toReg = new HashMap<>();
 
-    public static class FeatureToRegister {
-        public final NonNullSupplier<Block> block;
-        public final int veinSize;
-        public final int minHeight;
-        public final int maxHeight;
-        public final int frequency;
-        public final RuleTest test;
-        public final NodeDimension dim;
-        public ConfiguredFeature<?, ?> registered;
+	public static class FeatureToRegister {
+		public final NonNullSupplier<Block> block;
+		public final int veinSize;
+		public final int minHeight;
+		public final int maxHeight;
+		public final int frequency;
+		public final RuleTest test;
+		public final NodeDimension dim;
+		public ConfiguredFeature<?, ?> registered;
 
-        public FeatureToRegister(NonNullSupplier<Block> block, int veinSize, int minHeight, int maxHeight, int frequency, RuleTest test, NodeDimension dim) {
-            this.block = block;
-            this.veinSize = veinSize;
-            this.minHeight = minHeight;
-            this.maxHeight = maxHeight;
-            this.frequency = frequency;
-            this.test = test;
-            this.dim = dim;
-        }
+		public FeatureToRegister(NonNullSupplier<Block> block, int veinSize, int minHeight, int maxHeight, int frequency, RuleTest test, NodeDimension dim) {
+			this.block = block;
+			this.veinSize = veinSize;
+			this.minHeight = minHeight;
+			this.maxHeight = maxHeight;
+			this.frequency = frequency;
+			this.test = test;
+			this.dim = dim;
+		}
 
-        public ConfiguredFeature<?, ?> create() {
-            ConfiguredFeature<?, ?> f = Feature.ORE.configure(new OreFeatureConfig(
-                    test, block.get().getDefaultState(), veinSize))
-                    .decorate(Placement.RANGE.configure(new TopSolidRangeConfig(minHeight, 0, maxHeight)))
-                    .spreadHorizontally()
-                    .repeat(frequency);
+		public ConfiguredFeature<?, ?> create() {
+			ConfiguredFeature<?, ?> f = Feature.ORE.configure(new OreFeatureConfig(
+					test, block.get().getDefaultState(), veinSize))
+					.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(minHeight, 0, maxHeight)))
+					.spreadHorizontally()
+					.repeat(frequency);
 
-            this.registered = f;
-            return f;
-        }
-    }
+			this.registered = f;
+			return f;
+		}
+	}
 
-    public static void register() {
-    }
+	public static void register() {
+	}
 
-    public static void gen(BiomeLoadingEvent e) {
-        BiomeGenerationSettingsBuilder gen = e.getGeneration();
-        if (e.getCategory() == Biome.Category.NETHER) {
-            NETHER_NODES.forEach(n -> gen.feature(GenerationStage.Decoration.SURFACE_STRUCTURES, n));
-        } else if (e.getName() != Biomes.THE_END.getRegistryName()) {
-            NODES.forEach(n -> gen.feature(GenerationStage.Decoration.SURFACE_STRUCTURES, n));
-        }
-    }
+	public static void gen(BiomeLoadingEvent e) {
+		BiomeGenerationSettingsBuilder gen = e.getGeneration();
+		if (e.getCategory() == Biome.Category.NETHER) {
+			NETHER_NODES.forEach(n -> gen.feature(GenerationStage.Decoration.SURFACE_STRUCTURES, n));
+		} else if (e.getName() != Biomes.THE_END.getRegistryName()) {
+			NODES.forEach(n -> gen.feature(GenerationStage.Decoration.SURFACE_STRUCTURES, n));
+		}
+	}
 
-    public static void reg(FMLCommonSetupEvent e) {
-        toReg.forEach((name, toReg) -> register(name, toReg.create(), toReg.dim));
-    }
+	public static void reg(FMLCommonSetupEvent e) {
+		toReg.forEach((name, toReg) -> register(name, toReg.create(), toReg.dim));
+	}
 
-    public static FeatureToRegister add(String name, NonNullSupplier<Block> block, int veinSize, int minHeight, int maxHeight, int frequency, RuleTest test, NodeDimension dim) {
-        FeatureToRegister f = new FeatureToRegister(block, veinSize, minHeight, maxHeight, frequency, test, dim);
-        toReg.put(name, f);
-        return f;
-    }
+	public static FeatureToRegister add(String name, NonNullSupplier<Block> block, int veinSize, int minHeight, int maxHeight, int frequency, RuleTest test, NodeDimension dim) {
+		FeatureToRegister f = new FeatureToRegister(block, veinSize, minHeight, maxHeight, frequency, test, dim);
+		toReg.put(name, f);
+		return f;
+	}
 
-    public static <F extends IFeatureConfig> ConfiguredFeature<F, ?> register(String name, ConfiguredFeature<F, ?> feature, NodeDimension dim) {
-        switch (dim) {
-            case OVERWORLD:
-                NODES.add(feature);
-            case NETHER:
-                NETHER_NODES.add(feature);
-        }
-        return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, CreateAutomated.modid + ":" + name, feature);
-    }
+	public static <F extends IFeatureConfig> ConfiguredFeature<F, ?> register(String name, ConfiguredFeature<F, ?> feature, NodeDimension dim) {
+		switch (dim) {
+			case OVERWORLD:
+				NODES.add(feature);
+			case NETHER:
+				NETHER_NODES.add(feature);
+		}
+		return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, CreateAutomated.modid + ":" + name, feature);
+	}
 
-    public enum NodeDimension {
-        NETHER,
-        OVERWORLD,
-        END
-    }
+	public enum NodeDimension {
+		NETHER,
+		OVERWORLD,
+		END
+	}
 }

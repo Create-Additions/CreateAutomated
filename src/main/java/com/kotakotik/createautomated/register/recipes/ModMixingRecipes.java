@@ -8,17 +8,17 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
 
 public class ModMixingRecipes extends CAProcessingRecipeWrapper<MixingRecipe> {
-    public ModMixingRecipes(DataGenerator gen) {
-        super(gen);
-    }
+	public ModMixingRecipes(DataGenerator gen) {
+		super(gen);
+	}
 
-    @Override
-    public ProcessingRecipeBuilder<MixingRecipe> createBuilder(ResourceLocation id) {
-        return new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<MixingRecipe>) AllRecipeTypes.MIXING.serializer).getFactory(), id);
-    }
+	@Override
+	public ProcessingRecipeBuilder<MixingRecipe> createBuilder(ResourceLocation id) {
+		return new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<MixingRecipe>) AllRecipeTypes.MIXING.serializer).getFactory(), id);
+	}
 
-    @Override
-    public String getName() {
-        return "CreateAutomated mixing recipes";
-    }
+	@Override
+	public String getName() {
+		return "CreateAutomated mixing recipes";
+	}
 }

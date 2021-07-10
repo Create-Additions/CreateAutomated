@@ -20,38 +20,38 @@ import org.apache.logging.log4j.Logger;
 @Mod(CreateAutomated.modid)
 public class CreateAutomated {
 
-    // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
+	// Directly reference a log4j logger.
+	private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final String modid = "createautomated";
+	public static final String modid = "createautomated";
 
-    public static IEventBus modEventBus;
+	public static IEventBus modEventBus;
 
-    public static final NonNullLazyValue<CreateRegistrate> registrate = CreateRegistrate.lazy(modid);
+	public static final NonNullLazyValue<CreateRegistrate> registrate = CreateRegistrate.lazy(modid);
 
-    public CreateAutomated() {
-        modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        CreateRegistrate r = registrate.get();
-        modEventBus.addListener(RecipeItems::gatherData);
-        ModRecipeTypes.reg(r);
-        ModBlockPartials.register();
-        ModItems.register(r);
-        ModBlocks.register(r);
-        ModEntities.register(r);
-        ModTiles.register(r);
-        WorldGen.register();
-        modEventBus.addGenericListener(IRecipeSerializer.class, ModRecipeTypes::register);
-        OneTimeEventReceiver.addListener(modEventBus, FMLCommonSetupEvent.class, (e) -> {
-            WorldGen.reg(e);
-            ModActors.register();
-        });
-        modEventBus.addListener(ModBlockPartials::onModelBake);
-        modEventBus.addListener(ModBlockPartials::onModelRegistry);
-        if (DatagenModLoader.isRunningDataGen()) {
-            modEventBus.addListener((GatherDataEvent g) -> ModPonder.generateLang(r, g));
-            CALocalization.register(r);
-        }
-        modEventBus.addListener(ModPonder::register);
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGen::gen);
-    }
+	public CreateAutomated() {
+		modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		CreateRegistrate r = registrate.get();
+		modEventBus.addListener(RecipeItems::gatherData);
+		ModRecipeTypes.reg(r);
+		ModBlockPartials.register();
+		ModItems.register(r);
+		ModBlocks.register(r);
+		ModEntities.register(r);
+		ModTiles.register(r);
+		WorldGen.register();
+		modEventBus.addGenericListener(IRecipeSerializer.class, ModRecipeTypes::register);
+		OneTimeEventReceiver.addListener(modEventBus, FMLCommonSetupEvent.class, (e) -> {
+			WorldGen.reg(e);
+			ModActors.register();
+		});
+		modEventBus.addListener(ModBlockPartials::onModelBake);
+		modEventBus.addListener(ModBlockPartials::onModelRegistry);
+		if (DatagenModLoader.isRunningDataGen()) {
+			modEventBus.addListener((GatherDataEvent g) -> ModPonder.generateLang(r, g));
+			CALocalization.register(r);
+		}
+		modEventBus.addListener(ModPonder::register);
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGen::gen);
+	}
 }

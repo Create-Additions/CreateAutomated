@@ -8,17 +8,17 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
 
 public class ModCrushingRecipes extends CAProcessingRecipeWrapper<CrushingRecipe> {
-    public ModCrushingRecipes(DataGenerator datagen) {
-        super(datagen);
-    }
+	public ModCrushingRecipes(DataGenerator datagen) {
+		super(datagen);
+	}
 
-    @Override
-    public ProcessingRecipeBuilder<CrushingRecipe> createBuilder(ResourceLocation id) {
-        return new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<CrushingRecipe>) AllRecipeTypes.CRUSHING.serializer).getFactory(), id);
-    }
+	@Override
+	public ProcessingRecipeBuilder<CrushingRecipe> createBuilder(ResourceLocation id) {
+		return new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<CrushingRecipe>) AllRecipeTypes.CRUSHING.serializer).getFactory(), id);
+	}
 
-    @Override
-    public String getName() {
-        return "CreateAutomated crushing recipes";
-    }
+	@Override
+	public String getName() {
+		return "CreateAutomated crushing recipes";
+	}
 }

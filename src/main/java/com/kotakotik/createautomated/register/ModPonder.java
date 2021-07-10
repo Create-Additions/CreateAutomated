@@ -9,27 +9,27 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
 public class ModPonder {
-    public static void register(FMLClientSetupEvent event) {
-        register();
-    }
+	public static void register(FMLClientSetupEvent event) {
+		register();
+	}
 
-    protected static void register() {
-        PonderRegistry.forComponents(ModBlocks.ORE_EXTRACTOR_TOP)
-                .addStoryBoard("createautomated/extractor/intro", OreExtractorScenes::intro)
-                .addStoryBoard("createautomated/extractor/automation", OreExtractorScenes::automation);
+	protected static void register() {
+		PonderRegistry.forComponents(ModBlocks.ORE_EXTRACTOR_TOP)
+				.addStoryBoard("createautomated/extractor/intro", OreExtractorScenes::intro)
+				.addStoryBoard("createautomated/extractor/automation", OreExtractorScenes::automation);
 
-        PonderRegistry.tags.forTag(PonderTag.KINETIC_APPLIANCES)
-                .add(ModBlocks.ORE_EXTRACTOR_TOP);
-    }
+		PonderRegistry.tags.forTag(PonderTag.KINETIC_APPLIANCES)
+				.add(ModBlocks.ORE_EXTRACTOR_TOP);
+	}
 
-    public static void generateLang(CreateRegistrate registrate, GatherDataEvent event) {
-        register();
-        PonderRegistry.provideLangEntries().getAsJsonObject().entrySet().forEach(e -> {
-            String k = e.getKey();
-            String v = e.getValue().getAsString();
-            if (k.contains(CreateAutomated.modid + ".")) {
-                registrate.addRawLang(k, v);
-            }
-        });
-    }
+	public static void generateLang(CreateRegistrate registrate, GatherDataEvent event) {
+		register();
+		PonderRegistry.provideLangEntries().getAsJsonObject().entrySet().forEach(e -> {
+			String k = e.getKey();
+			String v = e.getValue().getAsString();
+			if (k.contains(CreateAutomated.modid + ".")) {
+				registrate.addRawLang(k, v);
+			}
+		});
+	}
 }
