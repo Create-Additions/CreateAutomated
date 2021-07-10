@@ -3,7 +3,6 @@ package com.kotakotik.createautomated.register;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.BottomOreExtractorBlock;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.OreExtractorTile;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.TopOreExtractorBlock;
-import com.kotakotik.createautomated.content.simple.node.NodeBlock;
 import com.kotakotik.createautomated.util.AddonStressConfigDefaults;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
@@ -18,8 +17,6 @@ import javax.annotation.Nullable;
 public class ModBlocks {
     public static BlockEntry<TopOreExtractorBlock> ORE_EXTRACTOR_TOP;
     public static BlockEntry<BottomOreExtractorBlock> ORE_EXTRACTOR_BOTTOM;
-
-    public static BlockEntry<NodeBlock> LAPIS_NODE;
 
     public static void register(CreateRegistrate registrate) {
         ORE_EXTRACTOR_TOP = registrate.block("ore_extractor", TopOreExtractorBlock::new)

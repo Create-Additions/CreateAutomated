@@ -4,7 +4,6 @@ import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.ExtractingRecipeGen;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.TopOreExtractorBlock;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
-import com.kotakotik.createautomated.content.simple.node.NodeBlock;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.recipes.ModCrushingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
@@ -47,7 +46,7 @@ public class RecipeItems {
         public final String name;
         public CreateRegistrate reg;
 
-        public BlockEntry<NodeBlock> NODE;
+        public BlockEntry<Block> NODE;
         public ItemEntry<Item> ORE_PIECE;
 
         public final Tags.IOptionalNamedTag<Block> NODE_TAG;
@@ -55,7 +54,7 @@ public class RecipeItems {
 
         List<BiConsumer<RegistrateRecipeProvider, ExtractableResource>> recipeGen = new ArrayList<>();
         public WorldGen.FeatureToRegister oreGenFeature;
-        public Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> nodeConf = c -> c;
+        public Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> nodeConf = c -> c;
 
         public ExtractableResource(String name, CreateRegistrate reg, Function<ItemBuilder<Item, CreateRegistrate>, ItemBuilder<Item, CreateRegistrate>> orePieceConf) {
             this.name = name;
@@ -85,8 +84,8 @@ public class RecipeItems {
             return oreGen(veinSize, 40, 256, frequency, dimension);
         }
 
-        public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage) {
-            NODE = conf.apply(reg.block(name + "_node", NodeBlock::new).recipe((ctx, prov) -> {
+        public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> conf, int drillDamage) {
+            NODE = conf.apply(reg.block(name + "_node", Block::new).recipe((ctx, prov) -> {
                 EXTRACTING.add(name, e -> e.output(ORE_PIECE).node(ctx.get()).ore(minOre, maxOre).requiredProgress(progress.apply(new IOreExtractorBlock.ExtractorProgressBuilder())).drillDamage(drillDamage));
             })
                     .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, AllTags.AllBlockTags.NON_MOVABLE.tag, NODE_TAG).loot((p, b) -> {
@@ -95,7 +94,7 @@ public class RecipeItems {
             return this;
         }
 
-        public ExtractableResource node(int ore, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage) {
+        public ExtractableResource node(int ore, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> conf, int drillDamage) {
             return node(ore, ore, progress, conf, drillDamage);
         }
 
