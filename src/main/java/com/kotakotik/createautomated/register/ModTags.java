@@ -1,6 +1,7 @@
 package com.kotakotik.createautomated.register;
 
 import com.kotakotik.createautomated.CreateAutomated;
+import com.simibubi.create.Create;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
@@ -27,6 +28,14 @@ public class ModTags {
 
 		static Tags.IOptionalNamedTag<Item> tag(String name, Supplier<Item>... defaults) {
 			return ItemTags.createOptional(new ResourceLocation(CreateAutomated.modid, name), Arrays.stream(defaults).collect(Collectors.toSet()));
+		}
+	}
+
+	public static class References {
+		public static final Tags.IOptionalNamedTag<Block> NON_MOVABLE = getBlockCreate("non_movable");
+
+		static Tags.IOptionalNamedTag<Block> getBlockCreate(String name) {
+			return BlockTags.createOptional(Create.asResource(name));
 		}
 	}
 }

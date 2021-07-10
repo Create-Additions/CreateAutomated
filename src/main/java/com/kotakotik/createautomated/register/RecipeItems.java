@@ -8,7 +8,6 @@ import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.recipes.ModCrushingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.builders.BlockBuilder;
@@ -88,7 +87,7 @@ public class RecipeItems {
 			NODE = conf.apply(reg.block(name + "_node", Block::new).recipe((ctx, prov) -> {
 				EXTRACTING.add(name, e -> e.output(ORE_PIECE).node(ctx.get()).ore(minOre, maxOre).requiredProgress(progress.apply(new IOreExtractorBlock.ExtractorProgressBuilder())).drillDamage(drillDamage));
 			})
-					.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, AllTags.AllBlockTags.NON_MOVABLE.tag, NODE_TAG).loot((p, b) -> {
+					.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, NODE_TAG, ModTags.References.NON_MOVABLE).loot((p, b) -> {
 						p.registerDropping(b, Items.AIR);
 					}).simpleItem()).register();
 			return this;

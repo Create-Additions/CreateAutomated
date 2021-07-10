@@ -6,10 +6,12 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import com.simibubi.create.repack.registrate.util.OneTimeEventReceiver;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DatagenModLoader;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -34,7 +36,6 @@ public class CreateAutomated {
 		CreateRegistrate r = registrate.get();
 		modEventBus.addListener(RecipeItems::gatherData);
 		ModRecipeTypes.reg(r);
-		ModBlockPartials.register();
 		ModItems.register(r);
 		ModBlocks.register(r);
 		ModEntities.register(r);
@@ -45,8 +46,8 @@ public class CreateAutomated {
 			WorldGen.reg(e);
 			ModActors.register();
 		});
-		modEventBus.addListener(ModBlockPartials::onModelBake);
-		modEventBus.addListener(ModBlockPartials::onModelRegistry);
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+				() -> ModBlockPartials::load);
 		if (DatagenModLoader.isRunningDataGen()) {
 			modEventBus.addListener((GatherDataEvent g) -> ModPonder.generateLang(r, g));
 			CALocalization.register(r);

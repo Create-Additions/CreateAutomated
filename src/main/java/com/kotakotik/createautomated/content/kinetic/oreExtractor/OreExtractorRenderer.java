@@ -1,12 +1,13 @@
 package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
+import com.jozufozu.flywheel.backend.Backend;
 import com.kotakotik.createautomated.register.ModBlockPartials;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.content.contraptions.base.KineticTileEntityRenderer;
+import com.simibubi.create.foundation.render.PartialBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.render.backend.FastRenderDispatcher;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -26,19 +27,19 @@ public class OreExtractorRenderer extends KineticTileEntityRenderer {
 	}
 
 	protected void renderSafe(KineticTileEntity te, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay) {
-		if (!FastRenderDispatcher.available(te.getWorld())) {
+		if (!Backend.getInstance().canUseInstancing(te.getWorld())) {
 			BlockState blockState = te.getBlockState();
 			OreExtractorTile tile = (OreExtractorTile) te;
 			BlockPos pos = te.getPos();
 			IVertexBuilder vb = buffer.getBuffer(RenderType.getSolid());
-			SuperByteBuffer superBuffer = ModBlockPartials.COGWHEEL.renderOn(blockState);
+			SuperByteBuffer superBuffer = PartialBufferer.get(ModBlockPartials.COGWHEEL, blockState);
 			standardKineticRotationTransform(superBuffer, te, light).renderInto(ms, vb);
 			if (tile.extractProgress > 0) {
 				int packedLightmapCoords = WorldRenderer.getLightmapCoordinates(te.getWorld(), blockState, pos);
 				float speed = Math.abs(tile.getSpeed());
 				float time = AnimationTickHolder.getRenderTime(te.getWorld());
 				float angle = ((time * speed * 6 / 10f) % 360) / 180 * (float) Math.PI;
-				SuperByteBuffer headRender = ModBlockPartials.DRILL_ORE_EXTRACTOR.renderOn(blockState);
+				SuperByteBuffer headRender = PartialBufferer.get(ModBlockPartials.DRILL_ORE_EXTRACTOR, blockState);
 				// dunno if i can use standardKineticRotationTransform here?
 				headRender.rotateCentered(Direction.UP, angle).translate(0, -1, 0).light(packedLightmapCoords).renderInto(ms, vb);
 			}

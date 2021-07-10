@@ -1,12 +1,13 @@
 package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
+import com.jozufozu.flywheel.backend.instancing.IDynamicInstance;
+import com.jozufozu.flywheel.backend.instancing.InstanceData;
+import com.jozufozu.flywheel.backend.instancing.MaterialManager;
 import com.kotakotik.createautomated.content.base.instances.CogInstance;
 import com.kotakotik.createautomated.register.ModBlockPartials;
 import com.simibubi.create.content.contraptions.base.KineticData;
+import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.content.contraptions.base.RotatingData;
-import com.simibubi.create.foundation.render.backend.instancing.IDynamicInstance;
-import com.simibubi.create.foundation.render.backend.instancing.InstanceData;
-import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
 import net.minecraft.util.Direction;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
@@ -18,14 +19,12 @@ public class OreExtractorInstance extends CogInstance implements IDynamicInstanc
 
 	public RotatingData drill;
 
-	public OreExtractorTile getTile() {
-		return (OreExtractorTile) tile;
+	public OreExtractorInstance(MaterialManager<?> modelManager, KineticTileEntity tile) {
+		super(modelManager, tile);
 	}
 
-	public OreExtractorInstance(InstancedTileRenderer<?> modelManager, OreExtractorTile tile) {
-		super(modelManager, tile);
-
-//        createDrill();
+	public OreExtractorTile getTile() {
+		return (OreExtractorTile) tile;
 	}
 
 	public RotatingData createDrill() {
