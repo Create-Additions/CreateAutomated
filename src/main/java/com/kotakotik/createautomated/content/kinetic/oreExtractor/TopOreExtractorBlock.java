@@ -93,6 +93,7 @@ public class TopOreExtractorBlock extends HorizontalKineticBlock implements ICog
                 if (!plr.isCreative()) {
                     plr.getHeldItem(hand).shrink(1);
                 }
+                tile.sendData();
                 return ActionResultType.SUCCESS; // dunno if i should use CONSUME but iirc it disables the animation and i dont want that
             }
         }

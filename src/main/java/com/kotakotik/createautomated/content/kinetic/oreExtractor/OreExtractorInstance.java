@@ -2,12 +2,20 @@ package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
 import com.kotakotik.createautomated.content.base.instances.CogInstance;
 import com.kotakotik.createautomated.register.ModBlockPartials;
+import com.simibubi.create.content.contraptions.base.KineticData;
 import com.simibubi.create.content.contraptions.base.RotatingData;
 import com.simibubi.create.foundation.render.backend.instancing.IDynamicInstance;
+import com.simibubi.create.foundation.render.backend.instancing.InstanceData;
 import com.simibubi.create.foundation.render.backend.instancing.InstancedTileRenderer;
 import net.minecraft.util.Direction;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+
+import java.lang.reflect.Field;
 
 public class OreExtractorInstance extends CogInstance implements IDynamicInstance {
+    public static final Field isRemovedField = ObfuscationReflectionHelper.findField(InstanceData.class, "removed");
+    public static final Field rotationOffsetField = ObfuscationReflectionHelper.findField(KineticData.class, "rotationOffset");
+
     public RotatingData drill;
 
     public OreExtractorTile getTile() {
@@ -17,7 +25,7 @@ public class OreExtractorInstance extends CogInstance implements IDynamicInstanc
     public OreExtractorInstance(InstancedTileRenderer<?> modelManager, OreExtractorTile tile) {
         super(modelManager, tile);
 
-        createDrill();
+//        createDrill();
     }
 
     public RotatingData createDrill() {
@@ -30,29 +38,43 @@ public class OreExtractorInstance extends CogInstance implements IDynamicInstanc
 
     public void updateDrillRotation() {
         drill.setRotationalSpeed(tile.getSpeed());
+        try {
+            drill.setRotationOffset((Float) rotationOffsetField.get(rotatingModel));
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         drill.setRotationAxis(super.getRotationAxis());
     }
-
-    boolean drillRemoved = false;
 
     @Override
     public void beginFrame() {
 
     }
 
+    public boolean isDrillRemoved() {
+        if (drill == null) return true;
+        try {
+            return (boolean) isRemovedField.get(drill);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
     @Override
     public void update() {
-        updateDrillRotation();
         if (getTile().durability <= 0) {
-            if (!drillRemoved) {
+            if (!isDrillRemoved()) {
                 drill.delete();
             }
-            drillRemoved = true;
         } else {
-            if (drillRemoved) {
+            if (isDrillRemoved()) {
                 createDrill();
             }
-            drillRemoved = false;
+        }
+        if (!isDrillRemoved()) {
+            updateDrillRotation();
+            updateLight();
         }
         super.update();
     }
@@ -60,12 +82,14 @@ public class OreExtractorInstance extends CogInstance implements IDynamicInstanc
     @Override
     public void updateLight() {
         super.updateLight();
-        relight(this.pos.down(), drill);
+        if (!isDrillRemoved()) {
+            relight(this.pos.down(), drill);
+        }
     }
 
     @Override
     public void remove() {
         super.remove();
-        drill.delete();
+        if (drill != null) drill.delete();
     }
 }
