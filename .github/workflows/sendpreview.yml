@@ -29,11 +29,11 @@ jobs:
             -   name: Grant execute permission for gradlew
                 run: chmod +x gradlew
             -   name: Build jar
+                id: build-jar
                 uses: eskatos/gradle-command-action@v1
                 with:
                     arguments: build --max-workers 1
                     wrapper-cache-enabled: true
-                    dependencies-cache-enabled: true
                     configuration-cache-enabled: true
                 env:
                     CA_VERSION: preview-${{ steps.get_branch.outputs.branch }}-${{ steps.get_commit.outputs.commit }}
@@ -42,4 +42,4 @@ jobs:
                 env:
                     DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
                 with:
-                    args: ./build/libs/*-${{ steps.get_commit.outputs.commit }}.*
+                    args: ./build/libs/*.*
