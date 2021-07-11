@@ -2,8 +2,10 @@ package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
 import com.kotakotik.createautomated.content.base.IDrillHead;
 import com.kotakotik.createautomated.content.base.IExtractable;
+import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.register.ModTags;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
+import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPoint;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -15,12 +17,15 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -218,5 +223,39 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
 	public static int getDefaultStress() {
 		return 64;
+	}
+
+	static {
+		ArmInteractionPoint.addPoint(new OreExtractorInteractionPoint(), OreExtractorInteractionPoint::new);
+	}
+
+	public static class OreExtractorInteractionPoint extends ArmInteractionPoint {
+		@Override
+		protected boolean isValid(IBlockReader iBlockReader, BlockPos blockPos, BlockState blockState) {
+			return blockState.getBlock() instanceof IOreExtractorBlock;
+		}
+
+		@Override
+		protected ItemStack insert(World world, ItemStack stack, boolean simulate) {
+			if (!(stack.getItem() instanceof IDrillHead)) return stack;
+			TileEntity t = world.getTileEntity(pos);
+			OreExtractorTile tile;
+			if (t instanceof OreExtractorTile) tile = (OreExtractorTile) t;
+			else {
+				tile = (OreExtractorTile) world.getTileEntity(pos.up());
+			}
+			if (tile == null) return stack;
+			if (tile.durability == 0) {
+				if (!simulate) {
+					tile.maxDurability = ((IDrillHead) stack.getItem()).getDurability();
+					tile.durability = tile.maxDurability;
+					tile.sendData();
+				}
+				ItemStack copy = stack.copy();
+				copy.shrink(1);
+				return copy;
+			}
+			return stack;
+		}
 	}
 }
