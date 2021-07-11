@@ -10,7 +10,7 @@ jobs:
                     fetch-depth: 0
             -   name: Get branch name
                 shell: bash
-                run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/ | tr . _}"
+                run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
                 id: get_branch
             -   name: Get latest commit short
                 run: echo "::set-output name=commit::$(git rev-parse --short HEAD)"
@@ -36,7 +36,7 @@ jobs:
                     wrapper-cache-enabled: true
                     configuration-cache-enabled: true
                 env:
-                    CA_VERSION: preview-${{ steps.get_branch.outputs.branch }}-${{ steps.get_commit.outputs.commit }}
+                    CA_VERSION: preview-${{ steps.get_commit.outputs.commit }}
             -   name: Send built file to discord
                 uses: sinshutu/upload-to-discord@master
                 env:
