@@ -32,11 +32,11 @@ jobs:
                 id: build-jar
                 uses: eskatos/gradle-command-action@v1
                 with:
-                    arguments: build --max-workers 1
+                    arguments: jar --max-workers 1
                     wrapper-cache-enabled: true
                     configuration-cache-enabled: true
                 env:
-                    CA_VERSION: preview-${{ steps.get_branch.outputs.branch }}-${{ steps.get_commit.outputs.commit }}
+                    CA_VERSION: preview-${{ steps.get_commit.outputs.commit }}
             -   name: Send built file to discord
                 uses: sinshutu/upload-to-discord@master
                 env:
