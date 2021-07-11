@@ -25,6 +25,7 @@
   "item.createautomated.lapis_ore_piece": "Lapis Ore Piece",
   "item.createautomated.zinc_ore_piece": "Zinc Ore Piece",
   "itemGroup.createautomated": "Create Automated",
+  "itemGroup.createautomated_resources": "Create Automated resources",
   "jei.ore_extractor.createautomated.between": "From %d to %d",
   "jei.ore_extractor.createautomated.drill_damage": "Drill damage: %d",
   "jei.ore_extractor.createautomated.time": "%f seconds at 128 RPM",

@@ -10,7 +10,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraftforge.event.RegistryEvent;
 
 public class ModRecipeTypes {
-	protected static ResourceLocation ExtractingLoc = new ResourceLocation(CreateAutomated.modid, "extracting");
+	protected static ResourceLocation ExtractingLoc = CreateAutomated.asResource("extracting");
 	public static ExtractingRecipeType EXTRACTING;
 
 	public static void reg(CreateRegistrate registrate) {

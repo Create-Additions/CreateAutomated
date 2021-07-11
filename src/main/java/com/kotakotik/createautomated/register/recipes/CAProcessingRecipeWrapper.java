@@ -32,7 +32,7 @@ public abstract class CAProcessingRecipeWrapper<T extends ProcessingRecipe<?>> e
 	}
 
 	public void add(String name, UnaryOperator<ProcessingRecipeBuilder<T>> transform) {
-		ResourceLocation id = new ResourceLocation(CreateAutomated.modid, name);
+		ResourceLocation id = CreateAutomated.asResource(name);
 		ProcessingRecipeBuilder<T> builder = createBuilder(id);
 		transform.apply(builder);
 		recipes.add(builder);

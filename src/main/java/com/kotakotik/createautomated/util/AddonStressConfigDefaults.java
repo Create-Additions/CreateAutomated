@@ -26,7 +26,7 @@ public class AddonStressConfigDefaults {
 
 	public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> setImpact(double impact) {
 		return (b) -> {
-			Objects.requireNonNull(getRegisteredDefaultImpacts()).put(new ResourceLocation(CreateAutomated.modid, b.getName()), impact);
+			Objects.requireNonNull(getRegisteredDefaultImpacts()).put(CreateAutomated.asResource(b.getName()), impact);
 			return b;
 		};
 	}

@@ -35,7 +35,7 @@ public class OreExtractionCategory implements IRecipeCategory<ExtractingRecipe> 
 	protected final IDrawable icon;
 	private final IGuiHelper helper;
 
-	public static final ResourceLocation id = new ResourceLocation(CreateAutomated.modid, "extraction");
+	public static final ResourceLocation id = CreateAutomated.asResource("extraction");
 
 	public static OreExtractionCategory INSTANCE;
 	protected AnimatedOreExtractor oreExtractor = new AnimatedOreExtractor();

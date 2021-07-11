@@ -21,7 +21,7 @@ public class ExtractingRecipeGen extends RecipeProvider {
 	}
 
 	public ExtractingRecipe.Result add(String id, Consumer<ExtractingRecipe> transform) {
-		return add(new ResourceLocation(CreateAutomated.modid, "extracting/" + id), transform);
+		return add(CreateAutomated.asResource("extracting/" + id), transform);
 	}
 
 	public ExtractingRecipe.Result add(ExtractingRecipe.Result built) {

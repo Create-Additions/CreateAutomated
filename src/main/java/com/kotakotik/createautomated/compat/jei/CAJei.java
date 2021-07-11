@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 @JeiPlugin
 public class CAJei implements IModPlugin {
-	public static final ResourceLocation id = new ResourceLocation(CreateAutomated.modid, "jeicompat");
+	public static final ResourceLocation id = CreateAutomated.asResource("jeicompat");
 
 	@Override
 	public ResourceLocation getPluginUid() {

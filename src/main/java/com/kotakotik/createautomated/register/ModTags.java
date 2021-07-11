@@ -6,7 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
 import java.util.Arrays;
@@ -18,7 +17,7 @@ public class ModTags {
 		public static final Tags.IOptionalNamedTag<Block> NODES = tag("nodes");
 
 		static Tags.IOptionalNamedTag<Block> tag(String name, Supplier<Block>... defaults) {
-			return BlockTags.createOptional(new ResourceLocation(CreateAutomated.modid, name), Arrays.stream(defaults).collect(Collectors.toSet()));
+			return BlockTags.createOptional(CreateAutomated.asResource(name), Arrays.stream(defaults).collect(Collectors.toSet()));
 		}
 	}
 
@@ -27,7 +26,7 @@ public class ModTags {
 		public static final Tags.IOptionalNamedTag<Item> DRILL_HEADS = tag("drill_heads");
 
 		static Tags.IOptionalNamedTag<Item> tag(String name, Supplier<Item>... defaults) {
-			return ItemTags.createOptional(new ResourceLocation(CreateAutomated.modid, name), Arrays.stream(defaults).collect(Collectors.toSet()));
+			return ItemTags.createOptional(CreateAutomated.asResource(name), Arrays.stream(defaults).collect(Collectors.toSet()));
 		}
 	}
 

@@ -1,5 +1,6 @@
 package com.kotakotik.createautomated.register;
 
+import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.ExtractingRecipeGen;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.TopOreExtractorBlock;
@@ -25,6 +26,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
@@ -39,6 +42,8 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
+
+import static com.kotakotik.createautomated.CreateAutomated.modEventBus;
 
 public class RecipeItems {
 	public static class ExtractableResource {
@@ -224,7 +229,17 @@ public class RecipeItems {
 	public static RecipeItem<DrillHeadItem> DRILL_HEAD;
 	public static RecipeItem<Item> CRUSHED_PRISMARINE;
 
+	public static ItemGroup itemGroup = new ItemGroup(CreateAutomated.modid + "_resources") {
+		@Override
+		public ItemStack createIcon() {
+			return new ItemStack(IRON_EXTRACTABLE.ORE_PIECE.get());
+		}
+	};
+
 	public static void register(CreateRegistrate registrate) {
+		registrate.itemGroup(() -> itemGroup, "Create Automated resources");
+//		registrate.addRawLang(((TranslationTextComponent) itemGroup.getTranslationKey()).getKey() , "Create Automated resources");
+//		CreateRegistrate registrate = CreateAutomated.registrate.get();
 		LAPIS_EXTRACTABLE = new GlueableExtractableResource("lapis", registrate, true, () -> Items.LAPIS_LAZULI, c -> c)
 				.node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(10).build(), c -> c, 1)
 				.oreGen(10, 4, WorldGen.NodeDimension.OVERWORLD);
@@ -298,6 +313,8 @@ public class RecipeItems {
 				.configureBuilder(b -> b.model(($, $$) -> {
 				}))
 				.register();
+
+		modEventBus.addListener(RecipeItems::gatherData);
 	}
 
 	public static ModMixingRecipes MIXING;

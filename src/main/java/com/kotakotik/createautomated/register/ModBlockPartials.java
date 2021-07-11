@@ -3,7 +3,6 @@ package com.kotakotik.createautomated.register;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.kotakotik.createautomated.CreateAutomated;
 import com.simibubi.create.Create;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public abstract class ModBlockPartials {
@@ -12,7 +11,7 @@ public abstract class ModBlockPartials {
 	public static PartialModel DRILL_ORE_EXTRACTOR = get("ore_extractor/drill");
 
 	public static PartialModel get(String name) {
-		return new PartialModel(new ResourceLocation(CreateAutomated.modid, "block/" + name));
+		return new PartialModel(CreateAutomated.asResource("block/" + name));
 	}
 
 	public static PartialModel getCreate(String name) {

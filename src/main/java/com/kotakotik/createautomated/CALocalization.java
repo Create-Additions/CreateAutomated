@@ -1,7 +1,6 @@
 package com.kotakotik.createautomated;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -26,11 +25,11 @@ public enum CALocalization {
 	}
 
 	CALocalization(String type, String id, String suffix, String localizedName) {
-		this(Util.makeTranslationKey(type, new ResourceLocation(CreateAutomated.modid, id)) + "." + suffix, localizedName);
+		this(Util.makeTranslationKey(type, CreateAutomated.asResource(id)) + "." + suffix, localizedName);
 	}
 
 	CALocalization(String type, String id, String localizedName) {
-		this(Util.makeTranslationKey(type, new ResourceLocation(CreateAutomated.modid, id)), localizedName);
+		this(Util.makeTranslationKey(type, CreateAutomated.asResource(id)), localizedName);
 	}
 
 	public TranslationTextComponent getComponent(Object... args) {

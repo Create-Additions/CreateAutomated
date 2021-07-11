@@ -6,6 +6,7 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import com.simibubi.create.repack.registrate.util.OneTimeEventReceiver;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -34,7 +35,6 @@ public class CreateAutomated {
 	public CreateAutomated() {
 		modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		CreateRegistrate r = registrate.get();
-		modEventBus.addListener(RecipeItems::gatherData);
 		ModRecipeTypes.reg(r);
 		ModItems.register(r);
 		ModBlocks.register(r);
@@ -54,5 +54,11 @@ public class CreateAutomated {
 		}
 		modEventBus.addListener(ModPonder::register);
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGen::gen);
+		// uses a new item group so its last not to put any other items in the item group
+		RecipeItems.register(r);
+	}
+
+	public static ResourceLocation asResource(String path) {
+		return new ResourceLocation(modid, path);
 	}
 }
