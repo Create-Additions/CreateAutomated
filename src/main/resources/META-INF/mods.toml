@@ -60,6 +60,6 @@ side = "BOTH"
 [[dependencies.createautomated]]
 modId = "create"
 mandatory = true
-versionRange = "mc1.16.5_v0.3.1c"
+versionRange = "mc1.16.5_v0.3.2"
 ordering = "BEFORE"
 side = "BOTH"
