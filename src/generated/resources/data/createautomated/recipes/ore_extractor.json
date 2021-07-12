@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cgc",
+    "bsb",
+    "b b"
+  ],
+  "key": {
+    "c": {
+      "item": "create:brass_casing"
+    },
+    "b": {
+      "item": "create:brass_ingot"
+    },
+    "s": {
+      "item": "create:shaft"
+    },
+    "g": {
+      "item": "create:cogwheel"
+    }
+  },
+  "result": {
+    "item": "createautomated:ore_extractor"
+  }
+}

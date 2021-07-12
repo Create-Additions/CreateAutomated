@@ -4,11 +4,14 @@ import com.kotakotik.createautomated.content.kinetic.oreExtractor.BottomOreExtra
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.OreExtractorTile;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.TopOreExtractorBlock;
 import com.kotakotik.createautomated.util.AddonStressConfigDefaults;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
 
@@ -33,6 +36,18 @@ public class ModBlocks {
 						BlockState blockstate = ORE_EXTRACTOR_BOTTOM.get().getStateForPlacement(p_195945_1_);
 						return blockstate != null && this.canPlace(p_195945_1_, blockstate) ? blockstate : null;
 					}
+				})
+				.recipe((ctx, prov) -> {
+					ShapedRecipeBuilder.shapedRecipe(ctx.get())
+							.patternLine("cgc")
+							.patternLine("bsb")
+							.patternLine("b b")
+							.key('c', AllBlocks.BRASS_CASING.get())
+							.key('b', AllItems.BRASS_INGOT.get())
+							.key('s', AllBlocks.SHAFT.get())
+							.key('g', AllBlocks.COGWHEEL.get())
+							.addCriterion("has_brass_casing", prov.hasItem(AllBlocks.BRASS_CASING.get()))
+							.build(prov);
 				}).model((ctx, prov) -> prov.withExistingParent(ctx.getName(), prov.modLoc("block/ore_extractor/item"))).build()
 				.register();
 
