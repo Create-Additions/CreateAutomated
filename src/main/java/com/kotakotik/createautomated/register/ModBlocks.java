@@ -3,6 +3,8 @@ package com.kotakotik.createautomated.register;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.BottomOreExtractorBlock;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.OreExtractorTile;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.TopOreExtractorBlock;
+import com.kotakotik.createautomated.content.kinetic.picker.PickerBlock;
+import com.kotakotik.createautomated.content.kinetic.picker.PickerTile;
 import com.kotakotik.createautomated.util.AddonStressConfigDefaults;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -20,6 +22,8 @@ import javax.annotation.Nullable;
 public class ModBlocks {
 	public static BlockEntry<TopOreExtractorBlock> ORE_EXTRACTOR_TOP;
 	public static BlockEntry<BottomOreExtractorBlock> ORE_EXTRACTOR_BOTTOM;
+
+	public static BlockEntry<PickerBlock> PICKER;
 
 	public static void register(CreateRegistrate registrate) {
 		ORE_EXTRACTOR_TOP = registrate.block("ore_extractor", TopOreExtractorBlock::new)
@@ -57,6 +61,16 @@ public class ModBlocks {
 				.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.itemModels().getExistingFile(prov.modLoc("block/ore_extractor/bottom"))))
 				.addLayer(() -> RenderType::getCutoutMipped)
 				.loot((cons, block) -> cons.registerDropping(block, ORE_EXTRACTOR_TOP.get()))
+				.register();
+
+		PICKER = registrate.block("mechanical_picker", PickerBlock::new)
+				.properties(AbstractBlock.Properties::nonOpaque)
+				.transform(AddonStressConfigDefaults.setImpact(PickerTile.getDefaultStress()))
+				.blockstate(($, $$) -> {
+				})
+				.addLayer(() -> RenderType::getCutoutMipped)
+				.item().model(($, $$) -> {
+				}).build()
 				.register();
 
 //        LAPIS_NODE = registrate.block("lapis_node", p -> new NodeBlock(p, ModItems.LAPIS_ORE_PIECE, 1, OreExtractorBlock.ExtractorProgressBuilder.atSpeedOfS(128).takesSeconds(10).build())).tag(ModTags.Blocks.NODES).simpleItem().register();
