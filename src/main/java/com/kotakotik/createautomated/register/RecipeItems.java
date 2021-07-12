@@ -4,6 +4,7 @@ import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.ExtractingRecipeGen;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.TopOreExtractorBlock;
+import com.kotakotik.createautomated.content.kinetic.picker.PickingRecipeGen;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.recipes.ModCrushingRecipes;
@@ -228,6 +229,7 @@ public class RecipeItems {
 	//    public static ItemEntry<DrillHead> DRILL_HEAD;
 	public static RecipeItem<DrillHeadItem> DRILL_HEAD;
 	public static RecipeItem<Item> CRUSHED_PRISMARINE;
+	public static RecipeItem<Item> DIAMOND_BIT;
 
 	public static ItemGroup itemGroup = new ItemGroup(CreateAutomated.modid + "_resources") {
 		@Override
@@ -307,9 +309,17 @@ public class RecipeItems {
 						.addCriterion("has_extractor", RegistrateRecipeProvider.hasItem(ModBlocks.ORE_EXTRACTOR_BOTTOM.get()))
 						.build(prov))
 				.register();
+
 		CRUSHED_PRISMARINE = RecipeItem.createBasic("crushed_prismarine", registrate)
 				.quickTag("crushed_prismarine", "vanilla")
 				.recipe((ctx, prov) -> CRUSHING.add("crushed_prismarine", b -> b.duration(150).require(Tags.Items.DUSTS_PRISMARINE).output(.3f, ctx.get(), 1).output(.1f, ctx.get(), 2)))
+				.configureBuilder(b -> b.model(($, $$) -> {
+				}))
+				.register();
+
+		DIAMOND_BIT = RecipeItem.createBasic("diamond_bit", registrate)
+				.quickTag("diamond_bits", "vanilla")
+				.recipe((ctx, prov) -> PICKING.add("diamond_bit", b -> b.require(CRUSHED_PRISMARINE.generalTag).output(.2f, ctx.get())))
 				.configureBuilder(b -> b.model(($, $$) -> {
 				}))
 				.register();
@@ -320,14 +330,17 @@ public class RecipeItems {
 	public static ModMixingRecipes MIXING;
 	public static ModCrushingRecipes CRUSHING;
 	public static ExtractingRecipeGen EXTRACTING;
+	public static PickingRecipeGen PICKING;
 
 	public static void gatherData(GatherDataEvent event) {
 		DataGenerator gen = event.getGenerator();
 		MIXING = new ModMixingRecipes(gen);
 		EXTRACTING = new ExtractingRecipeGen(gen);
 		CRUSHING = new ModCrushingRecipes(gen);
+		PICKING = new PickingRecipeGen(gen);
 		gen.addProvider(MIXING);
 		gen.addProvider(CRUSHING);
 		gen.addProvider(EXTRACTING);
+		gen.addProvider(PICKING);
 	}
 }

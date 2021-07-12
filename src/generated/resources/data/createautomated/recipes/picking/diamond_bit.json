@@ -1,0 +1,12 @@
+{
+  "type": "createautomated:picking",
+  "results": [
+    {
+      "item": "createautomated:diamond_bit",
+      "chance": 0.2
+    }
+  ],
+  "ingredient": {
+    "tag": "createautomated:crushed_prismarine"
+  }
+}
