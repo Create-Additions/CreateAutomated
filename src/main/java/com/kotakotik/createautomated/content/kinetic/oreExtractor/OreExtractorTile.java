@@ -4,6 +4,7 @@ import com.kotakotik.createautomated.content.base.IDrillHead;
 import com.kotakotik.createautomated.content.base.IExtractable;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.register.ModTags;
+import com.kotakotik.createautomated.register.config.ModServerConfig;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPoint;
 import com.simibubi.create.foundation.utility.VecHelper;
@@ -230,13 +231,28 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public static class OreExtractorInteractionPoint extends ArmInteractionPoint {
+		protected boolean armCanInsertDrills() {
+			if (ModServerConfig.armCanInsertDrills != null) return ModServerConfig.armCanInsertDrills.get();
+			return true;
+		}
+
+		protected boolean armCanExtractOrePieces() {
+			if (ModServerConfig.armCanExtractOrePieces != null) return ModServerConfig.armCanExtractOrePieces.get();
+			return false;
+		}
+
+		public OreExtractorInteractionPoint() {
+
+		}
+
 		@Override
 		protected boolean isValid(IBlockReader iBlockReader, BlockPos blockPos, BlockState blockState) {
-			return blockState.getBlock() instanceof IOreExtractorBlock;
+			return (armCanExtractOrePieces() || armCanInsertDrills()) && blockState.getBlock() instanceof IOreExtractorBlock;
 		}
 
 		@Override
 		protected ItemStack insert(World world, ItemStack stack, boolean simulate) {
+			if (!armCanInsertDrills()) return stack;
 			if (!(stack.getItem() instanceof IDrillHead)) return stack;
 			TileEntity t = world.getTileEntity(pos);
 			OreExtractorTile tile;
@@ -256,6 +272,22 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 				return copy;
 			}
 			return stack;
+		}
+
+		@Override
+		protected ItemStack extract(World world, int slot, int amount, boolean simulate) {
+			return armCanExtractOrePieces() ? super.extract(world, slot, amount, simulate) : ItemStack.EMPTY;
+		}
+
+		@Override
+		protected void cycleMode() {
+			if (armCanInsertDrills() && armCanExtractOrePieces()) {
+				super.cycleMode();
+			} else if (armCanInsertDrills() && !armCanExtractOrePieces()) {
+				mode = Mode.DEPOSIT;
+			} else if (armCanExtractOrePieces() && !armCanInsertDrills()) {
+				mode = Mode.TAKE;
+			}
 		}
 	}
 }

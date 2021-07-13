@@ -1,7 +1,7 @@
 package com.kotakotik.createautomated.content.worldgen;
 
 import com.kotakotik.createautomated.CreateAutomated;
-import com.kotakotik.createautomated.register.config.ModConfig;
+import com.kotakotik.createautomated.register.config.ModCommonConfig;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.util.registry.Registry;
@@ -54,10 +54,10 @@ public class WorldGen {
 
 		public ConfiguredFeature<?, ?> create() {
 			ConfiguredFeature<?, ?> f = Feature.ORE.configure(new OreFeatureConfig(
-					test, block.get().getDefaultState(), ModConfig.worldGenVeinSizes.get(name).get()))
-					.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(ModConfig.worldGenMinHeights.get(name).get(), 0, ModConfig.worldGenMaxHeights.get(name).get())))
+					test, block.get().getDefaultState(), ModCommonConfig.worldGenVeinSizes.get(name).get()))
+					.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(ModCommonConfig.worldGenMinHeights.get(name).get(), 0, ModCommonConfig.worldGenMaxHeights.get(name).get())))
 					.spreadHorizontally()
-					.repeat(ModConfig.worldGenFrequencies.get(name).get());
+					.repeat(ModCommonConfig.worldGenFrequencies.get(name).get());
 
 			this.registered = f;
 			return f;
@@ -78,8 +78,7 @@ public class WorldGen {
 
 	public static void reg(FMLCommonSetupEvent e) {
 		toReg.forEach((name, toReg) -> {
-			if (ModConfig.worldGenEnabled.get(name).get()) {
-				;
+			if (ModCommonConfig.worldGenEnabled.get(name).get()) {
 				register(name, toReg.create(), toReg.dim);
 			}
 		});
