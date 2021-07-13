@@ -322,7 +322,7 @@ public class RecipeItems {
 				.quickTag("diamond_bits", "vanilla")
 				.recipe((ctx, prov) -> {
 					PICKING.add("diamond_bit", b -> b.require(CRUSHED_PRISMARINE.generalTag).output(.2f, ctx.get()));
-					MIXING.add("diamond", b -> b.require(DIAMOND_BIT.generalTag, 1).require(ModFluids.MOLTEN_DIAMOND.get(), 800).output(Items.DIAMOND));
+					MIXING.add("diamond", b -> b.require(DIAMOND_BIT.generalTag).require(ModFluids.MOLTEN_DIAMOND.get(), 800).output(Items.DIAMOND));
 					CRUSHING.add("diamond_bit", b -> b.require(Tags.Items.GEMS_DIAMOND).output(ctx.get(), 3));
 				})
 				.configureBuilder(b -> b.model(($, $$) -> {
