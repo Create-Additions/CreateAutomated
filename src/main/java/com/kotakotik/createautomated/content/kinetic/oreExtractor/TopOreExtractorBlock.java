@@ -3,7 +3,7 @@ package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 import com.kotakotik.createautomated.content.base.IDrillHead;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.register.ModTiles;
-import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
+import com.simibubi.create.content.contraptions.base.KineticBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.ICogWheel;
 import com.simibubi.create.foundation.block.ITE;
 import net.minecraft.block.BlockState;
@@ -21,7 +21,7 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 
-public class TopOreExtractorBlock extends HorizontalKineticBlock implements ICogWheel, ITE<OreExtractorTile>, IOreExtractorBlock {
+public class TopOreExtractorBlock extends KineticBlock implements ICogWheel, ITE<OreExtractorTile>, IOreExtractorBlock {
 	@Override
 	public boolean isLargeCog() {
 		return !isSmallCog();
