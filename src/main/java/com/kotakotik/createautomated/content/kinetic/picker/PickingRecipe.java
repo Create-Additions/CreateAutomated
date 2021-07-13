@@ -16,6 +16,8 @@ import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -133,5 +135,12 @@ public class PickingRecipe implements IRecipe<IInventory>, IFinishedRecipe {
 	public PickingRecipe output(float chance, ResourceLocation registryName, int amount) {
 		this.output.add(new ProcessingOutput(Pair.of(registryName, amount), chance));
 		return this;
+	}
+
+	public static class PickingInventory extends RecipeWrapper {
+		public PickingInventory(ItemStack stack) {
+			super(new ItemStackHandler(1));
+			this.inv.setStackInSlot(0, stack);
+		}
 	}
 }
