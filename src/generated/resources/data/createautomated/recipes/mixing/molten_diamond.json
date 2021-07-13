@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "createautomated:diamond_bits"
+    },
+    {
+      "tag": "createautomated:diamond_bits"
+    },
+    {
+      "tag": "createautomated:diamond_bits"
+    }
+  ],
+  "results": [
+    {
+      "fluid": "createautomated:molten_diamond",
+      "amount": 150
+    }
+  ],
+  "heatRequirement": "superheated"
+}

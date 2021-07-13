@@ -41,6 +41,7 @@ public class CreateAutomated {
 		ModEntities.register(r);
 		ModTiles.register(r);
 		WorldGen.register();
+		ModFluids.register(r);
 		modEventBus.addGenericListener(IRecipeSerializer.class, ModRecipeTypes::register);
 		OneTimeEventReceiver.addListener(modEventBus, FMLCommonSetupEvent.class, (e) -> {
 			WorldGen.reg(e);

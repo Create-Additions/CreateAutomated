@@ -1,0 +1,19 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "fluidTag": "createautomated:diamond_bits",
+      "amount": 1
+    },
+    {
+      "fluid": "createautomated:molten_diamond",
+      "nbt": {},
+      "amount": 800
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:diamond"
+    }
+  ]
+}
