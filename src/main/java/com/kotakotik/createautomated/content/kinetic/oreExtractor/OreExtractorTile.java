@@ -162,8 +162,15 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
 		@Nonnull
 		@Override
+		public ItemStack extractItem(int slot, int amount, boolean simulate) {
+			if (!ModServerConfig.allowExtractOrePieces.get()) return ItemStack.EMPTY;
+			return super.extractItem(slot, amount, simulate);
+		}
+
+		@Nonnull
+		@Override
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (stack.getItem() instanceof IDrillHead && durability == 0) {
+			if (ModServerConfig.allowInsertDrills.get() && stack.getItem() instanceof IDrillHead && durability == 0) {
 				IDrillHead d = (IDrillHead) stack.getItem();
 				maxDurability = d.getDurability();
 				durability = maxDurability;
