@@ -8,6 +8,7 @@ import com.kotakotik.createautomated.content.kinetic.picker.PickingRecipeGen;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.recipes.ModCrushingRecipes;
+import com.kotakotik.createautomated.register.recipes.ModDeployingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.processing.HeatCondition;
@@ -331,6 +332,7 @@ public class RecipeItems {
 	public static ModCrushingRecipes CRUSHING;
 	public static ExtractingRecipeGen EXTRACTING;
 	public static PickingRecipeGen PICKING;
+	public static ModDeployingRecipes DEPLOYING;
 
 	public static void gatherData(GatherDataEvent event) {
 		DataGenerator gen = event.getGenerator();
@@ -338,9 +340,11 @@ public class RecipeItems {
 		EXTRACTING = new ExtractingRecipeGen(gen);
 		CRUSHING = new ModCrushingRecipes(gen);
 		PICKING = new PickingRecipeGen(gen);
+		DEPLOYING = new ModDeployingRecipes(gen);
 		gen.addProvider(MIXING);
 		gen.addProvider(CRUSHING);
 		gen.addProvider(EXTRACTING);
 		gen.addProvider(PICKING);
+		gen.addProvider(DEPLOYING);
 	}
 }

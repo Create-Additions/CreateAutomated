@@ -1,0 +1,17 @@
+{
+  "type": "create:deploying",
+  "ingredients": [
+    {
+      "tag": "createautomated:crushed_prismarine"
+    },
+    {
+      "item": "createautomated:picker"
+    }
+  ],
+  "results": [
+    {
+      "item": "createautomated:diamond_bit",
+      "chance": 0.2
+    }
+  ]
+}
