@@ -17,7 +17,8 @@
       "item": "create:cinder_flour"
     },
     {
-      "fluidTag": "minecraft:water",
+      "fluid": "minecraft:water",
+      "nbt": {},
       "amount": 100
     }
   ],

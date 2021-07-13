@@ -5,6 +5,7 @@ import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.FluidEntry;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
@@ -35,6 +36,8 @@ public class ModFluids {
 						.tickRate(25)
 						.slopeFindDistance(3)
 						.explosionResistance(100f))
+				.removeTag(FluidTags.WATER)
+				.tag(FluidTags.LAVA)
 				.bucket()
 				.recipe((ctx, prov) -> {
 					RecipeItems.MIXING.add("molten_diamond", b -> {

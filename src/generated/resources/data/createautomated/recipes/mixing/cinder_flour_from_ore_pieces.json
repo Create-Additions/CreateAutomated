@@ -29,7 +29,8 @@
       "tag": "createautomated:ore_pieces/cinder_flour"
     },
     {
-      "fluidTag": "minecraft:water",
+      "fluid": "minecraft:water",
+      "nbt": {},
       "amount": 10
     }
   ],

@@ -28,6 +28,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -273,16 +274,14 @@ public class RecipeItems {
 						for (int i = 0; i < 9; i++) {
 							b.require(r.ORE_PIECE_TAG);
 						}
-						// yes using the water tag lets you use chocolate and stuff but maybe i can just keep it that way
-						// i really dont wanna run datagen again
-						b.require(FluidTags.WATER, 10);
+						b.require(Fluids.WATER, 10);
 						return b.requiresHeat(HeatCondition.NONE).output(AllItems.CINDER_FLOUR.get());
 					});
 					MIXING.add("netherrack_from_cinder_flour", b -> {
 						for (int i = 0; i < 5; i++) {
 							b.require(AllItems.CINDER_FLOUR.get());
 						}
-						b.require(FluidTags.WATER, 100);
+						b.require(Fluids.WATER, 100);
 						return b.requiresHeat(HeatCondition.NONE).output(Blocks.NETHERRACK);
 					});
 				});
