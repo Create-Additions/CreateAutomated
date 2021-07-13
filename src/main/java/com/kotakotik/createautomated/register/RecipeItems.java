@@ -339,8 +339,8 @@ public class RecipeItems {
 		MIXING = new ModMixingRecipes(gen);
 		EXTRACTING = new ExtractingRecipeGen(gen);
 		CRUSHING = new ModCrushingRecipes(gen);
-		PICKING = new PickingRecipeGen(gen);
 		DEPLOYING = new ModDeployingRecipes(gen);
+		PICKING = new PickingRecipeGen(gen);
 		gen.addProvider(MIXING);
 		gen.addProvider(CRUSHING);
 		gen.addProvider(EXTRACTING);

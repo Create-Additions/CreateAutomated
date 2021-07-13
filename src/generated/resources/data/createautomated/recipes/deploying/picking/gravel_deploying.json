@@ -1,0 +1,17 @@
+{
+  "type": "create:deploying",
+  "ingredients": [
+    {
+      "item": "minecraft:gravel"
+    },
+    {
+      "item": "createautomated:picker"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:iron_nugget",
+      "chance": 0.125
+    }
+  ]
+}

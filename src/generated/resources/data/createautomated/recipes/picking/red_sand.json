@@ -1,0 +1,13 @@
+{
+  "type": "createautomated:picking",
+  "results": [
+    {
+      "item": "minecraft:gold_nugget",
+      "count": 3,
+      "chance": 0.125
+    }
+  ],
+  "ingredient": {
+    "item": "minecraft:red_sand"
+  }
+}

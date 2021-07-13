@@ -1,0 +1,17 @@
+{
+  "type": "create:deploying",
+  "ingredients": [
+    {
+      "item": "minecraft:soul_sand"
+    },
+    {
+      "item": "createautomated:picker"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:gold_nugget",
+      "chance": 0.02
+    }
+  ]
+}

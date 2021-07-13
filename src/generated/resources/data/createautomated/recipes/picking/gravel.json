@@ -1,0 +1,12 @@
+{
+  "type": "createautomated:picking",
+  "results": [
+    {
+      "item": "minecraft:iron_nugget",
+      "chance": 0.125
+    }
+  ],
+  "ingredient": {
+    "item": "minecraft:gravel"
+  }
+}
