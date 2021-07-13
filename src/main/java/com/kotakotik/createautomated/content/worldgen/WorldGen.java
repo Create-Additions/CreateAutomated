@@ -1,6 +1,7 @@
 package com.kotakotik.createautomated.content.worldgen;
 
 import com.kotakotik.createautomated.CreateAutomated;
+import com.kotakotik.createautomated.register.config.ModConfig;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.util.registry.Registry;
@@ -37,9 +38,10 @@ public class WorldGen {
 		public final int frequency;
 		public final RuleTest test;
 		public final NodeDimension dim;
+		public final String name;
 		public ConfiguredFeature<?, ?> registered;
 
-		public FeatureToRegister(NonNullSupplier<Block> block, int veinSize, int minHeight, int maxHeight, int frequency, RuleTest test, NodeDimension dim) {
+		public FeatureToRegister(NonNullSupplier<Block> block, int veinSize, int minHeight, int maxHeight, int frequency, RuleTest test, NodeDimension dim, String name) {
 			this.block = block;
 			this.veinSize = veinSize;
 			this.minHeight = minHeight;
@@ -47,14 +49,15 @@ public class WorldGen {
 			this.frequency = frequency;
 			this.test = test;
 			this.dim = dim;
+			this.name = name;
 		}
 
 		public ConfiguredFeature<?, ?> create() {
 			ConfiguredFeature<?, ?> f = Feature.ORE.configure(new OreFeatureConfig(
-					test, block.get().getDefaultState(), veinSize))
-					.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(minHeight, 0, maxHeight)))
+					test, block.get().getDefaultState(), ModConfig.worldGenVeinSizes.get(name).get()))
+					.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(ModConfig.worldGenMinHeights.get(name).get(), 0, ModConfig.worldGenMaxHeights.get(name).get())))
 					.spreadHorizontally()
-					.repeat(frequency);
+					.repeat(ModConfig.worldGenFrequencies.get(name).get());
 
 			this.registered = f;
 			return f;
@@ -74,11 +77,16 @@ public class WorldGen {
 	}
 
 	public static void reg(FMLCommonSetupEvent e) {
-		toReg.forEach((name, toReg) -> register(name, toReg.create(), toReg.dim));
+		toReg.forEach((name, toReg) -> {
+			if (ModConfig.worldGenEnabled.get(name).get()) {
+				;
+				register(name, toReg.create(), toReg.dim);
+			}
+		});
 	}
 
 	public static FeatureToRegister add(String name, NonNullSupplier<Block> block, int veinSize, int minHeight, int maxHeight, int frequency, RuleTest test, NodeDimension dim) {
-		FeatureToRegister f = new FeatureToRegister(block, veinSize, minHeight, maxHeight, frequency, test, dim);
+		FeatureToRegister f = new FeatureToRegister(block, veinSize, minHeight, maxHeight, frequency, test, dim, name);
 		toReg.put(name, f);
 		return f;
 	}

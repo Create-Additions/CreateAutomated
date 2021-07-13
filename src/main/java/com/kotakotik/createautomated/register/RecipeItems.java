@@ -7,6 +7,7 @@ import com.kotakotik.createautomated.content.kinetic.oreExtractor.TopOreExtracto
 import com.kotakotik.createautomated.content.kinetic.picker.PickingRecipeGen;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
+import com.kotakotik.createautomated.register.config.ModConfig;
 import com.kotakotik.createautomated.register.recipes.ModCrushingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModDeployingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
@@ -80,6 +81,7 @@ public class RecipeItems {
 
 		public ExtractableResource oreGen(int veinSize, int minHeight, int maxHeight, int frequency, WorldGen.NodeDimension dim) {
 			oreGenFeature = WorldGen.add(name + "_node", NODE::get, veinSize, minHeight, maxHeight, frequency, dim == WorldGen.NodeDimension.NETHER ? new TagMatchRuleTest(Tags.Blocks.NETHERRACK) : new TagMatchRuleTest(Tags.Blocks.DIRT), dim);
+			ModConfig.addWorldGen(oreGenFeature);
 			return this;
 //            WorldGen.register(name + "_node", f);
 //            this.oreGenFeature = f;

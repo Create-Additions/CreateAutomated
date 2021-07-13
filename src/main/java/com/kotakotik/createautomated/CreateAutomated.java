@@ -2,6 +2,7 @@ package com.kotakotik.createautomated;
 
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.*;
+import com.kotakotik.createautomated.register.config.ModConfig;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import com.simibubi.create.repack.registrate.util.OneTimeEventReceiver;
@@ -57,6 +58,7 @@ public class CreateAutomated {
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGen::gen);
 		// uses a new item group so its last not to put any other items in the item group
 		RecipeItems.register(r);
+		ModConfig.reg();
 	}
 
 	public static ResourceLocation asResource(String path) {
