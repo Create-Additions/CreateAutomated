@@ -21,8 +21,7 @@ public class ModItems {
 	public static void register(CreateRegistrate registrate) {
 		registrate.itemGroup(() -> itemGroup, "Create Automated");
 
-		PICKER = registrate.item("picker", PickerItem::new).model(($, $$) -> {
-		}).properties(p -> p.maxDamage(32)).register();
+		PICKER = registrate.item("picker", PickerItem::new).properties(p -> p.maxDamage(32)).register();
 //        LAPIS_ORE_PIECE = registrate.item("lapis_ore_piece", Item::new).tag(ModTags.Items.ORE_PIECES).register();
 //        IRON_INGOT_PIECE = registrate.item("iron_ingot_piece", Item::new).register();
 	}

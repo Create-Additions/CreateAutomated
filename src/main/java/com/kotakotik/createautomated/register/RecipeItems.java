@@ -316,8 +316,6 @@ public class RecipeItems {
 		CRUSHED_PRISMARINE = RecipeItem.createBasic("crushed_prismarine", registrate)
 				.quickTag("crushed_prismarine", "vanilla")
 				.recipe((ctx, prov) -> CRUSHING.add("crushed_prismarine", b -> b.duration(150).require(Tags.Items.DUSTS_PRISMARINE).output(.3f, ctx.get(), 1).output(.1f, ctx.get(), 2)))
-				.configureBuilder(b -> b.model(($, $$) -> {
-				}))
 				.register();
 
 		DIAMOND_BIT = RecipeItem.createBasic("diamond_bit", registrate)
@@ -327,8 +325,6 @@ public class RecipeItems {
 					MIXING.add("diamond", b -> b.require(DIAMOND_BIT.generalTag).require(ModFluids.MOLTEN_DIAMOND.get(), 800).output(Items.DIAMOND));
 					CRUSHING.add("diamond_bit", b -> b.require(Tags.Items.GEMS_DIAMOND).output(ctx.get(), 3));
 				})
-				.configureBuilder(b -> b.model(($, $$) -> {
-				}))
 				.register();
 
 		modEventBus.addListener(RecipeItems::gatherData);
