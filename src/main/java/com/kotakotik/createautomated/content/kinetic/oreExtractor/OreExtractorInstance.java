@@ -9,6 +9,7 @@ import com.simibubi.create.content.contraptions.base.KineticData;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.content.contraptions.base.RotatingData;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.lang.reflect.Field;
@@ -74,6 +75,8 @@ public class OreExtractorInstance extends CogInstance implements IDynamicInstanc
 		if (!isDrillRemoved()) {
 			updateDrillRotation();
 			updateLight();
+			BlockPos p = getInstancePosition();
+			drill.setPosition(p.getX(), p.getY() - 1 + getTile().drillPos, p.getZ());
 		}
 		super.update();
 	}

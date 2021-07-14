@@ -6,24 +6,25 @@ import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.register.ModTags;
 import com.kotakotik.createautomated.register.config.ModServerConfig;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
+import com.simibubi.create.content.contraptions.relays.encased.GearshiftBlock;
+import com.simibubi.create.content.contraptions.relays.gearbox.GearshiftTileEntity;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPoint;
 import com.simibubi.create.foundation.utility.VecHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.OreBlock;
+import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -45,6 +46,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	//    private NonNullList<ItemStack> inventory = NonNullList.withSize(1, ItemStack.EMPTY);
 	public int extractProgress = 0;
 	public int durability = 0;
+	public float drillPos = 0;
 	protected LazyOptional<IItemHandler> invHandler = LazyOptional.of(() -> this.inventory);
 
 	public int maxDurability;
@@ -62,13 +64,17 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		return getBlockToMine() instanceof IExtractable || IExtractable.getRecipe(world, getBreakingPos()).isPresent();
 	}
 
+	public boolean isDrillLowEnough() {
+		return drillPos < .05;
+	}
+
 	@Override
 	public boolean shouldRun() {
-		return false && super.shouldRun() && isBreakableOre(getBreakingPos()) && isSpeedRequirementFulfilled();
+		return false && super.shouldRun() && isBreakableOre(getBreakingPos()) && isSpeedRequirementFulfilled() && isDrillLowEnough();
 	}
 
 	public boolean shouldRunExtracting() {
-		return isExtractable(getBreakingPos()) && isSpeedRequirementFulfilled() && durability > 0;
+		return isExtractable(getBreakingPos()) && isSpeedRequirementFulfilled() && durability > 0 && isDrillLowEnough();
 	}
 
 	public Block getBlockToMine() {
@@ -83,19 +89,38 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	@Override
 	public void tick() {
 		assert world != null;
-		if (world.isRemote && !world.isAirBlock(getBreakingPos())) {
+		if (world.isRemote && (shouldRunExtracting() || shouldRun())) {
 			particles();
 		}
 
 		super.tick();
+		if(!world.isRemote) {
+			doRedstoneStuff();
+		}
 
 		if (shouldRunExtracting()) {
-			Block below = getBlockToMine();
-			BlockPos belowBlock = getBreakingPos();
 			IExtractable.tryExtract(this);
 		} else if (extractProgress != 0) {
 			extractProgress = 0;
 			notifyUpdate();
+		}
+	}
+
+	public boolean isRedstonePowered() {
+		return world.getBlockState(pos.down()).get(BlockStateProperties.POWERED) ||getBlockState().get(BlockStateProperties.POWERED);
+	}
+
+	protected void doRedstoneStuff() {
+		float toSet = drillPos;
+		if(isRedstonePowered()) {
+			toSet += .03f;
+		} else {
+			toSet -= .03f;
+		}
+		toSet = MathHelper.clamp(toSet,0,.4f);
+		if(toSet != drillPos) {
+			drillPos = toSet;
+			sendData();
 		}
 	}
 
@@ -121,6 +146,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		compound.putInt("ExtractProgress", extractProgress);
 		compound.putInt("Durability", durability);
 		compound.putInt("MaxDurability", maxDurability);
+		compound.putFloat("DrillPos", drillPos);
 	}
 
 	@Override
@@ -132,6 +158,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		extractProgress = compound.getInt("ExtractProgress");
 		durability = compound.getInt("Durability");
 		maxDurability = compound.getInt("MaxDurability");
+		drillPos = compound.getFloat("DrillPos");
 	}
 
 	@Override

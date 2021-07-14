@@ -11,6 +11,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -39,6 +41,7 @@ public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock
 
 	public BottomOreExtractorBlock(Properties p_i48440_1_) {
 		super(p_i48440_1_);
+		setDefaultState(getDefaultState().with(BlockStateProperties.POWERED, false));
 	}
 
 	@Override
@@ -58,6 +61,12 @@ public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock
 			return state;
 		}
 		return super.updatePostPlacement(state, direction, updatingState, world, pos, updatingPos);
+	}
+
+	@Override
+	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> b) {
+		b.add(BlockStateProperties.POWERED);
+		super.fillStateContainer(b);
 	}
 
 	@Override
@@ -112,5 +121,17 @@ public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock
 		BlockPos updatingPos = pos.offset(d);
 		checkForOther(state, d, world.getBlockState(updatingPos), world, pos, updatingPos, !plr.isCreative());
 		super.onBlockHarvested(world, pos, state, plr);
+	}
+
+	@Override
+	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+		if (!worldIn.isRemote) {
+			boolean previouslyPowered = state.get(BlockStateProperties.POWERED);
+			if (previouslyPowered != worldIn.isBlockPowered(pos)) {
+				worldIn.setBlockState(pos, state.cycle(BlockStateProperties.POWERED), 2);
+			}
+
+		}
+		super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
 	}
 }
