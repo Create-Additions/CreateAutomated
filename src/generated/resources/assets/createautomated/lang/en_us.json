@@ -33,5 +33,6 @@
   "jei.ore_extractor.createautomated.between": "From %d to %d",
   "jei.ore_extractor.createautomated.drill_damage": "Drill damage: %d",
   "jei.ore_extractor.createautomated.time": "%f seconds at 128 RPM",
-  "jei.ore_extractor.createautomated.title": "Ore Extraction"
+  "jei.ore_extractor.createautomated.title": "Ore Extraction",
+  "jei.picker.createautomated.title": "Picking"
 }

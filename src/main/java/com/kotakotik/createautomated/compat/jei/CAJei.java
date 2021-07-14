@@ -2,6 +2,7 @@ package com.kotakotik.createautomated.compat.jei;
 
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.compat.jei.categories.OreExtractionCategory;
+import com.kotakotik.createautomated.compat.jei.categories.PickingCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -21,15 +22,18 @@ public class CAJei implements IModPlugin {
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
 		OreExtractionCategory.getCatalysts().forEach(e -> registration.addRecipeCatalyst(e, OreExtractionCategory.id));
+		PickingCategory.getCatalysts().forEach(e -> registration.addRecipeCatalyst(e, PickingCategory.id));
 	}
 
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
 		registration.addRecipes(OreExtractionCategory.getRecipes(), OreExtractionCategory.id);
+		registration.addRecipes(PickingCategory.getRecipes(), PickingCategory.id);
 	}
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration) {
 		registration.addRecipeCategories(new OreExtractionCategory(registration.getJeiHelpers().getGuiHelper()));
+		registration.addRecipeCategories(new PickingCategory(registration.getJeiHelpers().getGuiHelper()));
 	}
 }
