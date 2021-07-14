@@ -11,6 +11,9 @@ public class ModServerConfig extends com.kotakotik.createautomated.register.conf
 	public static ForgeConfigSpec.BooleanValue armCanExtractOrePieces;
 	public static ForgeConfigSpec.BooleanValue allowInsertDrills;
 	public static ForgeConfigSpec.BooleanValue allowExtractOrePieces;
+	public static ForgeConfigSpec.BooleanValue extractorAllowToggleRedstone;
+	public static ForgeConfigSpec.BooleanValue allowBreakOres;
+	public static ForgeConfigSpec.BooleanValue allowBreakBlocks;
 
 	@Override
 	protected ForgeConfigSpec.Builder getBuilder() {
@@ -49,5 +52,17 @@ public class ModServerConfig extends com.kotakotik.createautomated.register.conf
 		allowExtractOrePieces = BUILDER_SERVER
 				.comment("Whether or not things like hoppers and funnels can extract ore pieces from ore extractors")
 				.define("allowExtractOrePieces", true);
+
+		extractorAllowToggleRedstone = BUILDER_SERVER
+				.comment("Whether or not the extractor can be toggled with redstone")
+				.define("allowToggleRedstone", true);
+
+		allowBreakOres = BUILDER_SERVER
+				.comment("Whether or not the extractor can break ores")
+				.define("allowBreakOres", false);
+
+		allowBreakBlocks = BUILDER_SERVER
+				.comment("Whether or not the extractor can break any block")
+				.define("allowBreakBlocks", false);
 	}
 }

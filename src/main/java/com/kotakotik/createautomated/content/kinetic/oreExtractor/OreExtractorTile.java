@@ -57,7 +57,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public boolean isBreakableOre(BlockPos pos) {
-		return getBlockToMine() instanceof OreBlock;
+		return (ModServerConfig.allowBreakOres.get() && getBlockToMine() instanceof OreBlock) || (ModServerConfig.allowBreakBlocks.get() && !isExtractable(null)) && !world.isAirBlock(getBreakingPos());
 	}
 
 	public boolean isExtractable(BlockPos pos) {
@@ -65,12 +65,12 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public boolean isDrillLowEnough() {
-		return drillPos < .05;
+		return drillPos < .05 || !ModServerConfig.extractorAllowToggleRedstone.get();
 	}
 
 	@Override
 	public boolean shouldRun() {
-		return false && super.shouldRun() && isBreakableOre(getBreakingPos()) && isSpeedRequirementFulfilled() && isDrillLowEnough();
+		return super.shouldRun() && isBreakableOre(getBreakingPos()) && isSpeedRequirementFulfilled() && isDrillLowEnough();
 	}
 
 	public boolean shouldRunExtracting() {
@@ -111,6 +111,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	protected void doRedstoneStuff() {
+		if(!ModServerConfig.extractorAllowToggleRedstone.get()) return;
 		float toSet = drillPos;
 		if(isRedstonePowered()) {
 			toSet += .03f;
