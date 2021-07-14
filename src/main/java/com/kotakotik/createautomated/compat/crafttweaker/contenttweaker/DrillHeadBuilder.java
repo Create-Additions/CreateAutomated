@@ -30,9 +30,7 @@ import java.util.*;
 @ZenRegister(modDeps = {"contenttweaker"})
 @ZenCodeType.Name("mods.createautomated.item.DrillHeadBuilder")
 public class DrillHeadBuilder extends ItemTypeBuilder {
-	public String tier;
 	public int durability;
-	public boolean addTag = true;
 	public boolean noPartial = false;
 
 	public boolean generateDrillModel = true;
@@ -45,10 +43,6 @@ public class DrillHeadBuilder extends ItemTypeBuilder {
 	public void build(ResourceLocation resourceLocation) {
 		CustomDrillHead item = new CustomDrillHead(itemBuilder.getItemProperties(), durability, resourceLocation, this);
 		VanillaFactory.queueItemForRegistration(item);
-		if(addTag) {
-			TagManagerItem.INSTANCE.addElements(new MCTag<>(CreateAutomated.asResource("drill_heads"), TagManagerItem.INSTANCE), Arrays.asList(item));
-			if(tier != null) TagManagerItem.INSTANCE.addElements(new MCTag<>(CreateAutomated.asResource("drill_heads/"+tier), TagManagerItem.INSTANCE), Arrays.asList(item));
-		}
 		if(!noPartial) {
 			DrillPartialIndex.add(resourceLocation, new PartialModel(new ResourceLocation(resourceLocation.getNamespace(), "block/drills/" + resourceLocation.getPath())));
 
@@ -56,20 +50,8 @@ public class DrillHeadBuilder extends ItemTypeBuilder {
 	}
 
 	@ZenCodeType.Method
-	public DrillHeadBuilder tier(String newTier) {
-		this.tier = newTier;
-		return this;
-	}
-
-	@ZenCodeType.Method
 	public DrillHeadBuilder durability(int newDurability) {
 		this.durability = newDurability;
-		return this;
-	}
-
-	@ZenCodeType.Method
-	public DrillHeadBuilder noTag() {
-		addTag = false;
 		return this;
 	}
 
