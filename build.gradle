@@ -108,6 +108,9 @@ repositories {
         name "Progwml6 maven"
         url "https://dvs1.progwml6.com/files/maven/"
     }
+    maven {
+        url "https://maven.blamejared.com"
+    }
 }
 
 dependencies {
@@ -118,6 +121,7 @@ dependencies {
 
     compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
+    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${crafttweaker_version}")
 
     annotationProcessor 'org.spongepowered:mixin:0.8:processor'
 }
