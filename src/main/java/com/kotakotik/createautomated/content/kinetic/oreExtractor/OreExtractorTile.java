@@ -1,10 +1,14 @@
 package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
+import com.kotakotik.createautomated.CreateAutomated;
+import com.kotakotik.createautomated.api.DrillPartialIndex;
 import com.kotakotik.createautomated.content.base.IDrillHead;
 import com.kotakotik.createautomated.content.base.IExtractable;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
+import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.register.ModTags;
 import com.kotakotik.createautomated.register.config.ModServerConfig;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
 import com.simibubi.create.content.contraptions.relays.encased.GearshiftBlock;
 import com.simibubi.create.content.contraptions.relays.gearbox.GearshiftTileEntity;
@@ -21,6 +25,7 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -38,6 +43,8 @@ import org.apache.commons.lang3.RandomUtils;
 import javax.annotation.Nonnull;
 
 public class OreExtractorTile extends BlockBreakingKineticTileEntity {
+	public ResourceLocation drillId;
+
 	public OreExtractorTile(TileEntityType<?> typeIn) {
 		super(typeIn);
 	}
@@ -148,6 +155,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		compound.putInt("Durability", durability);
 		compound.putInt("MaxDurability", maxDurability);
 		compound.putFloat("DrillPos", drillPos);
+		compound.putString("DrillId", drillId == null ? CreateAutomated.modid + ":block/ore_extractor/drill" : drillId.toString());
 	}
 
 	@Override
@@ -160,6 +168,21 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		durability = compound.getInt("Durability");
 		maxDurability = compound.getInt("MaxDurability");
 		drillPos = compound.getFloat("DrillPos");
+		drillId = new ResourceLocation(compound.getString("DrillId"));
+	}
+
+	public void setDrill(int durability, ResourceLocation id) {
+		this.maxDurability = durability;
+		this.durability = durability;
+		this.drillId = id;
+	}
+
+	public void setDrill(IDrillHead head, ResourceLocation id) {
+		setDrill(head.getDurability(), id);
+	}
+
+	public void setDrill(DrillHeadItem head) {
+		setDrill(head, head.getRegistryName());
 	}
 
 	@Override
@@ -200,8 +223,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
 			if (ModServerConfig.allowInsertDrills.get() && stack.getItem() instanceof IDrillHead && durability == 0) {
 				IDrillHead d = (IDrillHead) stack.getItem();
-				maxDurability = d.getDurability();
-				durability = maxDurability;
+				setDrill((DrillHeadItem) stack.getItem());
 				stack.setCount(0);
 			}
 			return stack;
@@ -298,8 +320,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 			if (tile == null) return stack;
 			if (tile.durability == 0) {
 				if (!simulate) {
-					tile.maxDurability = ((IDrillHead) stack.getItem()).getDurability();
-					tile.durability = tile.maxDurability;
+					tile.setDrill((DrillHeadItem) stack.getItem());
 					tile.sendData();
 				}
 				ItemStack copy = stack.copy();

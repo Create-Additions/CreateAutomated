@@ -2,6 +2,7 @@ package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 
 import com.kotakotik.createautomated.content.base.IDrillHead;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
+import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.register.ModTiles;
 import com.simibubi.create.content.contraptions.base.KineticBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.ICogWheel;
@@ -98,8 +99,7 @@ public class TopOreExtractorBlock extends KineticBlock implements ICogWheel, ITE
 			IDrillHead drill = (IDrillHead) plr.getHeldItem(hand).getItem();
 			OreExtractorTile tile = ((OreExtractorTile) world.getTileEntity(pos));
 			if (!(plr instanceof FakePlayer) || tile.durability == 0) { // if fakeplayer, only use when durability is ran out, like the blaze burner
-				tile.durability = drill.getDurability();
-				tile.maxDurability = tile.durability;
+				tile.setDrill(drill, plr.getHeldItem(hand).getItem().getRegistryName());
 				if (!plr.isCreative()) {
 					plr.getHeldItem(hand).shrink(1);
 				}

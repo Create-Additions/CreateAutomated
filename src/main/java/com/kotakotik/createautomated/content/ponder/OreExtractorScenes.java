@@ -2,7 +2,10 @@ package com.kotakotik.createautomated.content.ponder;
 
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.kinetic.oreExtractor.OreExtractorTile;
+import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
+import com.kotakotik.createautomated.register.ModItems;
 import com.kotakotik.createautomated.register.RecipeItems;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.components.deployer.DeployerTileEntity;
 import com.simibubi.create.foundation.ponder.ElementLink;
 import com.simibubi.create.foundation.ponder.SceneBuilder;
@@ -58,8 +61,7 @@ public class OreExtractorScenes {
 		scene.overlay.showText(160).attachKeyFrame().pointAt(util.vector.centerOf(extractorTop)).placeNearTarget().text("Extractors require drill heads to operate, which can be inserted by players by right clicking");
 		scene.world.setKineticSpeed(util.select.everywhere(), 128);
 		scene.world.modifyTileEntity(extractorTop, OreExtractorTile.class, (entity) -> {
-			entity.maxDurability = 300;
-			entity.durability = 200;
+			entity.setDrill(RecipeItems.DRILL_HEAD.item.get());
 			entity.markDirty(); // dunno if i should do this... lets do it anyway!
 		});
 
@@ -106,8 +108,7 @@ public class OreExtractorScenes {
 		scene.world.moveDeployer(deployer, .7f, 25);
 		scene.idle(26);
 		scene.world.modifyTileEntity(extractorTop, OreExtractorTile.class, tile -> {
-			tile.durability = 300;
-			tile.maxDurability = 300;
+			tile.setDrill((DrillHeadItem) drill.getItem());
 		});
 		scene.idle(81);
 		scene.world.hideSection(util.select.position(deployer), Direction.UP);
@@ -140,8 +141,7 @@ public class OreExtractorScenes {
 		// Funnel output
 		scene.idle(5);
 		scene.world.modifyTileEntity(extractorTop, OreExtractorTile.class, tile -> {
-			tile.durability = 300;
-			tile.maxDurability = 300;
+			tile.setDrill((DrillHeadItem) drill.getItem());
 		});
 		scene.rotateCameraY(75);
 		scene.world.showSection(util.select.position(funnelOut), Direction.WEST);

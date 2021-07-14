@@ -124,6 +124,10 @@ dependencies {
     compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${crafttweaker_version}")
     compile fg.deobf("com.blamejared.contenttweaker:ContentTweaker-${contenttweaker_version}")
 
+    if(add_openloader=="true") {
+        runtimeOnly "net.darkhax.openloader:OpenLoader-${openloader_version}"
+    }
+
     annotationProcessor 'org.spongepowered:mixin:0.8:processor'
 }
 

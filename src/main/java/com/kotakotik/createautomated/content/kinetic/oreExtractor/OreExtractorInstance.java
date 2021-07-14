@@ -3,6 +3,7 @@ package com.kotakotik.createautomated.content.kinetic.oreExtractor;
 import com.jozufozu.flywheel.backend.instancing.IDynamicInstance;
 import com.jozufozu.flywheel.backend.instancing.InstanceData;
 import com.jozufozu.flywheel.backend.instancing.MaterialManager;
+import com.kotakotik.createautomated.api.DrillPartialIndex;
 import com.kotakotik.createautomated.content.base.instances.CogInstance;
 import com.kotakotik.createautomated.register.ModBlockPartials;
 import com.simibubi.create.content.contraptions.base.KineticData;
@@ -29,7 +30,7 @@ public class OreExtractorInstance extends CogInstance implements IDynamicInstanc
 	}
 
 	public RotatingData createDrill() {
-		drill = getRotatingMaterial().getModel(ModBlockPartials.DRILL_ORE_EXTRACTOR, blockState).createInstance();
+		drill = getRotatingMaterial().getModel(DrillPartialIndex.get(getTile().drillId), blockState).createInstance();
 		drill.setRotationAxis(Direction.Axis.Y);
 		updateDrillRotation();
 		drill.setPosition(getInstancePosition().down());
