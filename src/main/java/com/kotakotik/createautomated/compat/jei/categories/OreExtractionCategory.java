@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.kotakotik.createautomated.CALocalization;
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.compat.jei.animations.AnimatedOreExtractor;
-import com.kotakotik.createautomated.content.kinetic.oreExtractor.ExtractingRecipe;
+import com.kotakotik.createautomated.content.kinetic.oreExtractor.recipe.ExtractingRecipe;
 import com.kotakotik.createautomated.register.ModBlocks;
 import com.kotakotik.createautomated.register.ModRecipeTypes;
 import com.mojang.blaze3d.matrix.MatrixStack;

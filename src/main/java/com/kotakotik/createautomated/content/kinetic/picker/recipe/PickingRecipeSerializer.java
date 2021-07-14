@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.content.kinetic.picker;
+package com.kotakotik.createautomated.content.kinetic.picker.recipe;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

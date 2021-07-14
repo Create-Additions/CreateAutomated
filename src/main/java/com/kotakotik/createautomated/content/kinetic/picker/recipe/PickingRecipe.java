@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.content.kinetic.picker;
+package com.kotakotik.createautomated.content.kinetic.picker.recipe;
 
 import com.google.gson.JsonObject;
 import com.kotakotik.createautomated.register.ModRecipeTypes;
