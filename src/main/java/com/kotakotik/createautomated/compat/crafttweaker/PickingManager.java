@@ -11,6 +11,7 @@ import com.blamejared.crafttweaker.impl.item.MCWeightedItemStack;
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipe;
 import com.kotakotik.createautomated.content.processing.picker.recipe.PickingRecipe;
+import com.kotakotik.createautomated.register.ModItems;
 import com.kotakotik.createautomated.register.ModRecipeTypes;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.contraptions.components.deployer.DeployerApplicationRecipe;
@@ -36,7 +37,8 @@ public class PickingManager implements IRecipeManager {
 		ResourceLocation deployingRes = new ResourceLocation("crafttweaker", deployingName);
 		PickingRecipe r = new PickingRecipe(resourceLocation).require(input.asVanillaIngredient());
 		ProcessingRecipeBuilder<DeployerApplicationRecipe> deployingRecipe = new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<DeployerApplicationRecipe>) AllRecipeTypes.DEPLOYING.serializer).getFactory(), deployingRes)
-				.require(input.asVanillaIngredient());
+				.require(input.asVanillaIngredient())
+				.require(ModItems.PICKER.get());
 		for(MCWeightedItemStack output : outputs) {
 			r.output((float) output.getWeight(), output.getItemStack().getInternal());
 			deployingRecipe.output((float) output.getWeight(), output.getItemStack().getInternal());
