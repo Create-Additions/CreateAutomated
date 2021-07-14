@@ -1,6 +1,6 @@
-package com.kotakotik.createautomated.content.kinetic.picker;
+package com.kotakotik.createautomated.content.processing.picker;
 
-import com.kotakotik.createautomated.content.kinetic.picker.recipe.PickingRecipe;
+import com.kotakotik.createautomated.content.processing.picker.recipe.PickingRecipe;
 import com.kotakotik.createautomated.register.ModRecipeTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;

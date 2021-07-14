@@ -1,11 +1,9 @@
 package com.kotakotik.createautomated.content.ponder;
 
 import com.kotakotik.createautomated.CreateAutomated;
-import com.kotakotik.createautomated.content.kinetic.oreExtractor.OreExtractorTile;
+import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorTile;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
-import com.kotakotik.createautomated.register.ModItems;
 import com.kotakotik.createautomated.register.RecipeItems;
-import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.components.deployer.DeployerTileEntity;
 import com.simibubi.create.foundation.ponder.ElementLink;
 import com.simibubi.create.foundation.ponder.SceneBuilder;

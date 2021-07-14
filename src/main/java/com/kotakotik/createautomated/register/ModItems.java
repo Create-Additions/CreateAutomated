@@ -1,7 +1,7 @@
 package com.kotakotik.createautomated.register;
 
 import com.kotakotik.createautomated.CreateAutomated;
-import com.kotakotik.createautomated.content.kinetic.picker.PickerItem;
+import com.kotakotik.createautomated.content.processing.picker.PickerItem;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.ItemEntry;

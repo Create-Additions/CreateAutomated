@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.content.kinetic.picker.recipe;
+package com.kotakotik.createautomated.content.processing.picker.recipe;
 
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.register.ModItems;

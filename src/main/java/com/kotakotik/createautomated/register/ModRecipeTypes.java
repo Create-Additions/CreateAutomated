@@ -1,10 +1,10 @@
 package com.kotakotik.createautomated.register;
 
 import com.kotakotik.createautomated.CreateAutomated;
-import com.kotakotik.createautomated.content.kinetic.oreExtractor.recipe.ExtractingRecipeSerializer;
-import com.kotakotik.createautomated.content.kinetic.oreExtractor.recipe.ExtractingRecipeType;
-import com.kotakotik.createautomated.content.kinetic.picker.recipe.PickingRecipeSerializer;
-import com.kotakotik.createautomated.content.kinetic.picker.recipe.PickingRecipeType;
+import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipeSerializer;
+import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipeType;
+import com.kotakotik.createautomated.content.processing.picker.recipe.PickingRecipeSerializer;
+import com.kotakotik.createautomated.content.processing.picker.recipe.PickingRecipeType;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.ResourceLocation;

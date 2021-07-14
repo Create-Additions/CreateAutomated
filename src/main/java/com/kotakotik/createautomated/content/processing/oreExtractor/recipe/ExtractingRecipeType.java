@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.content.kinetic.oreExtractor.recipe;
+package com.kotakotik.createautomated.content.processing.oreExtractor.recipe;
 
 import net.minecraft.item.crafting.IRecipeType;
 

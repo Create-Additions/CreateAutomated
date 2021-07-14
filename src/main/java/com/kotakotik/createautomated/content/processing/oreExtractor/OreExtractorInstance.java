@@ -1,11 +1,10 @@
-package com.kotakotik.createautomated.content.kinetic.oreExtractor;
+package com.kotakotik.createautomated.content.processing.oreExtractor;
 
 import com.jozufozu.flywheel.backend.instancing.IDynamicInstance;
 import com.jozufozu.flywheel.backend.instancing.InstanceData;
 import com.jozufozu.flywheel.backend.instancing.MaterialManager;
 import com.kotakotik.createautomated.api.DrillPartialIndex;
 import com.kotakotik.createautomated.content.base.instances.CogInstance;
-import com.kotakotik.createautomated.register.ModBlockPartials;
 import com.simibubi.create.content.contraptions.base.KineticData;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.content.contraptions.base.RotatingData;

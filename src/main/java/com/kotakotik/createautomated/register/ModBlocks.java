@@ -1,8 +1,8 @@
 package com.kotakotik.createautomated.register;
 
-import com.kotakotik.createautomated.content.kinetic.oreExtractor.BottomOreExtractorBlock;
-import com.kotakotik.createautomated.content.kinetic.oreExtractor.OreExtractorTile;
-import com.kotakotik.createautomated.content.kinetic.oreExtractor.TopOreExtractorBlock;
+import com.kotakotik.createautomated.content.processing.oreExtractor.BottomOreExtractorBlock;
+import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorTile;
+import com.kotakotik.createautomated.content.processing.oreExtractor.TopOreExtractorBlock;
 import com.kotakotik.createautomated.util.AddonStressConfigDefaults;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;

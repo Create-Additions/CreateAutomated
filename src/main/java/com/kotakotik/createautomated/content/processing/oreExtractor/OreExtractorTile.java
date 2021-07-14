@@ -1,17 +1,13 @@
-package com.kotakotik.createautomated.content.kinetic.oreExtractor;
+package com.kotakotik.createautomated.content.processing.oreExtractor;
 
 import com.kotakotik.createautomated.CreateAutomated;
-import com.kotakotik.createautomated.api.DrillPartialIndex;
 import com.kotakotik.createautomated.content.base.IDrillHead;
 import com.kotakotik.createautomated.content.base.IExtractable;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.register.ModTags;
 import com.kotakotik.createautomated.register.config.ModServerConfig;
-import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
-import com.simibubi.create.content.contraptions.relays.encased.GearshiftBlock;
-import com.simibubi.create.content.contraptions.relays.gearbox.GearshiftTileEntity;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPoint;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.block.*;

@@ -2,9 +2,9 @@ package com.kotakotik.createautomated.register;
 
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
-import com.kotakotik.createautomated.content.kinetic.oreExtractor.recipe.ExtractingRecipeGen;
-import com.kotakotik.createautomated.content.kinetic.oreExtractor.TopOreExtractorBlock;
-import com.kotakotik.createautomated.content.kinetic.picker.recipe.PickingRecipeGen;
+import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipeGen;
+import com.kotakotik.createautomated.content.processing.oreExtractor.TopOreExtractorBlock;
+import com.kotakotik.createautomated.content.processing.picker.recipe.PickingRecipeGen;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.config.ModCommonConfig;

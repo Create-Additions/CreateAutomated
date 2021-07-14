@@ -2,17 +2,13 @@ package com.kotakotik.createautomated.compat.jei.categories;
 
 import com.kotakotik.createautomated.CALocalization;
 import com.kotakotik.createautomated.CreateAutomated;
-import com.kotakotik.createautomated.compat.jei.animations.AnimatedOreExtractor;
 import com.kotakotik.createautomated.compat.jei.animations.AnimatedPicker;
-import com.kotakotik.createautomated.content.kinetic.picker.recipe.PickingRecipe;
-import com.kotakotik.createautomated.register.ModBlocks;
+import com.kotakotik.createautomated.content.processing.picker.recipe.PickingRecipe;
 import com.kotakotik.createautomated.register.ModItems;
 import com.kotakotik.createautomated.register.ModRecipeTypes;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.compat.jei.EmptyBackground;
-import com.simibubi.create.compat.jei.category.CrushingCategory;
 import com.simibubi.create.content.contraptions.processing.ProcessingOutput;
-import com.simibubi.create.content.curiosities.tools.SandPaperPolishingRecipe;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.gui.GuiGameElement;
 import com.simibubi.create.foundation.utility.Lang;
@@ -24,17 +20,12 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 

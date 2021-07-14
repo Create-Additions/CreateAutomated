@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.content.kinetic.oreExtractor;
+package com.kotakotik.createautomated.content.processing.oreExtractor;
 
 import com.jozufozu.flywheel.backend.Backend;
 import com.kotakotik.createautomated.register.ModBlockPartials;
