@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.content.base;
+package com.kotakotik.createautomated.api;
 
 import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipe;
 import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorTile;

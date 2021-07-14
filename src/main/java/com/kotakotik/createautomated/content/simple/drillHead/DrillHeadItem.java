@@ -1,6 +1,6 @@
 package com.kotakotik.createautomated.content.simple.drillHead;
 
-import com.kotakotik.createautomated.content.base.IDrillHead;
+import com.kotakotik.createautomated.api.IDrillHead;
 import net.minecraft.item.Item;
 
 public class DrillHeadItem extends Item implements IDrillHead {

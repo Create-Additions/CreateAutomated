@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.content.base;
+package com.kotakotik.createautomated.api;
 
 public interface IDrillHead {
 	int getDurability();

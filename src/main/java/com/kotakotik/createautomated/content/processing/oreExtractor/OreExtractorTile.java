@@ -1,8 +1,8 @@
 package com.kotakotik.createautomated.content.processing.oreExtractor;
 
 import com.kotakotik.createautomated.CreateAutomated;
-import com.kotakotik.createautomated.content.base.IDrillHead;
-import com.kotakotik.createautomated.content.base.IExtractable;
+import com.kotakotik.createautomated.api.IDrillHead;
+import com.kotakotik.createautomated.api.IExtractable;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.register.ModTags;
