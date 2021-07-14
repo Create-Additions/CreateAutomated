@@ -122,6 +122,7 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
     compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${crafttweaker_version}")
+    compile fg.deobf("com.blamejared.contenttweaker:ContentTweaker-${contenttweaker_version}")
 
     annotationProcessor 'org.spongepowered:mixin:0.8:processor'
 }
