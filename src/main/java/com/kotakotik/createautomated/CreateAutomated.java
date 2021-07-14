@@ -1,5 +1,7 @@
 package com.kotakotik.createautomated;
 
+import com.kotakotik.createautomated.compat.ModDependencies;
+import com.kotakotik.createautomated.compat.kubejs.CAKubeJS;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.*;
 import com.kotakotik.createautomated.register.config.ModConfig;
@@ -56,6 +58,7 @@ public class CreateAutomated {
 			modEventBus.addListener((GatherDataEvent g) -> ModPonder.generateLang(r, g));
 			CALocalization.register(r);
 		}
+		ModDependencies.KUBEJS.runIfInstalled(() -> CAKubeJS::new);
 		modEventBus.addListener(ModPonder::register);
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGen::gen);
 		// uses a new item group so its last not to put any other items in the item group
