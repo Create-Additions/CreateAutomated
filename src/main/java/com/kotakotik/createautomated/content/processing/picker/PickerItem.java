@@ -69,7 +69,8 @@ public class PickerItem extends Item {
 			}
 			AxisAlignedBB bb;
 			if(plr instanceof DeployerFakePlayer) {
-				bb = plr.getBoundingBox().offset(-.5,-.5,-.5).grow(.3);
+				bb = plr.getBoundingBox().offset(-.5,-.5,-.5).grow(.3,0,.3);
+				bb = new AxisAlignedBB(bb.minX, bb.minY, bb.minZ, bb.maxX, bb.maxY - .8, bb.maxZ);
 			} else {
 				RayTraceResult raytraceresult = rayTrace(world, plr, RayTraceContext.FluidMode.NONE);
 				if (!(raytraceresult instanceof BlockRayTraceResult))
