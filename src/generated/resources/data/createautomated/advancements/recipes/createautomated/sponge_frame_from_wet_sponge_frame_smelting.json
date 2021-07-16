@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "createautomated:sponge_frame_from_wet_sponge_frame_smelting"
+    ]
+  },
+  "criteria": {
+    "has_wet_sponge_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "createautomated:wet_sponge_frame"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "createautomated:sponge_frame_from_wet_sponge_frame_smelting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_wet_sponge_frame",
+      "has_the_recipe"
+    ]
+  ]
+}

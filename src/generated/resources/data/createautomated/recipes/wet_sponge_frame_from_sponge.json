@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:wet_sponge"
+    },
+    {
+      "item": "create:sail_frame"
+    },
+    {
+      "item": "create:sail_frame"
+    },
+    {
+      "item": "create:sail_frame"
+    },
+    {
+      "item": "create:sail_frame"
+    }
+  ],
+  "result": {
+    "item": "createautomated:wet_sponge_frame",
+    "count": 4
+  }
+}

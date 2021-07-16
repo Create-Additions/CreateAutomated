@@ -7,6 +7,8 @@
   "block.createautomated.molten_diamond": "Molten Diamond",
   "block.createautomated.ore_extractor": "Ore Extractor",
   "block.createautomated.ore_extractor_bottom": "Ore Extractor",
+  "block.createautomated.sponge_frame": "Sponge Frame",
+  "block.createautomated.wet_sponge_frame": "Wet Sponge Frame",
   "block.createautomated.zinc_node": "Zinc Node",
   "create.ponder.createautomated.ore_extractor.automation.header": "Automating ore extraction",
   "create.ponder.createautomated.ore_extractor.automation.text_1": "Deployers can insert drill heads into Ore Extractors",

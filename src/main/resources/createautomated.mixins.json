@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "hackforge.refmap.json",
   "mixins": [
+    "SpongeFrameMixin"
   ],
   "injectors": {
     "defaultRequire": 1

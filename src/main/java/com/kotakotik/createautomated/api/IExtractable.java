@@ -1,7 +1,7 @@
 package com.kotakotik.createautomated.api;
 
-import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipe;
 import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorTile;
+import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipe;
 import com.kotakotik.createautomated.register.ModRecipeTypes;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;

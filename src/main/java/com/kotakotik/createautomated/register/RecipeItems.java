@@ -2,8 +2,8 @@ package com.kotakotik.createautomated.register;
 
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
-import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipeGen;
 import com.kotakotik.createautomated.content.processing.oreExtractor.TopOreExtractorBlock;
+import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipeGen;
 import com.kotakotik.createautomated.content.processing.picker.recipe.PickingRecipeGen;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
@@ -11,8 +11,8 @@ import com.kotakotik.createautomated.register.config.ModCommonConfig;
 import com.kotakotik.createautomated.register.recipes.ModCrushingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModDeployingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
+import com.kotakotik.createautomated.register.recipes.ModSplashingRecipes;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.builders.BlockBuilder;
@@ -346,6 +346,7 @@ public class RecipeItems {
 	public static ExtractingRecipeGen EXTRACTING;
 	public static PickingRecipeGen PICKING;
 	public static ModDeployingRecipes DEPLOYING;
+	public static ModSplashingRecipes SPLASHING;
 
 	public static void gatherData(GatherDataEvent event) {
 		DataGenerator gen = event.getGenerator();
@@ -354,10 +355,12 @@ public class RecipeItems {
 		CRUSHING = new ModCrushingRecipes(gen);
 		DEPLOYING = new ModDeployingRecipes(gen);
 		PICKING = new PickingRecipeGen(gen);
+		SPLASHING = new ModSplashingRecipes(gen);
 		gen.addProvider(MIXING);
 		gen.addProvider(CRUSHING);
 		gen.addProvider(EXTRACTING);
 		gen.addProvider(PICKING);
 		gen.addProvider(DEPLOYING);
+		gen.addProvider(SPLASHING);
 	}
 }
