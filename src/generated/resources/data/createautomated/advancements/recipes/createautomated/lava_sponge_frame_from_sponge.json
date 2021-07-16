@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "createautomated:wet_sponge_frame_from_sponge"
+      "createautomated:lava_sponge_frame_from_sponge"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "createautomated:wet_sponge_frame_from_sponge"
+        "recipe": "createautomated:lava_sponge_frame_from_sponge"
       }
     }
   },
