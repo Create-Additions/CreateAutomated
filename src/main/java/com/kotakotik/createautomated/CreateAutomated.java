@@ -49,6 +49,7 @@ public class CreateAutomated {
 		OneTimeEventReceiver.addListener(modEventBus, FMLCommonSetupEvent.class, (e) -> {
 			WorldGen.reg(e);
 			ModActors.register();
+			ModPackets.registerPackets();
 		});
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
 				() -> ModBlockPartials::load);
