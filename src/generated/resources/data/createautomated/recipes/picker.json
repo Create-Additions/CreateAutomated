@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "si ",
+    "isi",
+    " is"
+  ],
+  "key": {
+    "s": {
+      "tag": "forge:string"
+    },
+    "i": {
+      "tag": "createautomated:bits/iron"
+    }
+  },
+  "result": {
+    "item": "createautomated:picker"
+  }
+}

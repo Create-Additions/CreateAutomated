@@ -1,0 +1,18 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_nugget"
+    }
+  ],
+  "results": [
+    {
+      "item": "createautomated:iron_bit"
+    },
+    {
+      "item": "createautomated:iron_bit",
+      "count": 2,
+      "chance": 0.3
+    }
+  ]
+}

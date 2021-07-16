@@ -42,7 +42,7 @@ public class ModFluids {
 				.recipe((ctx, prov) -> {
 					RecipeItems.MIXING.add("molten_diamond", b -> {
 						for (int i = 0; i < 3; i++) {
-							b.require(RecipeItems.DIAMOND_BIT.generalTag);
+							b.require(RecipeItems.DIAMOND_BIT.itemTag);
 						}
 						return b.requiresHeat(HeatCondition.SUPERHEATED).output(MOLTEN_DIAMOND.get(), 150);
 					});

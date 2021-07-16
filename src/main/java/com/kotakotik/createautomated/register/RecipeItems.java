@@ -12,6 +12,7 @@ import com.kotakotik.createautomated.register.recipes.ModCrushingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModDeployingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.builders.BlockBuilder;
@@ -211,6 +212,11 @@ public class RecipeItems {
 			return this;
 		}
 
+		RecipeItem<T> noModel() {
+			CreateAutomated.LOGGER.warn("Recipe item " + name + " has no model");
+			return configureBuilder(b -> b.model(($, $$) -> {}));
+		}
+
 		RecipeItem<T> register() {
 			item = builder.properties((p) -> {
 				for (UnaryOperator<Item.Properties> c : propertiesConfig) {
@@ -233,6 +239,7 @@ public class RecipeItems {
 	public static RecipeItem<DrillHeadItem> DRILL_HEAD;
 	public static RecipeItem<Item> CRUSHED_PRISMARINE;
 	public static RecipeItem<Item> DIAMOND_BIT;
+	public static RecipeItem<Item> IRON_BIT;
 
 	public static ItemGroup itemGroup = new ItemGroup(CreateAutomated.modid + "_resources") {
 		@Override
@@ -317,12 +324,18 @@ public class RecipeItems {
 				.register();
 
 		DIAMOND_BIT = RecipeItem.createBasic("diamond_bit", registrate)
-				.quickTag("diamond_bits", "vanilla")
+				.quickTag("bits", "diamond")
 				.recipe((ctx, prov) -> {
 					PICKING.add("diamond_bit", b -> b.require(CRUSHED_PRISMARINE.generalTag).output(.2f, ctx.get()));
-					MIXING.add("diamond", b -> b.require(DIAMOND_BIT.generalTag).require(ModFluids.MOLTEN_DIAMOND.get(), 800).output(Items.DIAMOND));
+					MIXING.add("diamond", b -> b.require(DIAMOND_BIT.itemTag).require(ModFluids.MOLTEN_DIAMOND.get(), 800).output(Items.DIAMOND));
 					CRUSHING.add("diamond_bit", b -> b.require(Tags.Items.GEMS_DIAMOND).output(ctx.get(), 3));
 				})
+				.register();
+
+		IRON_BIT = RecipeItem.createBasic("iron_bit", registrate)
+				.quickTag("bits", "iron")
+				.recipe((ctx, prov) -> CRUSHING.add("iron_bit", b -> b.require(Items.IRON_NUGGET).output(ctx.get()).output(.3f, ctx.get(), 2)))
+				.noModel()
 				.register();
 
 		modEventBus.addListener(RecipeItems::gatherData);
