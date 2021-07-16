@@ -69,7 +69,7 @@ public class PickerItem extends Item {
 			}
 			AxisAlignedBB bb;
 			if(plr instanceof DeployerFakePlayer) {
-				bb = plr.getBoundingBox().offset(-.5,-.5,-.5);
+				bb = plr.getBoundingBox().offset(-.5,-.5,-.5).grow(.3);
 			} else {
 				RayTraceResult raytraceresult = rayTrace(world, plr, RayTraceContext.FluidMode.NONE);
 				if (!(raytraceresult instanceof BlockRayTraceResult))
@@ -79,7 +79,6 @@ public class PickerItem extends Item {
 
 				bb = new AxisAlignedBB(hitVec, hitVec).grow(1f);
 			}
-			System.out.println(bb.getCenter());
 			ItemEntity pickUp = null;
 			for (ItemEntity itemEntity : world.getEntitiesWithinAABB(ItemEntity.class, bb)) {
 				if (!itemEntity.isAlive())
