@@ -27,7 +27,7 @@ public class ModPonder {
 		PonderRegistry.provideLangEntries().getAsJsonObject().entrySet().forEach(e -> {
 			String k = e.getKey();
 			String v = e.getValue().getAsString();
-			if (k.contains(CreateAutomated.modid + ".")) {
+			if (k.contains(CreateAutomated.MODID + ".")) {
 				registrate.addRawLang(k, v);
 			}
 		});

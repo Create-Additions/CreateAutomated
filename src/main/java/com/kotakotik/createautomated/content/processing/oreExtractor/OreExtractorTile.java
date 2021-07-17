@@ -10,7 +10,10 @@ import com.kotakotik.createautomated.register.config.ModServerConfig;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPoint;
 import com.simibubi.create.foundation.utility.VecHelper;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.OreBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -151,7 +154,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		compound.putInt("Durability", durability);
 		compound.putInt("MaxDurability", maxDurability);
 		compound.putFloat("DrillPos", drillPos);
-		compound.putString("DrillId", drillId == null ? CreateAutomated.modid + ":block/ore_extractor/drill" : drillId.toString());
+		compound.putString("DrillId", drillId == null ? CreateAutomated.MODID + ":block/ore_extractor/drill" : drillId.toString());
 	}
 
 	@Override

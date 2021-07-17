@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Tags;
 
 public class ModItems {
-	public static ItemGroup itemGroup = new ItemGroup(CreateAutomated.modid) {
+	public static ItemGroup itemGroup = new ItemGroup(CreateAutomated.MODID) {
 		@Override
 		public ItemStack createIcon() {
 			return new ItemStack(AllItems.WRENCH.get());

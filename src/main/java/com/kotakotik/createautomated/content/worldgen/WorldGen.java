@@ -97,7 +97,7 @@ public class WorldGen {
 			case NETHER:
 				NETHER_NODES.add(feature);
 		}
-		return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, CreateAutomated.modid + ":" + name, feature);
+		return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, CreateAutomated.MODID + ":" + name, feature);
 	}
 
 	public enum NodeDimension {

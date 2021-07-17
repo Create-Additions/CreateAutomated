@@ -1,5 +1,6 @@
 package com.kotakotik.createautomated;
 
+import com.kotakotik.createaddon.BuildConfig;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.*;
 import com.kotakotik.createautomated.register.config.ModConfig;
@@ -14,8 +15,6 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DatagenModLoader;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -23,17 +22,17 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(CreateAutomated.modid)
+@Mod(CreateAutomated.MODID)
 public class CreateAutomated {
 
 	// Directly reference a log4j logger.
 	public static final Logger LOGGER = LogManager.getLogger();
 
-	public static final String modid = "createautomated";
+	public static final String MODID = BuildConfig.MODID;
 
 	public static IEventBus modEventBus;
 
-	public static final NonNullLazyValue<CreateRegistrate> registrate = CreateRegistrate.lazy(modid);
+	public static final NonNullLazyValue<CreateRegistrate> registrate = CreateRegistrate.lazy(MODID);
 
 	public CreateAutomated() {
 		modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -65,6 +64,6 @@ public class CreateAutomated {
 	}
 
 	public static ResourceLocation asResource(String path) {
-		return new ResourceLocation(modid, path);
+		return new ResourceLocation(MODID, path);
 	}
 }

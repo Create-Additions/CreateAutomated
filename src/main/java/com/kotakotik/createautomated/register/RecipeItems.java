@@ -241,7 +241,7 @@ public class RecipeItems {
 	public static RecipeItem<Item> DIAMOND_BIT;
 	public static RecipeItem<Item> IRON_BIT;
 
-	public static ItemGroup itemGroup = new ItemGroup(CreateAutomated.modid + "_resources") {
+	public static ItemGroup itemGroup = new ItemGroup(CreateAutomated.MODID + "_resources") {
 		@Override
 		public ItemStack createIcon() {
 			return new ItemStack(IRON_EXTRACTABLE.ORE_PIECE.get());
