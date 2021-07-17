@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "createautomated:wet_sponge_frame"
+  },
+  "result": "createautomated:sponge_frame",
+  "experience": 0.0,
+  "cookingtime": 200
+}

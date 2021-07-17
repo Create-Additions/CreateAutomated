@@ -2,7 +2,7 @@
   "type": "create:mixing",
   "ingredients": [
     {
-      "tag": "createautomated:diamond_bits"
+      "tag": "createautomated:bits/diamond"
     },
     {
       "fluid": "createautomated:molten_diamond",

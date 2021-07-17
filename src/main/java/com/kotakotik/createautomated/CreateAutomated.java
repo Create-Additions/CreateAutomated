@@ -21,17 +21,17 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(CreateAutomated.modid)
+@Mod(CreateAutomated.MODID)
 public class CreateAutomated {
 
 	// Directly reference a log4j logger.
-	private static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogManager.getLogger();
 
-	public static final String modid = "createautomated";
+	public static final String MODID = BuildConfig.MODID;
 
 	public static IEventBus modEventBus;
 
-	public static final NonNullLazyValue<CreateRegistrate> registrate = CreateRegistrate.lazy(modid);
+	public static final NonNullLazyValue<CreateRegistrate> registrate = CreateRegistrate.lazy(MODID);
 
 	public CreateAutomated() {
 		modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -47,6 +47,7 @@ public class CreateAutomated {
 		OneTimeEventReceiver.addListener(modEventBus, FMLCommonSetupEvent.class, (e) -> {
 			WorldGen.reg(e);
 			ModActors.register();
+			ModPackets.registerPackets();
 		});
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
 				() -> ModBlockPartials::load);
@@ -62,6 +63,6 @@ public class CreateAutomated {
 	}
 
 	public static ResourceLocation asResource(String path) {
-		return new ResourceLocation(modid, path);
+		return new ResourceLocation(MODID, path);
 	}
 }

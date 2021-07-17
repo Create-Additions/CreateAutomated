@@ -2,13 +2,13 @@
   "type": "create:mixing",
   "ingredients": [
     {
-      "tag": "createautomated:diamond_bits"
+      "tag": "createautomated:bits/diamond"
     },
     {
-      "tag": "createautomated:diamond_bits"
+      "tag": "createautomated:bits/diamond"
     },
     {
-      "tag": "createautomated:diamond_bits"
+      "tag": "createautomated:bits/diamond"
     }
   ],
   "results": [

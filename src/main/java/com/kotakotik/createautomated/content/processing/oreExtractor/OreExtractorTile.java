@@ -156,7 +156,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		compound.putInt("Durability", durability);
 		compound.putInt("MaxDurability", maxDurability);
 		compound.putFloat("DrillPos", drillPos);
-		compound.putString("DrillId", drillId == null ? CreateAutomated.modid + ":block/ore_extractor/drill" : drillId.toString());
+		compound.putString("DrillId", drillId == null ? CreateAutomated.MODID + ":block/ore_extractor/drill" : drillId.toString());
 	}
 
 	@Override

@@ -1,0 +1,13 @@
+{
+  "type": "create:splashing",
+  "ingredients": [
+    {
+      "item": "createautomated:lava_sponge_frame"
+    }
+  ],
+  "results": [
+    {
+      "item": "createautomated:sponge_frame"
+    }
+  ]
+}

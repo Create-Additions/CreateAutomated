@@ -1,0 +1,13 @@
+{
+  "type": "create:splashing",
+  "ingredients": [
+    {
+      "item": "createautomated:sponge_frame"
+    }
+  ],
+  "results": [
+    {
+      "item": "createautomated:wet_sponge_frame"
+    }
+  ]
+}

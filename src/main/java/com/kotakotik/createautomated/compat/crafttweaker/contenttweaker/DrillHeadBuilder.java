@@ -6,26 +6,20 @@ import com.blamejared.contenttweaker.api.items.ItemTypeBuilder;
 import com.blamejared.contenttweaker.api.resources.ResourceType;
 import com.blamejared.contenttweaker.api.resources.WriteableResource;
 import com.blamejared.contenttweaker.api.resources.WriteableResourceTemplate;
-import com.blamejared.contenttweaker.blocks.BlockBuilder;
 import com.blamejared.contenttweaker.items.ItemBuilder;
-import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.impl.actions.tags.ActionTagAdd;
-import com.blamejared.crafttweaker.impl.tag.MCTag;
-import com.blamejared.crafttweaker.impl.tag.manager.TagManager;
-import com.blamejared.crafttweaker.impl.tag.manager.TagManagerItem;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.api.DrillPartialIndex;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
-import com.kotakotik.createautomated.register.RecipeItems;
-import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.Tags;
 import org.openzen.zencode.java.ZenCodeType;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @ZenRegister(modDeps = {"contenttweaker"})
 @ZenCodeType.Name("mods.createautomated.item.DrillHeadBuilder")
@@ -91,7 +85,7 @@ public class DrillHeadBuilder extends ItemTypeBuilder {
 			if(builder.generateDrillModel) {
 				resources.add(new WriteableResourceTemplate(ResourceType.ASSETS,
 						id, "models", "block", "drills").withTemplate(ResourceType.ASSETS,
-						new ResourceLocation(CreateAutomated.modid, "models/block/drill")).setLocationProperty(id));
+						new ResourceLocation(CreateAutomated.MODID, "models/block/drill")).setLocationProperty(id));
 			}
 			return resources;
 		}

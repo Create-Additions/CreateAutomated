@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "createautomated:lava_sponge_frame_from_sponge"
+    ]
+  },
+  "criteria": {
+    "has_sponge": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:sponge"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "createautomated:lava_sponge_frame_from_sponge"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sponge",
+      "has_the_recipe"
+    ]
+  ]
+}

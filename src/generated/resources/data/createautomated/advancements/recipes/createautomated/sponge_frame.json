@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "createautomated:sponge_frame"
+    ]
+  },
+  "criteria": {
+    "has_sponge": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:sponge"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "createautomated:sponge_frame"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sponge",
+      "has_the_recipe"
+    ]
+  ]
+}
