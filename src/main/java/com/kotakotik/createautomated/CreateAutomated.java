@@ -1,6 +1,5 @@
 package com.kotakotik.createautomated;
 
-import com.kotakotik.createaddon.BuildConfig;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.*;
 import com.kotakotik.createautomated.register.config.ModConfig;
