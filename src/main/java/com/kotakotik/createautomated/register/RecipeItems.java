@@ -335,7 +335,6 @@ public class RecipeItems {
 		IRON_BIT = RecipeItem.createBasic("iron_bit", registrate)
 				.quickTag("bits", "iron")
 				.recipe((ctx, prov) -> CRUSHING.add("iron_bit", b -> b.require(Items.IRON_NUGGET).output(ctx.get()).output(.3f, ctx.get(), 2)))
-				.noModel()
 				.register();
 
 		modEventBus.addListener(RecipeItems::gatherData);
