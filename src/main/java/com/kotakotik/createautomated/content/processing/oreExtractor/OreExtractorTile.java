@@ -99,6 +99,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 			particles();
 		}
 		getBlockState(); // super.tick() crashes cuz blockstate is null, this puts one in the cache
+		System.out.println(getBlockState());
 
 		super.tick();
 		if (!level.isClientSide) {
@@ -188,7 +189,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	@Override
 	public void setRemoved() {
 		super.setRemoved();
-		invHandler.invalidate();
+//		invHandler.invalidate();
 	}
 
 	@Nonnull
@@ -208,12 +209,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
 	@Override
 	public World getWorld() {
-		return level;
-	}
-
-	@Override
-	public World getLevel() {
-		return null;
+		return getLevel();
 	}
 
 	public class Inv extends ItemStackHandler {
