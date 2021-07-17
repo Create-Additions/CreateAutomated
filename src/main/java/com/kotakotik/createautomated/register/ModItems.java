@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 public class ModItems {
 	public static ItemGroup itemGroup = new ItemGroup(CreateAutomated.modid) {
 		@Override
-		public ItemStack createIcon() {
+		public ItemStack makeIcon() {
 			return new ItemStack(AllItems.WRENCH.get());
 		}
 	};
@@ -21,7 +21,7 @@ public class ModItems {
 	public static void register(CreateRegistrate registrate) {
 		registrate.itemGroup(() -> itemGroup, "Create Automated");
 
-		PICKER = registrate.item("picker", PickerItem::new).properties(p -> p.maxDamage(32)).register();
+		PICKER = registrate.item("picker", PickerItem::new).properties(p -> p.durability(32)).register();
 //        LAPIS_ORE_PIECE = registrate.item("lapis_ore_piece", Item::new).tag(ModTags.Items.ORE_PIECES).register();
 //        IRON_INGOT_PIECE = registrate.item("iron_ingot_piece", Item::new).register();
 	}

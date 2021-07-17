@@ -22,9 +22,9 @@ public interface IOreExtractorBlock {
 		if (direction == getDirectionToOther(isTop())) {
 			if (!(updatingState.getBlock() instanceof IOreExtractorBlock)) {
 				if (drop) {
-					return Blocks.AIR.getDefaultState();
+					return Blocks.AIR.defaultBlockState();
 				}
-				world.breakBlock(pos, false, null);
+				world.removeBlock(pos, false);
 			}
 		}
 		return state;

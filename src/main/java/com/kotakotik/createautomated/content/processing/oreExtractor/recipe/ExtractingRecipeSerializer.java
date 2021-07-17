@@ -13,9 +13,9 @@ public class ExtractingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerial
 	public static ExtractingRecipeSerializer INSTANCE;
 
 	@Override
-	public ExtractingRecipe read(ResourceLocation id, JsonObject json) {
+	public ExtractingRecipe fromJson(ResourceLocation id, JsonObject json) {
 		return new ExtractingRecipe(id,
-				Ingredient.deserialize(json.get("node")),
+				Ingredient.fromJson(json.get("node")),
 				json.get("output").getAsString(),
 				json.get("drillDamage").getAsInt(),
 				json.get("requiredProgress").getAsInt(),
@@ -25,10 +25,10 @@ public class ExtractingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerial
 
 	@Nullable
 	@Override
-	public ExtractingRecipe read(ResourceLocation id, PacketBuffer buffer) {
+	public ExtractingRecipe fromNetwork(ResourceLocation id, PacketBuffer buffer) {
 		return new ExtractingRecipe(id,
-				Ingredient.read(buffer), //node
-				buffer.readString(), // output
+				Ingredient.fromNetwork(buffer), //node
+				buffer.readUtf(), // output
 				buffer.readInt(), // drill damage
 				buffer.readInt(), // required progress
 				// min ore, max ore
@@ -36,8 +36,8 @@ public class ExtractingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerial
 				buffer.readInt());
 	}
 
-	public void write(JsonObject json, ExtractingRecipe recipe) {
-		json.add("node", recipe.node.serialize());
+	public void toJson(JsonObject json, ExtractingRecipe recipe) {
+		json.add("node", recipe.node.toJson());
 		json.addProperty("output", recipe.output);
 		json.addProperty("drillDamage", recipe.drillDamage);
 		json.addProperty("requiredProgress", recipe.requiredProgress);
@@ -46,9 +46,9 @@ public class ExtractingRecipeSerializer extends ForgeRegistryEntry<IRecipeSerial
 	}
 
 	@Override
-	public void write(PacketBuffer buffer, ExtractingRecipe recipe) {
-		recipe.node.write(buffer);
-		buffer.writeString(recipe.output);
+	public void toNetwork(PacketBuffer buffer, ExtractingRecipe recipe) {
+		recipe.node.toNetwork(buffer);
+		buffer.writeUtf(recipe.output);
 		buffer.writeInt(recipe.drillDamage);
 		buffer.writeInt(recipe.requiredProgress);
 		buffer.writeInt(recipe.minOre);

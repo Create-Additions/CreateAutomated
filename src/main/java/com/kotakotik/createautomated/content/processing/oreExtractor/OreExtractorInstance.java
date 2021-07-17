@@ -32,7 +32,7 @@ public class OreExtractorInstance extends CogInstance implements IDynamicInstanc
 		drill = getRotatingMaterial().getModel(DrillPartialIndex.get(getTile().drillId), blockState).createInstance();
 		drill.setRotationAxis(Direction.Axis.Y);
 		updateDrillRotation();
-		drill.setPosition(getInstancePosition().down());
+		drill.setPosition(getInstancePosition().below());
 		return drill;
 	}
 
@@ -85,7 +85,7 @@ public class OreExtractorInstance extends CogInstance implements IDynamicInstanc
 	public void updateLight() {
 		super.updateLight();
 		if (!isDrillRemoved()) {
-			relight(this.pos.down(), drill);
+			relight(this.pos.below(), drill);
 		}
 	}
 

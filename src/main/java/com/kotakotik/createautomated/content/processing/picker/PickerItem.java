@@ -3,6 +3,7 @@ package com.kotakotik.createautomated.content.processing.picker;
 import com.kotakotik.createautomated.content.processing.picker.recipe.PickingRecipe;
 import com.kotakotik.createautomated.register.ModRecipeTypes;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -26,19 +27,18 @@ public class PickerItem extends Item {
 
 	// TODO: make picking not instant
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity plr, Hand hand) {
+	public ActionResult<ItemStack> use(World world, PlayerEntity plr, Hand hand) {
 		Hand otherHand = hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND;
-		pick(plr.getHeldItem(otherHand), world, plr.getHeldItem(hand), !plr.isCreative(), plr).forEach(plr::addItemStackToInventory);
-		return super.onItemRightClick(world, plr, hand);
+		pick(plr.getItemInHand(otherHand), world, plr.getItemInHand(hand), !plr.isCreative(), plr).forEach(plr::addItem);
+		return super.use(world, plr, hand);
 	}
 
 	public static List<ItemStack> pick(ItemStack toPick, World world, ItemStack picker, boolean damage, PlayerEntity plr) {
-		Optional<PickingRecipe> recipe = world.getRecipeManager().getRecipe(ModRecipeTypes.PICKING, new PickingRecipe.PickingInventory(toPick), world);
+		Optional<PickingRecipe> recipe = world.getRecipeManager().getRecipeFor(ModRecipeTypes.PICKING, new PickingRecipe.PickingInventory(toPick), world);
 		if (recipe.isPresent()) {
 			PickingRecipe r = recipe.get();
 			toPick.shrink(1);
-			if (damage) picker.damageItem(1, plr, p -> {
-			});
+			if (damage) picker.hurtAndBreak(1, plr, LivingEntity::animateHurt);
 			return r.generateOutputs();
 		}
 		return new ArrayList<>();
@@ -59,7 +59,7 @@ public class PickerItem extends Item {
 				pick(item.getItem(), event.getWorld(), event.getItemStack(), !event.getPlayer().isCreative(), event.getPlayer()).forEach(stack -> {
 					World world = event.getWorld();
 					ItemEntity output = new ItemEntity(world, item.getX(), item.getY(), item.getZ(), stack);
-					world.addEntity(output);
+					world.addFreshEntity(output);
 				});
 				// ah yes, getItem().getItem()
 				// amazing mappings lol

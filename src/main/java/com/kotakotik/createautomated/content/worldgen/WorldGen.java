@@ -53,11 +53,11 @@ public class WorldGen {
 		}
 
 		public ConfiguredFeature<?, ?> create() {
-			ConfiguredFeature<?, ?> f = Feature.ORE.configure(new OreFeatureConfig(
-					test, block.get().getDefaultState(), ModCommonConfig.worldGenVeinSizes.get(name).get()))
-					.decorate(Placement.RANGE.configure(new TopSolidRangeConfig(ModCommonConfig.worldGenMinHeights.get(name).get(), 0, ModCommonConfig.worldGenMaxHeights.get(name).get())))
-					.spreadHorizontally()
-					.repeat(ModCommonConfig.worldGenFrequencies.get(name).get());
+			ConfiguredFeature<?, ?> f = Feature.ORE.configured(new OreFeatureConfig(
+					test, block.get().defaultBlockState(), ModCommonConfig.worldGenVeinSizes.get(name).get()))
+					.decorated(Placement.RANGE.configured(new TopSolidRangeConfig(ModCommonConfig.worldGenMinHeights.get(name).get(), 0, ModCommonConfig.worldGenMaxHeights.get(name).get())))
+					.squared()
+					.chance(ModCommonConfig.worldGenFrequencies.get(name).get());
 
 			this.registered = f;
 			return f;
@@ -70,9 +70,9 @@ public class WorldGen {
 	public static void gen(BiomeLoadingEvent e) {
 		BiomeGenerationSettingsBuilder gen = e.getGeneration();
 		if (e.getCategory() == Biome.Category.NETHER) {
-			NETHER_NODES.forEach(n -> gen.feature(GenerationStage.Decoration.SURFACE_STRUCTURES, n));
+			NETHER_NODES.forEach(n -> gen.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, n));
 		} else if (e.getName() != Biomes.THE_END.getRegistryName()) {
-			NODES.forEach(n -> gen.feature(GenerationStage.Decoration.SURFACE_STRUCTURES, n));
+			NODES.forEach(n -> gen.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, n));
 		}
 	}
 

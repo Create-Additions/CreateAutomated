@@ -45,7 +45,7 @@ public class PickingCategory implements IRecipeCategory<PickingRecipe> {
 	}
 
 	public static List<IRecipe<?>> getRecipes() {
-		return Minecraft.getInstance().world.getRecipeManager()
+		return Minecraft.getInstance().level.getRecipeManager()
 				.getRecipes()
 				.stream()
 				.filter(r -> r.getType() == ModRecipeTypes.PICKING)
@@ -94,7 +94,7 @@ public class PickingCategory implements IRecipeCategory<PickingRecipe> {
 
 		itemStacks.init(0, true, 26, 28);
 		itemStacks.set(0, Arrays.asList(pickingRecipe.input
-				.getMatchingStacks()));
+				.getItems()));
 		itemStacks.init(1, false, 131, 28);
 		itemStacks.set(1, results.get(0)
 				.getStack());
@@ -104,7 +104,7 @@ public class PickingCategory implements IRecipeCategory<PickingRecipe> {
 				ProcessingOutput output = results.get(i - 1);
 				float chance = output.getChance();
 				if (chance != 1) {
-					tooltip.add(1, Lang.translate("recipe.processing.chance", (double)chance < 0.01f ? "<1" : (int)(chance * 100)).formatted(TextFormatting.GOLD));
+					tooltip.add(1, Lang.translate("recipe.processing.chance", (double) chance < 0.01f ? "<1" : (int) (chance * 100)).withStyle(TextFormatting.GOLD));
 				}
 			}
 		});
@@ -119,16 +119,16 @@ public class PickingCategory implements IRecipeCategory<PickingRecipe> {
 		AllGuiTextures.JEI_LONG_ARROW.draw(matrixStack, 52, 32);
 
 		ItemStack[] matchingStacks = recipe.input
-				.getMatchingStacks();
+				.getItems();
 		if (matchingStacks.length == 0)
 			return;
 
 		ItemStack s = matchingStacks[0];
 
-		matrixStack.push();
+		matrixStack.pushPose();
 		matrixStack.scale(1.4f, 1.4f, 1.4f);
-		GuiGameElement.of(s).draw(matrixStack,55, 3);
-		matrixStack.pop();
+		GuiGameElement.of(s).draw(matrixStack, 55, 3);
+		matrixStack.popPose();
 
 		picker.draw(matrixStack, 80, -10);
 	}

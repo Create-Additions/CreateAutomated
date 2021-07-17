@@ -16,6 +16,6 @@ public class BottomOreExtractorTile extends TileEntity {
 	@Nonnull
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-		return world.getTileEntity(pos.up()).getCapability(cap, side);
+		return level.getBlockEntity(worldPosition.above()).getCapability(cap, side);
 	}
 }

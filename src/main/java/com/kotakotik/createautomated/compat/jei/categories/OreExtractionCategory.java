@@ -74,7 +74,7 @@ public class OreExtractionCategory implements IRecipeCategory<ExtractingRecipe> 
 
 	@Override
 	public void setIngredients(ExtractingRecipe recipe, IIngredients iIngredients) {
-		iIngredients.setInput(VanillaTypes.ITEM, new ItemStack(recipe.node.getMatchingStacks()[0].getItem()));// not sure whether i actually need to create a new itemstack but *idc*
+		iIngredients.setInput(VanillaTypes.ITEM, new ItemStack(recipe.node.getItems()[0].getItem()));// not sure whether i actually need to create a new itemstack but *idc*
 
 		iIngredients.setOutput(VanillaTypes.ITEM, recipe.getCraftingResult1Size());
 	}
@@ -89,7 +89,7 @@ public class OreExtractionCategory implements IRecipeCategory<ExtractingRecipe> 
 		guiItemStacks.addTooltipCallback((i, input, stack, tooltip) -> {
 			if (!input) {
 				if (recipe.minOre != recipe.maxOre) {
-					tooltip.add(CALocalization.JEI_ORE_EXTRACTOR_BETWEEN.getComponent(recipe.minOre, recipe.maxOre).formatted(TextFormatting.GOLD));
+					tooltip.add(CALocalization.JEI_ORE_EXTRACTOR_BETWEEN.getComponent(recipe.minOre, recipe.maxOre).withStyle(TextFormatting.GOLD));
 //                    tooltip.add(new StringTextComponent("From " + recipe.minOre + " to " + recipe.maxOre).formatted(TextFormatting.GOLD));
 				} else {
 					stack.setCount(recipe.minOre);
@@ -102,16 +102,16 @@ public class OreExtractionCategory implements IRecipeCategory<ExtractingRecipe> 
 	public List<ITextComponent> getTooltipStrings(ExtractingRecipe recipe, double mouseX, double mouseY) {
 //        System.out.println("x" + mouseX);
 //        System.out.println("y" + mouseY);
-		ItemStack node = recipe.node.getMatchingStacks()[0];
+		ItemStack node = recipe.node.getItems()[0];
 		// from x 30
 		// from y 86
 		// to x 60
 		// to y 56
 		if (mouseX > 30 && mouseX < 60 && mouseY > 56 && mouseX < 86) {
 			return Lists.newArrayList(
-					new TranslationTextComponent(node.getItem().getTranslationKey()),
-					CALocalization.JEI_ORE_EXTRACTOR_DRILL_DAMAGE.getComponent(recipe.drillDamage).formatted(TextFormatting.GOLD),
-					CALocalization.JEI_ORE_EXTRACTOR_TIME.getComponent(recipe.requiredProgress / 128f / 20f).formatted(TextFormatting.GOLD) // dunno if i actually need to include that they are float but shouldnt hurt right?
+					new TranslationTextComponent(node.getItem().getDescriptionId()),
+					CALocalization.JEI_ORE_EXTRACTOR_DRILL_DAMAGE.getComponent(recipe.drillDamage).withStyle(TextFormatting.GOLD),
+					CALocalization.JEI_ORE_EXTRACTOR_TIME.getComponent(recipe.requiredProgress / 128f / 20f).withStyle(TextFormatting.GOLD) // dunno if i actually need to include that they are float but shouldnt hurt right?
 			);
 		}
 		return IRecipeCategory.super.getTooltipStrings(recipe, mouseX, mouseY);
@@ -119,7 +119,7 @@ public class OreExtractionCategory implements IRecipeCategory<ExtractingRecipe> 
 
 	@Override
 	public void draw(ExtractingRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
-		oreExtractor.drawWithBlock(matrixStack, 30, 30, ((BlockItem) recipe.node.getMatchingStacks()[0].getItem()).getBlock().getDefaultState());
+		oreExtractor.drawWithBlock(matrixStack, 30, 30, ((BlockItem) recipe.node.getItems()[0].getItem()).getBlock().defaultBlockState());
 		AllGuiTextures.JEI_DOWN_ARROW.draw(matrixStack, 80, 30);
 
 		(recipe.minOre > 0 ? AllGuiTextures.JEI_SLOT : AllGuiTextures.JEI_CHANCE_SLOT)
@@ -127,7 +127,7 @@ public class OreExtractionCategory implements IRecipeCategory<ExtractingRecipe> 
 	}
 
 	public static List<IRecipe<?>> getRecipes() {
-		return Minecraft.getInstance().world.getRecipeManager()
+		return Minecraft.getInstance().level.getRecipeManager()
 				.getRecipes()
 				.stream()
 				.filter(r -> r.getType() == ModRecipeTypes.EXTRACTING)

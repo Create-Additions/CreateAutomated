@@ -33,8 +33,9 @@ public class ExtractingRecipeGen extends RecipeProvider {
 		super(p_i48262_1_);
 	}
 
+	// 👽
 	@Override
-	protected void registerRecipes(Consumer<IFinishedRecipe> c) {
+	protected void buildShapelessRecipes(Consumer<IFinishedRecipe> c) {
 		for (ExtractingRecipe.Result built : all) c.accept(built);
 	}
 

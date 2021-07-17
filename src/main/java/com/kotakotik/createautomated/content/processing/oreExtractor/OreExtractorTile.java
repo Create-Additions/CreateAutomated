@@ -10,7 +10,10 @@ import com.kotakotik.createautomated.register.config.ModServerConfig;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPoint;
 import com.simibubi.create.foundation.utility.VecHelper;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.OreBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -56,15 +59,15 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
 	@Override
 	public BlockPos getBreakingPos() {
-		return getPos().down(2);
+		return getBlockPos().below(2);
 	}
 
 	public boolean isBreakableOre(BlockPos pos) {
-		return (ModServerConfig.allowBreakOres.get() && getBlockToMine() instanceof OreBlock) || (ModServerConfig.allowBreakBlocks.get() && !isExtractable(null)) && !world.isAirBlock(getBreakingPos());
+		return (ModServerConfig.allowBreakOres.get() && getBlockToMine() instanceof OreBlock) || (ModServerConfig.allowBreakBlocks.get() && !isExtractable(null)) && !level.isEmptyBlock(getBreakingPos());
 	}
 
 	public boolean isExtractable(BlockPos pos) {
-		return getBlockToMine() instanceof IExtractable || IExtractable.getRecipe(world, getBreakingPos()).isPresent();
+		return getBlockToMine() instanceof IExtractable || IExtractable.getRecipe(level, getBreakingPos()).isPresent();
 	}
 
 	public boolean isDrillLowEnough() {
@@ -81,7 +84,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public Block getBlockToMine() {
-		return world.getBlockState(getBreakingPos()).getBlock();
+		return level.getBlockState(getBreakingPos()).getBlock();
 	}
 
 	@Override
@@ -91,13 +94,14 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
 	@Override
 	public void tick() {
-		assert world != null;
-		if (world.isRemote && (shouldRunExtracting() || shouldRun())) {
+		assert level != null;
+		if (level.isClientSide && (shouldRunExtracting() || shouldRun())) {
 			particles();
 		}
+		getBlockState(); // super.tick() crashes cuz blockstate is null, this puts one in the cache
 
 		super.tick();
-		if(!world.isRemote) {
+		if (!level.isClientSide) {
 			doRedstoneStuff();
 		}
 
@@ -110,7 +114,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public boolean isRedstonePowered() {
-		return world.getBlockState(pos.down()).get(BlockStateProperties.POWERED) ||getBlockState().get(BlockStateProperties.POWERED);
+		return level.getBlockState(getBlockPos().below()).getValue(BlockStateProperties.POWERED) || getBlockState().getValue(BlockStateProperties.POWERED);
 	}
 
 	protected void doRedstoneStuff() {
@@ -182,8 +186,8 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	@Override
-	public void remove() {
-		super.remove();
+	public void setRemoved() {
+		super.setRemoved();
 		invHandler.invalidate();
 	}
 
@@ -197,6 +201,21 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		return super.getCapability(capability, facing);
 	}
 
+	@Override
+	public boolean shouldRenderNormally() {
+		return super.shouldRenderNormally();
+	}
+
+	@Override
+	public World getWorld() {
+		return level;
+	}
+
+	@Override
+	public World getLevel() {
+		return null;
+	}
+
 	public class Inv extends ItemStackHandler {
 		public Inv() {
 			super(1);
@@ -204,7 +223,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
 		@Override
 		public boolean isItemValid(int slot, ItemStack stack) {
-			return stack.getItem().getTags().contains(ModTags.Items.ORE_PIECES.getId());
+			return stack.getItem().getTags().contains(ModTags.Items.ORE_PIECES.getName());
 		}
 
 		@Nonnull
@@ -227,14 +246,14 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public void particle(IParticleData data) {
-		float angle = world.rand.nextFloat() * 360;
+		float angle = level.random.nextFloat() * 360;
 		Vector3d offset = new Vector3d(0, 0, 0.25f);
 		offset = VecHelper.rotate(offset, angle, Direction.Axis.Y);
 		Vector3d target = VecHelper.rotate(offset, getSpeed() > 0 ? 25 : -25, Direction.Axis.Y)
 				.add(0, .25f, 0);
-		Vector3d center = offset.add(VecHelper.getCenterOf(pos));
-		target = VecHelper.offsetRandomly(target.subtract(offset), world.rand, 1 / 128f);
-		world.addParticle(data, center.x, center.y - 1.75f, center.z, target.x, target.y, target.z);
+		Vector3d center = offset.add(VecHelper.getCenterOf(getBlockPos()));
+		target = VecHelper.offsetRandomly(target.subtract(offset), level.random, 1 / 128f);
+		level.addParticle(data, center.x, center.y - 1.75f, center.z, target.x, target.y, target.z);
 	}
 
 	public void particles(int amount, ItemStack stack) {
@@ -268,7 +287,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 			if (lastRenderDurability != durability && durability == 0) {
 				// TODO: subtitle shows item breaking instead of drill breaking
 				// TODO: probably just make a custom sound for this
-				world.playSound(Minecraft.getInstance().player, pos, SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS, 1, 10);
+				level.playSound(Minecraft.getInstance().player, getBlockPos(), SoundEvents.ITEM_BREAK, SoundCategory.BLOCKS, 1, 10);
 				particles(RandomUtils.nextInt(30, 50), new ItemStack(Blocks.IRON_BLOCK)); // SUMMON **ALL** THE PARTICLES!!!
 			}
 		}
@@ -304,14 +323,14 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		}
 
 		@Override
-		protected ItemStack insert(World world, ItemStack stack, boolean simulate) {
+		protected ItemStack insert(World level, ItemStack stack, boolean simulate) {
 			if (!armCanInsertDrills()) return stack;
 			if (!(stack.getItem() instanceof IDrillHead)) return stack;
-			TileEntity t = world.getTileEntity(pos);
+			TileEntity t = level.getBlockEntity(pos);
 			OreExtractorTile tile;
 			if (t instanceof OreExtractorTile) tile = (OreExtractorTile) t;
 			else {
-				tile = (OreExtractorTile) world.getTileEntity(pos.up());
+				tile = (OreExtractorTile) level.getBlockEntity(pos.above());
 			}
 			if (tile == null) return stack;
 			if (tile.durability == 0) {
@@ -327,8 +346,8 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		}
 
 		@Override
-		protected ItemStack extract(World world, int slot, int amount, boolean simulate) {
-			return armCanExtractOrePieces() ? super.extract(world, slot, amount, simulate) : ItemStack.EMPTY;
+		protected ItemStack extract(World level, int slot, int amount, boolean simulate) {
+			return armCanExtractOrePieces() ? super.extract(level, slot, amount, simulate) : ItemStack.EMPTY;
 		}
 
 		@Override

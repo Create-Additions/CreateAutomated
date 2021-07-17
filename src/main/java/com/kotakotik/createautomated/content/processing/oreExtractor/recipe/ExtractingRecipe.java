@@ -37,7 +37,7 @@ public class ExtractingRecipe implements IRecipe<IInventory> { // help
 	}
 
 	public ExtractingRecipe node(IItemProvider item) {
-		return node(Ingredient.fromItems(item));
+		return node(Ingredient.of(item));
 	}
 
 	public ExtractingRecipe node(NonNullSupplier<IItemProvider> item) {
@@ -97,31 +97,31 @@ public class ExtractingRecipe implements IRecipe<IInventory> { // help
 
 	@Override
 	public boolean matches(IInventory inv, World world) {
-		return node.test(inv.getStackInSlot(0));
+		return node.test(inv.getItem(0));
 	}
 
 	@Override
-	public ItemStack getCraftingResult(@Nullable IInventory p_77572_1_) {
+	public ItemStack assemble(@Nullable IInventory p_77572_1_) {
 		ItemStack stack = getCraftingResult1Size();
 		stack.setCount(minOre == maxOre ? minOre : RandomUtils.nextInt(minOre, maxOre));
 		return stack;
 	}
 
 	public ItemStack getCraftingResult() {
-		return getCraftingResult(null);
+		return assemble(null);
 	}
 
 	public ItemStack getCraftingResult1Size() {
-		return getRecipeOutput();
+		return getResultItem();
 	}
 
 	@Override
-	public boolean canFit(int p_194133_1_, int p_194133_2_) {
+	public boolean canCraftInDimensions(int p_194133_1_, int p_194133_2_) {
 		return true;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(output)));
 	}
 
@@ -142,7 +142,7 @@ public class ExtractingRecipe implements IRecipe<IInventory> { // help
 
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
-		return NonNullList.from(node);
+		return NonNullList.of(node);
 	}
 
 	@Override
@@ -174,8 +174,8 @@ public class ExtractingRecipe implements IRecipe<IInventory> { // help
 		}
 
 		@Override
-		public void serialize(JsonObject json) {
-			getSerializer().write(json, clone());
+		public void serializeRecipeData(JsonObject json) {
+			getType().toJson(json, clone());
 		}
 
 		public ExtractingRecipe clone() {
@@ -183,24 +183,23 @@ public class ExtractingRecipe implements IRecipe<IInventory> { // help
 		}
 
 		@Override
-		public ResourceLocation getID() {
+		public ResourceLocation getId() {
 			return id;
 		}
 
-		@Override
-		public ExtractingRecipeSerializer getSerializer() {
+		public ExtractingRecipeSerializer getType() {
 			return ExtractingRecipeSerializer.get();
 		}
 
 		@Nullable
 		@Override
-		public JsonObject getAdvancementJson() {
+		public JsonObject serializeAdvancement() {
 			return null;
 		}
 
 		@Nullable
 		@Override
-		public ResourceLocation getAdvancementID() {
+		public ResourceLocation getAdvancementId() {
 			return null;
 		}
 	}

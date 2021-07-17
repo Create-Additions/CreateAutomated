@@ -2,8 +2,8 @@ package com.kotakotik.createautomated.register;
 
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
-import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipeGen;
 import com.kotakotik.createautomated.content.processing.oreExtractor.TopOreExtractorBlock;
+import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipeGen;
 import com.kotakotik.createautomated.content.processing.picker.recipe.PickingRecipeGen;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
@@ -97,7 +97,7 @@ public class RecipeItems {
 				EXTRACTING.add(name, e -> e.output(ORE_PIECE).node(ctx.get()).ore(minOre, maxOre).requiredProgress(progress.apply(new IOreExtractorBlock.ExtractorProgressBuilder())).drillDamage(drillDamage));
 			})
 					.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, NODE_TAG, ModTags.References.NON_MOVABLE).loot((p, b) -> {
-						p.registerDropping(b, Items.AIR);
+						p.dropOther(b, Items.AIR);
 					}).simpleItem()).register();
 			return this;
 		}
@@ -179,7 +179,7 @@ public class RecipeItems {
 
 		RecipeItem<T> quickTag(Tags.IOptionalNamedTag<Item> tag, String s) {
 //            itemTag = ModTags.Items.tag(tag.getId().getPath() + "/" + s);
-			itemTag = ItemTags.createOptional(new ResourceLocation(tag.getId().getNamespace(), tag.getId().getPath() + "/" + s));
+			itemTag = ItemTags.createOptional(new ResourceLocation(tag.getName().getNamespace(), tag.getName().getPath() + "/" + s));
 			builder.tag(tag, itemTag);
 			generalTag = tag;
 			return this;
@@ -203,7 +203,7 @@ public class RecipeItems {
 		}
 
 		RecipeItem<T> nonStackable() {
-			return configureProperties(p -> p.maxStackSize(1));
+			return configureProperties(p -> p.stacksTo(1));
 		}
 
 		RecipeItem<T> configureProperties(UnaryOperator<Item.Properties> f) {
@@ -236,14 +236,14 @@ public class RecipeItems {
 
 	public static ItemGroup itemGroup = new ItemGroup(CreateAutomated.modid + "_resources") {
 		@Override
-		public ItemStack createIcon() {
+		public ItemStack makeIcon() {
 			return new ItemStack(IRON_EXTRACTABLE.ORE_PIECE.get());
 		}
 	};
 
 	public static void register(CreateRegistrate registrate) {
 		registrate.itemGroup(() -> itemGroup, "Create Automated resources");
-//		registrate.addRawLang(((TranslationTextComponent) itemGroup.getTranslationKey()).getKey() , "Create Automated resources");
+//		registrate.addRawLang(((TranslationTextComponent) itemGroup.getTranslationdefine()).getdefine() , "Create Automated resources");
 //		CreateRegistrate registrate = CreateAutomated.registrate.get();
 		LAPIS_EXTRACTABLE = new GlueableExtractableResource("lapis", registrate, true, () -> Items.LAPIS_LAZULI, c -> c)
 				.node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(10).build(), c -> c, 1)
@@ -289,26 +289,26 @@ public class RecipeItems {
 //                .tag(ModTags.Items.DRILL_HEADS)
 //                .properties(p -> p.maxStackSize(1))
 //                .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
-//                        .patternLine("bbb")
-//                        .patternLine("rbr")
-//                        .patternLine(" r ")
-//                        .key('b', Blocks.IRON_BLOCK)
-//                        .key('r', Items.IRON_INGOT)
-//                        .addCriterion("has_extractor", RegistrateRecipeProvider.hasItem(ModBlocks.ORE_EXTRACTOR_BOTTOM.get()))
-//                        .build(prov))
+//                        .pattern("bbb")
+//                        .pattern("rbr")
+//                        .pattern(" r ")
+//                        .define('b', Blocks.IRON_BLOCK)
+//                        .define('r', Items.IRON_INGOT)
+//                        .unlockedBy("has_extractor", RegistrateRecipeProvider.hasItem(ModBlocks.ORE_EXTRACTOR_BOTTOM.get()))
+//                        .save(prov)
 //                .register();
 
 		DRILL_HEAD = new RecipeItem<>("drill_head", registrate, DrillHeadItem::new)
 				.quickTag(ModTags.Items.DRILL_HEADS, "iron")
 				.nonStackable()
-				.recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
-						.patternLine("bbb")
-						.patternLine("rbr")
-						.patternLine(" r ")
-						.key('b', Blocks.IRON_BLOCK)
-						.key('r', Items.IRON_INGOT)
-						.addCriterion("has_extractor", RegistrateRecipeProvider.hasItem(ModBlocks.ORE_EXTRACTOR_BOTTOM.get()))
-						.build(prov))
+				.recipe((ctx, prov) -> ShapedRecipeBuilder.shaped(ctx.get())
+						.pattern("bbb")
+						.pattern("rbr")
+						.pattern(" r ")
+						.define('b', Blocks.IRON_BLOCK)
+						.define('r', Items.IRON_INGOT)
+						.unlockedBy("has_extractor", RegistrateRecipeProvider.hasItem(ModBlocks.ORE_EXTRACTOR_BOTTOM.get()))
+						.save(prov))
 				.register();
 
 		CRUSHED_PRISMARINE = RecipeItem.createBasic("crushed_prismarine", registrate)

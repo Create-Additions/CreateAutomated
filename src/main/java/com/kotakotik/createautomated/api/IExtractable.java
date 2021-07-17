@@ -1,7 +1,7 @@
 package com.kotakotik.createautomated.api;
 
-import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipe;
 import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorTile;
+import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipe;
 import com.kotakotik.createautomated.register.ModRecipeTypes;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -31,9 +31,9 @@ public interface IExtractable {
 	}
 
 	static Optional<ExtractingRecipe> getRecipe(World world, BlockPos pos) {
-		return world.getRecipeManager().getRecipe(ModRecipeTypes.EXTRACTING, new RecipeWrapper(new ItemStackHandler(1)) {
+		return world.getRecipeManager().getRecipeFor(ModRecipeTypes.EXTRACTING, new RecipeWrapper(new ItemStackHandler(1)) {
 			@Override
-			public ItemStack getStackInSlot(int slot) {
+			public ItemStack getItem(int slot) {
 				return new ItemStack(world.getBlockState(pos).getBlock()); // probably not the best way of doing this but idc
 			}
 		}, world);

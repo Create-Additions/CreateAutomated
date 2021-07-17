@@ -21,7 +21,7 @@ public class OreExtractorScenes {
 	public static void intro(SceneBuilder scene, SceneBuildingUtil util) {
 		// Positions
 		BlockPos extractorBottom = util.grid.at(1, 1, 1);
-		BlockPos extractorTop = extractorBottom.up();
+		BlockPos extractorTop = extractorBottom.above();
 		BlockPos funnel = util.grid.at(1, 2, 0);
 
 		// Configure
@@ -33,7 +33,7 @@ public class OreExtractorScenes {
 		scene.showBasePlate();
 		scene.idle(5);
 		scene.overlay.showText(80)
-				.attachKeyFrame().placeNearTarget().pointAt(util.vector.topOf(extractorBottom.down()))
+				.attachKeyFrame().placeNearTarget().pointAt(util.vector.topOf(extractorBottom.below()))
 				.text("Resource nodes can be found in the world, however cannot be moved");
 		scene.idle(80);
 
@@ -44,11 +44,11 @@ public class OreExtractorScenes {
 				.text("Ore Extractors can be used to extract from resource nodes");
 		scene.idle(85);
 		scene.overlay.showText(80)
-				.attachKeyFrame().placeNearTarget().pointAt(util.vector.topOf(extractorTop.add(-1, 0, 0)))
+				.attachKeyFrame().placeNearTarget().pointAt(util.vector.topOf(extractorTop.offset(-1, 0, 0)))
 				.text("However they require high speed and stress capacity");
 		scene.idle(20);
 		scene.world.setKineticSpeed(util.select.everywhere(), 128);
-		scene.effects.rotationSpeedIndicator(extractorTop.up().east());
+		scene.effects.rotationSpeedIndicator(extractorTop.above().east());
 		scene.effects.indicateSuccess(extractorBottom);
 		scene.effects.indicateSuccess(extractorTop);
 		scene.idle(60);
@@ -60,7 +60,7 @@ public class OreExtractorScenes {
 		scene.world.setKineticSpeed(util.select.everywhere(), 128);
 		scene.world.modifyTileEntity(extractorTop, OreExtractorTile.class, (entity) -> {
 			entity.setDrill(RecipeItems.DRILL_HEAD.item.get());
-			entity.markDirty(); // dunno if i should do this... lets do it anyway!
+			entity.setChanged(); // dunno if i should do this... lets do it anyway!
 		});
 
 		scene.idle(60);
@@ -75,12 +75,12 @@ public class OreExtractorScenes {
 	public static void automation(SceneBuilder scene, SceneBuildingUtil util) {
 		// Variables
 		BlockPos extractorBottom = util.grid.at(3, 1, 1);
-		BlockPos extractorTop = extractorBottom.up();
+		BlockPos extractorTop = extractorBottom.above();
 		BlockPos deployer = util.grid.at(3, 1, 3);
 		BlockPos hopper = util.grid.at(3, 2, 2);
 		BlockPos funnelIn = util.grid.at(2, 2, 1);
-		BlockPos funnelOut = funnelIn.down();
-		BlockPos chute = extractorTop.up();
+		BlockPos funnelOut = funnelIn.below();
+		BlockPos chute = extractorTop.above();
 		ItemStack drill = new ItemStack(RecipeItems.DRILL_HEAD.item.get());
 
 		// Configure
@@ -148,7 +148,7 @@ public class OreExtractorScenes {
 				.attachKeyFrame().placeNearTarget().pointAt(util.vector.centerOf(funnelOut))
 				.text("Funnels and fan chutes can extract any output items");
 		scene.idle(20);
-		ElementLink<EntityElement> piece = scene.world.createItemEntity(util.vector.topOf(funnelOut.down()), Vector3d.ZERO, new ItemStack(RecipeItems.GOLD_EXTRACTABLE.ORE_PIECE.get(), 34));
+		ElementLink<EntityElement> piece = scene.world.createItemEntity(util.vector.topOf(funnelOut.below()), Vector3d.ZERO, new ItemStack(RecipeItems.GOLD_EXTRACTABLE.ORE_PIECE.get(), 34));
 		scene.world.flapFunnel(funnelOut, false);
 		scene.idle(81);
 

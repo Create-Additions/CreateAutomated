@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PickingRecipe implements IRecipe<IInventory>, IFinishedRecipe {
+public class PickingRecipe implements IRecipe<IInventory> {
 	public List<ProcessingOutput> output = new ArrayList<>();
 	public Ingredient input;
 	public final ResourceLocation id;
@@ -34,44 +34,22 @@ public class PickingRecipe implements IRecipe<IInventory>, IFinishedRecipe {
 	}
 
 	@Override
-	public void serialize(JsonObject json) {
-		((PickingRecipeSerializer) getSerializer()).write(json, this);
-	}
-
-	@Override
-	public ResourceLocation getID() {
-		return id;
-	}
-
-	@Nullable
-	@Override
-	public JsonObject getAdvancementJson() {
-		return null;
-	}
-
-	@Nullable
-	@Override
-	public ResourceLocation getAdvancementID() {
-		return null;
-	}
-
-	@Override
 	public boolean matches(IInventory inv, World world) {
-		return input.test(inv.getStackInSlot(0));
+		return input.test(inv.getItem(0));
 	}
 
 	@Override
-	public ItemStack getCraftingResult(IInventory p_77572_1_) {
-		return getRecipeOutput();
+	public ItemStack assemble(IInventory p_77572_1_) {
+		return getResultItem();
 	}
 
 	@Override
-	public boolean canFit(int p_194133_1_, int p_194133_2_) {
+	public boolean canCraftInDimensions(int p_194133_1_, int p_194133_2_) {
 		return true;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return output.get(0).rollOutput();
 	}
 
@@ -81,7 +59,7 @@ public class PickingRecipe implements IRecipe<IInventory>, IFinishedRecipe {
 
 	@Override
 	public ResourceLocation getId() {
-		return getID();
+		return id;
 	}
 
 	@Override
@@ -94,12 +72,43 @@ public class PickingRecipe implements IRecipe<IInventory>, IFinishedRecipe {
 		return ModRecipeTypes.PICKING;
 	}
 
+	public final Finished finished = new Finished();
+
+	public class Finished implements IFinishedRecipe {
+		@Override
+		public void serializeRecipeData(JsonObject json) {
+			((PickingRecipeSerializer) getSerializer()).toJson(json, PickingRecipe.this);
+		}
+
+		@Override
+		public ResourceLocation getId() {
+			return id;
+		}
+
+		@Override
+		public IRecipeSerializer<?> getType() {
+			return ModRecipeTypes.PICKING_SERIALIZER;
+		}
+
+		@Nullable
+		@Override
+		public JsonObject serializeAdvancement() {
+			return null;
+		}
+
+		@Nullable
+		@Override
+		public ResourceLocation getAdvancementId() {
+			return null;
+		}
+	}
+
 	public PickingRecipe require(ITag.INamedTag<Item> tag) {
-		return this.require(Ingredient.fromTag(tag));
+		return this.require(Ingredient.of(tag));
 	}
 
 	public PickingRecipe require(IItemProvider item) {
-		return this.require(Ingredient.fromItems(item));
+		return this.require(Ingredient.of(item));
 	}
 
 	public PickingRecipe require(Ingredient ingredient) {
