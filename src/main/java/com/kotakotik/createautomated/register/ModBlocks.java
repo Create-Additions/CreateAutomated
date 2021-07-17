@@ -72,7 +72,7 @@ public class ModBlocks {
 
 
 		WET_SPONGE_FRAME = registrate.block("wet_sponge_frame", p -> new SpongeFrameBlock(p, InWorldProcessing.Type.SPLASHING))
-				.properties(AbstractBlock.Properties::nonOpaque)
+				.properties(AbstractBlock.Properties::noOcclusion)
 				.blockstate(($, $$) -> {
 				}).tag(AllTags.AllBlockTags.FAN_TRANSPARENT.tag)
 				.item().model(($, $$) -> {
@@ -80,7 +80,7 @@ public class ModBlocks {
 				.register();
 
 		LAVA_SPONGE_FRAME = registrate.block("lava_sponge_frame", p -> new SpongeFrameBlock(p, InWorldProcessing.Type.BLASTING))
-				.properties(AbstractBlock.Properties::nonOpaque)
+				.properties(AbstractBlock.Properties::noOcclusion)
 				.blockstate(($, $$) -> {
 				}).tag(AllTags.AllBlockTags.FAN_TRANSPARENT.tag)
 				.item().model(($, $$) -> {
@@ -88,35 +88,35 @@ public class ModBlocks {
 				.register();
 
 		SPONGE_FRAME = registrate.block("sponge_frame", p -> new SpongeFrameBlock(p, null))
-				.properties(AbstractBlock.Properties::nonOpaque)
+				.properties(AbstractBlock.Properties::noOcclusion)
 				.blockstate(($, $$) -> {
 				}).tag(AllTags.AllBlockTags.FAN_TRANSPARENT.tag)
 				.item().model(($, $$) -> {
 				}).build().recipe((ctx, prov) -> {
-					ShapelessRecipeBuilder.shapelessRecipe(WET_SPONGE_FRAME.get())
-							.addIngredient(ctx.get())
-							.addIngredient(Items.WATER_BUCKET)
-							.addCriterion("has_sponge_frame", prov.hasItem(ctx.get()))
-							.build(prov);
+					ShapelessRecipeBuilder.shapeless(WET_SPONGE_FRAME.get())
+							.requires(ctx.get())
+							.requires(Items.WATER_BUCKET)
+							.unlockedBy("has_sponge_frame", prov.hasItem(ctx.get()))
+							.save(prov);
 
-					ShapelessRecipeBuilder.shapelessRecipe(WET_SPONGE_FRAME.get(), 4)
-							.addIngredient(Blocks.WET_SPONGE)
-							.addIngredient(AllBlocks.SAIL_FRAME.get(), 4)
-							.addCriterion("has_sponge", prov.hasItem(Blocks.SPONGE))
-							.build(prov, CreateAutomated.asResource("wet_sponge_frame_from_sponge"));
+					ShapelessRecipeBuilder.shapeless(WET_SPONGE_FRAME.get(), 4)
+							.requires(Blocks.WET_SPONGE)
+							.requires(AllBlocks.SAIL_FRAME.get(), 4)
+							.unlockedBy("has_sponge", prov.hasItem(Blocks.SPONGE))
+							.save(prov, CreateAutomated.asResource("wet_sponge_frame_from_sponge"));
 
-					ShapelessRecipeBuilder.shapelessRecipe(LAVA_SPONGE_FRAME.get(), 4)
-							.addIngredient(Blocks.WET_SPONGE)
-							.addIngredient(AllBlocks.SAIL_FRAME.get(), 4)
-							.addIngredient(AllItems.BLAZE_CAKE.get())
-							.addCriterion("has_sponge", prov.hasItem(Blocks.SPONGE))
-							.build(prov, CreateAutomated.asResource("lava_sponge_frame_from_sponge"));
+					ShapelessRecipeBuilder.shapeless(LAVA_SPONGE_FRAME.get(), 4)
+							.requires(Blocks.WET_SPONGE)
+							.requires(AllBlocks.SAIL_FRAME.get(), 4)
+							.requires(AllItems.BLAZE_CAKE.get())
+							.unlockedBy("has_sponge", prov.hasItem(Blocks.SPONGE))
+							.save(prov, CreateAutomated.asResource("lava_sponge_frame_from_sponge"));
 
-					ShapelessRecipeBuilder.shapelessRecipe(ctx.get(), 4)
-							.addIngredient(Blocks.SPONGE)
-							.addIngredient(AllBlocks.SAIL_FRAME.get(), 4)
-							.addCriterion("has_sponge", prov.hasItem(Blocks.SPONGE))
-							.build(prov);
+					ShapelessRecipeBuilder.shapeless(ctx.get(), 4)
+							.requires(Blocks.SPONGE)
+							.requires(AllBlocks.SAIL_FRAME.get(), 4)
+							.unlockedBy("has_sponge", prov.hasItem(Blocks.SPONGE))
+							.save(prov);
 
 					prov.smelting(DataIngredient.items(WET_SPONGE_FRAME), ctx, 0);
 					RecipeItems.SPLASHING.add("wet_sponge_frame", b -> b.require(ctx.get()).output(WET_SPONGE_FRAME.get()));

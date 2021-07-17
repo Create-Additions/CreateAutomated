@@ -25,6 +25,6 @@ public class ModPackets {
 
 	public static void sendToNear(World world, BlockPos pos, int range, Object message) {
 		channel.send(PacketDistributor.NEAR
-				.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), range, world.getRegistryKey())), message);
+				.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), range, world.dimension())), message);
 	}
 }
