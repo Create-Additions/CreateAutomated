@@ -41,23 +41,23 @@ public class AnimatedOreExtractor extends AnimatedKinetics {
 
 		int scale = 28;
 
-		GuiGameElement.of(AllBlocks.COGWHEEL.getDefaultState()) // default cogwheel() method returns a shaftless one
+		defaultBlockElement(AllBlocks.COGWHEEL.getDefaultState()) // default cogwheel() method returns a shaftless one
 				.rotateBlock(0, getCurrentAngle(), 0)
 				.atLocal(0, 0, 0)
 				.scale(scale)
 				.render(matrixStack);
 
-		GuiGameElement.of(ModBlocks.ORE_EXTRACTOR_BOTTOM.getDefaultState())
+		defaultBlockElement(ModBlocks.ORE_EXTRACTOR_BOTTOM.getDefaultState())
 				.atLocal(0, 1, 0)
 				.scale(scale)
 				.render(matrixStack);
 
-		GuiGameElement.of(ModBlocks.ORE_EXTRACTOR_TOP.getDefaultState())
+		defaultBlockElement(ModBlocks.ORE_EXTRACTOR_TOP.getDefaultState())
 				.atLocal(0, 0, 0)
 				.scale(scale)
 				.render(matrixStack);
 
-		GuiGameElement.of(ModBlockPartials.DRILL_ORE_EXTRACTOR)
+		defaultBlockElement(ModBlockPartials.DRILL_ORE_EXTRACTOR)
 				.rotateBlock(0, getCurrentAngle(), 0)
 				.atLocal(0, 1, 0)
 				.scale(scale)

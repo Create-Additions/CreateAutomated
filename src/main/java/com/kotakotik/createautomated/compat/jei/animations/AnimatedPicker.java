@@ -2,6 +2,7 @@ package com.kotakotik.createautomated.compat.jei.animations;
 
 import com.kotakotik.createautomated.register.ModItems;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.foundation.gui.GuiGameElement;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -29,7 +30,7 @@ public class AnimatedPicker implements IDrawable {
 		float speed = 2;
 		float offset = offsetRange - (AnimationTickHolder.getRenderTime() * speed % (offsetRange * 2));
 		if (offset < 0) offset *= -1;
-		GuiGameElement.of(stack).draw(matrixStack, 0, (int) offset);
+		GuiGameElement.of(stack).lighting(AnimatedKinetics.DEFAULT_LIGHTING).draw(matrixStack, 0, (int) offset);
 		matrixStack.popPose();
 	}
 }
