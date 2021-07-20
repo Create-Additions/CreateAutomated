@@ -15,5 +15,28 @@
         }
       ]
     }
+  ],
+  "functions": [
+    {
+      "function": "minecraft:copy_nbt",
+      "source": "block_entity",
+      "ops": [
+        {
+          "source": "DrillId",
+          "target": "BlockEntityTag.DrillId",
+          "op": "replace"
+        },
+        {
+          "source": "Durability",
+          "target": "BlockEntityTag.Durability",
+          "op": "replace"
+        },
+        {
+          "source": "MaxDurability",
+          "target": "BlockEntityTag.MaxDurability",
+          "op": "replace"
+        }
+      ]
+    }
   ]
 }

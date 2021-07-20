@@ -11,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -29,6 +30,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock {
@@ -121,6 +123,11 @@ public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock
 		BlockPos updatingPos = pos.relative(d);
 		checkForOther(state, d, world.getBlockState(updatingPos), world, pos, updatingPos, !plr.isCreative());
 		super.playerWillDestroy(world, pos, state, plr);
+	}
+
+	@Override
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder loot) {
+		return ModBlocks.ORE_EXTRACTOR_TOP.get().getDrops(state, loot);
 	}
 
 	@Override

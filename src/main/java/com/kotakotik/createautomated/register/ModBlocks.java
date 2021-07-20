@@ -1,6 +1,7 @@
 package com.kotakotik.createautomated.register;
 
 import com.kotakotik.createautomated.CreateAutomated;
+import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.processing.oreExtractor.BottomOreExtractorBlock;
 import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorTile;
 import com.kotakotik.createautomated.content.processing.oreExtractor.TopOreExtractorBlock;
@@ -13,6 +14,7 @@ import com.simibubi.create.content.contraptions.processing.InWorldProcessing;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.providers.DataGenContext;
 import com.simibubi.create.repack.registrate.providers.RegistrateBlockstateProvider;
+import com.simibubi.create.repack.registrate.providers.loot.RegistrateBlockLootTables;
 import com.simibubi.create.repack.registrate.util.DataIngredient;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import net.minecraft.block.AbstractBlock;
@@ -22,13 +24,15 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
+import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Items;
+import net.minecraft.loot.functions.CopyNbt;
 
 import javax.annotation.Nullable;
 
-public class ModBlocks {
+public abstract class ModBlocks extends BlockLootTables {
 	public static BlockEntry<TopOreExtractorBlock> ORE_EXTRACTOR_TOP;
 	public static BlockEntry<BottomOreExtractorBlock> ORE_EXTRACTOR_BOTTOM;
 	public static BlockEntry<SpongeFrameBlock> WET_SPONGE_SAIL;
@@ -50,6 +54,16 @@ public class ModBlocks {
 						BlockState blockstate = ORE_EXTRACTOR_BOTTOM.get().getStateForPlacement(p_195945_1_);
 						return blockstate != null && this.canPlace(p_195945_1_, blockstate) ? blockstate : null;
 					}
+
+					@Override
+					protected boolean placeBlock(BlockItemUseContext ctx, BlockState state) {
+						boolean p = super.placeBlock(ctx, state);
+						if (p) {
+							ORE_EXTRACTOR_BOTTOM.get().setPlacedBy(ctx.getLevel(), ctx.getClickedPos(), state, ctx.getPlayer(), ctx.getItemInHand());
+							updateCustomBlockEntityTag(ctx.getLevel(), ctx.getPlayer(), ctx.getClickedPos().above(), ctx.getItemInHand());
+						}
+						return p;
+					}
 				})
 				.recipe((ctx, prov) -> {
 					ShapedRecipeBuilder.shaped(ctx.get())
@@ -63,6 +77,7 @@ public class ModBlocks {
 							.unlockedBy("has_brass_casing", prov.hasItem(AllBlocks.BRASS_CASING.get()))
 							.save(prov);
 				}).model((ctx, prov) -> prov.withExistingParent(ctx.getName(), prov.modLoc("block/ore_extractor/item"))).build()
+				.loot(ModBlocks::oreExtractorLootTable)
 				.register();
 
 		ORE_EXTRACTOR_BOTTOM = registrate.block("ore_extractor_bottom", BottomOreExtractorBlock::new)
@@ -70,7 +85,8 @@ public class ModBlocks {
 				.lang("Ore Extractor")
 				.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.itemModels().getExistingFile(prov.modLoc("block/ore_extractor/bottom"))))
 				.addLayer(() -> RenderType::cutoutMipped)
-				.loot((cons, block) -> cons.dropOther(block, ORE_EXTRACTOR_TOP.get()))
+				// P A I N
+				.loot(ModBlocks::oreExtractorLootTable)
 				.register();
 
 		WET_SPONGE_SAIL = registrate.block("wet_sponge_sail", p -> new SpongeFrameBlock(p, InWorldProcessing.Type.SPLASHING))
@@ -122,6 +138,14 @@ public class ModBlocks {
 					RecipeItems.SPLASHING.add("wet_sponge_frame", b -> b.require(ctx.get()).output(WET_SPONGE_SAIL.get()));
 					RecipeItems.SPLASHING.add("sponge_frame_from_lava", b -> b.require(LAVA_SPONGE_SAIL.get()).output(ctx.get()));
 				}).register();
+	}
+
+	protected static <T extends Block & IOreExtractorBlock> void oreExtractorLootTable(RegistrateBlockLootTables cons, T block) {
+		CopyNbt.Builder nbt = CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY);
+		for (String nbtKey : block.nbtList()) {
+			nbt.copy(nbtKey, "BlockEntityTag." + nbtKey);
+		}
+		cons.add(block, createSingleItemTable(ORE_EXTRACTOR_TOP.get()).apply(nbt));
 	}
 
 	public static <T extends Block> void spongeSailBlockstate(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov) {

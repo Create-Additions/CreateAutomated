@@ -1,15 +1,15 @@
 package com.kotakotik.createautomated.content.base;
 
-import com.kotakotik.createautomated.register.ModBlocks;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.PushReaction;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+
+import java.util.Arrays;
+import java.util.List;
 
 public interface IOreExtractorBlock extends IWrenchable {
 	default PushReaction pushReaction(BlockState state) {
@@ -34,8 +34,12 @@ public interface IOreExtractorBlock extends IWrenchable {
 		return state;
 	}
 
-	default ItemStack getWrenchedStack(BlockState state, ItemUseContext ctx) {
-		return new ItemStack(ModBlocks.ORE_EXTRACTOR_TOP.get());
+	default List<String> nbtList() {
+		return Arrays.asList(
+				"DrillId",
+				"Durability",
+				"MaxDurability"
+		);
 	}
 
 	class ExtractorProgressBuilder {

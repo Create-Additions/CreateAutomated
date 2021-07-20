@@ -22,6 +22,10 @@ public class OreExtractorInstance extends CogInstance implements IDynamicInstanc
 
 	public OreExtractorInstance(MaterialManager<?> modelManager, KineticTileEntity tile) {
 		super(modelManager, tile);
+
+		if (getTile().durability > 0) {
+			createDrill();
+		}
 	}
 
 	public OreExtractorTile getTile() {
