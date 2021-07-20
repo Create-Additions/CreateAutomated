@@ -27,7 +27,7 @@ public abstract class CAProcessingRecipeWrapper<T extends ProcessingRecipe<?>> e
 	}
 
 	@Override
-	protected void registerRecipes(Consumer<IFinishedRecipe> r) {
+	protected void buildShapelessRecipes(Consumer<IFinishedRecipe> r) {
 		recipes.forEach(builder -> builder.build(r));
 	}
 

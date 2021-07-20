@@ -26,11 +26,11 @@ public enum CALocalization {
 	}
 
 	CALocalization(String type, String id, String suffix, String localizedName) {
-		this(Util.makeTranslationKey(type, CreateAutomated.asResource(id)) + "." + suffix, localizedName);
+		this(Util.makeDescriptionId(type, CreateAutomated.asResource(id)) + "." + suffix, localizedName);
 	}
 
 	CALocalization(String type, String id, String localizedName) {
-		this(Util.makeTranslationKey(type, CreateAutomated.asResource(id)), localizedName);
+		this(Util.makeDescriptionId(type, CreateAutomated.asResource(id)), localizedName);
 	}
 
 	public TranslationTextComponent getComponent(Object... args) {

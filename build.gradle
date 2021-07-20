@@ -41,7 +41,8 @@ minecraft {
         client {
             workingDirectory project.file('run')
 
-            jvmArgs "-Dmixin.env.disableRefMap=true"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             arg "-mixin.config=createautomated.mixins.json"
 
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -58,7 +59,8 @@ minecraft {
         server {
             workingDirectory project.file('server')
 
-            jvmArgs "-Dmixin.env.disableRefMap=true"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             arg "-mixin.config=createautomated.mixins.json"
 
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -75,7 +77,8 @@ minecraft {
         data {
             workingDirectory project.file('run')
 
-            jvmArgs "-Dmixin.env.disableRefMap=true"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 

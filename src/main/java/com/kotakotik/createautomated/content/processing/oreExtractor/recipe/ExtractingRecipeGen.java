@@ -34,7 +34,7 @@ public class ExtractingRecipeGen extends RecipeProvider {
 	}
 
 	@Override
-	protected void registerRecipes(Consumer<IFinishedRecipe> c) {
+	protected void buildShapelessRecipes(Consumer<IFinishedRecipe> c) {
 		for (ExtractingRecipe.Result built : all) c.accept(built);
 	}
 

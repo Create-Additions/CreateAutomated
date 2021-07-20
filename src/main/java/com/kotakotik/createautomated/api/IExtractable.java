@@ -17,7 +17,7 @@ public interface IExtractable {
 	void extractTick(OreExtractorTile oreExtractorTile);
 
 	static void tryExtract(OreExtractorTile tile) {
-		if (getRecipe(Objects.requireNonNull(tile.getWorld()), tile.getBreakingPos()).isPresent()) {
+		if (getRecipe(Objects.requireNonNull(tile.getLevel()), tile.getBreakingPos()).isPresent()) {
 			if (tile.getBlockToMine() instanceof IExtractable) {
 				((IExtractable) tile.getBlockToMine()).extractTick(tile);
 			} else {
@@ -31,9 +31,9 @@ public interface IExtractable {
 	}
 
 	static Optional<ExtractingRecipe> getRecipe(World world, BlockPos pos) {
-		return world.getRecipeManager().getRecipe(ModRecipeTypes.EXTRACTING, new RecipeWrapper(new ItemStackHandler(1)) {
+		return world.getRecipeManager().getRecipeFor(ModRecipeTypes.EXTRACTING, new RecipeWrapper(new ItemStackHandler(1)) {
 			@Override
-			public ItemStack getStackInSlot(int slot) {
+			public ItemStack getItem(int slot) {
 				return new ItemStack(world.getBlockState(pos).getBlock()); // probably not the best way of doing this but idc
 			}
 		}, world);
@@ -42,7 +42,7 @@ public interface IExtractable {
 	static void extractFromRecipe(OreExtractorTile tile) {
 		Block below = tile.getBlockToMine();
 		BlockPos belowBlock = tile.getBreakingPos();
-		Optional<ExtractingRecipe> recipe = IExtractable.getRecipe(Objects.requireNonNull(tile.getWorld()), belowBlock);
+		Optional<ExtractingRecipe> recipe = IExtractable.getRecipe(Objects.requireNonNull(tile.getLevel()), belowBlock);
 		ExtractingRecipe r = recipe.get();
 		int progress = (int) (tile.extractProgress + Math.abs(tile.getSpeed()));
 		if (progress >= r.requiredProgress) {

@@ -48,7 +48,7 @@ public class ModFluids {
 					});
 					RecipeItems.MIXING.add("molten_diamond_from_ingot", b -> b.require(Tags.Items.GEMS_DIAMOND).requiresHeat(HeatCondition.SUPERHEATED).output(MOLTEN_DIAMOND.get(), 1000));
 				})
-				.properties(p -> p.maxStackSize(1))
+				.properties(p -> p.stacksTo(1))
 				.build()
 				.register();
 	}

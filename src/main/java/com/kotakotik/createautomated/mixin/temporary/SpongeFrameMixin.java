@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.mixin;
+package com.kotakotik.createautomated.mixin.temporary;
 
 import com.kotakotik.createautomated.api.ISpongeFrame;
 import com.simibubi.create.content.contraptions.processing.InWorldProcessing;

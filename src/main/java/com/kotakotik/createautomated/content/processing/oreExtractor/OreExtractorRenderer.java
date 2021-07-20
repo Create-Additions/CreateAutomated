@@ -22,22 +22,22 @@ public class OreExtractorRenderer extends KineticTileEntityRenderer {
 		super(dispatcher);
 	}
 
-	public boolean isGlobalRenderer(KineticTileEntity te) {
+	public boolean shouldRenderOffScreen(KineticTileEntity te) {
 		return true;
 	}
 
 	protected void renderSafe(KineticTileEntity te, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay) {
-		if (!Backend.getInstance().canUseInstancing(te.getWorld())) {
+		if (!Backend.getInstance().canUseInstancing(te.getLevel())) {
 			BlockState blockState = te.getBlockState();
 			OreExtractorTile tile = (OreExtractorTile) te;
-			BlockPos pos = te.getPos();
-			IVertexBuilder vb = buffer.getBuffer(RenderType.getSolid());
+			BlockPos pos = te.getBlockPos();
+			IVertexBuilder vb = buffer.getBuffer(RenderType.solid());
 			SuperByteBuffer superBuffer = PartialBufferer.get(ModBlockPartials.COGWHEEL, blockState);
 			standardKineticRotationTransform(superBuffer, te, light).renderInto(ms, vb);
 			if (tile.extractProgress > 0) {
-				int packedLightmapCoords = WorldRenderer.getLightmapCoordinates(te.getWorld(), blockState, pos);
+				int packedLightmapCoords = WorldRenderer.getLightColor(te.getLevel(), blockState, pos);
 				float speed = Math.abs(tile.getSpeed());
-				float time = AnimationTickHolder.getRenderTime(te.getWorld());
+				float time = AnimationTickHolder.getRenderTime(te.getLevel());
 				float angle = ((time * speed * 6 / 10f) % 360) / 180 * (float) Math.PI;
 				SuperByteBuffer headRender = PartialBufferer.get(ModBlockPartials.DRILL_ORE_EXTRACTOR, blockState);
 				// dunno if i can use standardKineticRotationTransform here?

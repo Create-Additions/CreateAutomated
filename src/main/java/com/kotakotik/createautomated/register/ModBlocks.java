@@ -34,45 +34,45 @@ public class ModBlocks {
 
 	public static void register(CreateRegistrate registrate) {
 		ORE_EXTRACTOR_TOP = registrate.block("ore_extractor", TopOreExtractorBlock::new)
-				.properties(AbstractBlock.Properties::nonOpaque)
+				.properties(AbstractBlock.Properties::noOcclusion)
 				.transform(AddonStressConfigDefaults.setImpact(OreExtractorTile.getDefaultStress()))
 //                .blockstate(BlockStateGen.directionalBlockProvider(true))
 				.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.itemModels().getExistingFile(prov.modLoc("block/ore_extractor/top"))))
-				.addLayer(() -> RenderType::getCutoutMipped)
+				.addLayer(() -> RenderType::cutoutMipped)
 				.lang("Ore Extractor")
 				.item((b, p) -> new BlockItem(b, p) {
 					@Nullable
 					@Override
-					public BlockState getStateForPlacement(BlockItemUseContext p_195945_1_) {
+					public BlockState getPlacementState(BlockItemUseContext p_195945_1_) {
 						BlockState blockstate = ORE_EXTRACTOR_BOTTOM.get().getStateForPlacement(p_195945_1_);
 						return blockstate != null && this.canPlace(p_195945_1_, blockstate) ? blockstate : null;
 					}
 				})
 				.recipe((ctx, prov) -> {
-					ShapedRecipeBuilder.shapedRecipe(ctx.get())
-							.patternLine("cgc")
-							.patternLine("bsb")
-							.patternLine("b b")
-							.key('c', AllBlocks.BRASS_CASING.get())
-							.key('b', AllItems.BRASS_INGOT.get())
-							.key('s', AllBlocks.SHAFT.get())
-							.key('g', AllBlocks.COGWHEEL.get())
-							.addCriterion("has_brass_casing", prov.hasItem(AllBlocks.BRASS_CASING.get()))
-							.build(prov);
+					ShapedRecipeBuilder.shaped(ctx.get())
+							.pattern("cgc")
+							.pattern("bsb")
+							.pattern("b b")
+							.define('c', AllBlocks.BRASS_CASING.get())
+							.define('b', AllItems.BRASS_INGOT.get())
+							.define('s', AllBlocks.SHAFT.get())
+							.define('g', AllBlocks.COGWHEEL.get())
+							.unlockedBy("has_brass_casing", prov.hasItem(AllBlocks.BRASS_CASING.get()))
+							.save(prov);
 				}).model((ctx, prov) -> prov.withExistingParent(ctx.getName(), prov.modLoc("block/ore_extractor/item"))).build()
 				.register();
 
 		ORE_EXTRACTOR_BOTTOM = registrate.block("ore_extractor_bottom", BottomOreExtractorBlock::new)
-				.properties(AbstractBlock.Properties::nonOpaque)
+				.properties(AbstractBlock.Properties::noOcclusion)
 				.lang("Ore Extractor")
 				.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.itemModels().getExistingFile(prov.modLoc("block/ore_extractor/bottom"))))
-				.addLayer(() -> RenderType::getCutoutMipped)
-				.loot((cons, block) -> cons.registerDropping(block, ORE_EXTRACTOR_TOP.get()))
+				.addLayer(() -> RenderType::cutoutMipped)
+				.loot((cons, block) -> cons.dropOther(block, ORE_EXTRACTOR_TOP.get()))
 				.register();
 
 
 		WET_SPONGE_FRAME = registrate.block("wet_sponge_frame", p -> new SpongeFrameBlock(p, InWorldProcessing.Type.SPLASHING))
-				.properties(AbstractBlock.Properties::nonOpaque)
+				.properties(AbstractBlock.Properties::noOcclusion)
 				.blockstate(($, $$) -> {
 				}).tag(AllTags.AllBlockTags.FAN_TRANSPARENT.tag)
 				.item().model(($, $$) -> {
@@ -80,7 +80,7 @@ public class ModBlocks {
 				.register();
 
 		LAVA_SPONGE_FRAME = registrate.block("lava_sponge_frame", p -> new SpongeFrameBlock(p, InWorldProcessing.Type.BLASTING))
-				.properties(AbstractBlock.Properties::nonOpaque)
+				.properties(AbstractBlock.Properties::noOcclusion)
 				.blockstate(($, $$) -> {
 				}).tag(AllTags.AllBlockTags.FAN_TRANSPARENT.tag)
 				.item().model(($, $$) -> {
@@ -88,35 +88,35 @@ public class ModBlocks {
 				.register();
 
 		SPONGE_FRAME = registrate.block("sponge_frame", p -> new SpongeFrameBlock(p, null))
-				.properties(AbstractBlock.Properties::nonOpaque)
+				.properties(AbstractBlock.Properties::noOcclusion)
 				.blockstate(($, $$) -> {
 				}).tag(AllTags.AllBlockTags.FAN_TRANSPARENT.tag)
 				.item().model(($, $$) -> {
 				}).build().recipe((ctx, prov) -> {
-					ShapelessRecipeBuilder.shapelessRecipe(WET_SPONGE_FRAME.get())
-							.addIngredient(ctx.get())
-							.addIngredient(Items.WATER_BUCKET)
-							.addCriterion("has_sponge_frame", prov.hasItem(ctx.get()))
-							.build(prov);
+					ShapelessRecipeBuilder.shapeless(WET_SPONGE_FRAME.get())
+							.requires(ctx.get())
+							.requires(Items.WATER_BUCKET)
+							.unlockedBy("has_sponge_frame", prov.hasItem(ctx.get()))
+							.save(prov);
 
-					ShapelessRecipeBuilder.shapelessRecipe(WET_SPONGE_FRAME.get(), 4)
-							.addIngredient(Blocks.WET_SPONGE)
-							.addIngredient(AllBlocks.SAIL_FRAME.get(), 4)
-							.addCriterion("has_sponge", prov.hasItem(Blocks.SPONGE))
-							.build(prov, CreateAutomated.asResource("wet_sponge_frame_from_sponge"));
+					ShapelessRecipeBuilder.shapeless(WET_SPONGE_FRAME.get(), 4)
+							.requires(Blocks.WET_SPONGE)
+							.requires(AllBlocks.SAIL_FRAME.get(), 4)
+							.unlockedBy("has_sponge", prov.hasItem(Blocks.SPONGE))
+							.save(prov, CreateAutomated.asResource("wet_sponge_frame_from_sponge"));
 
-					ShapelessRecipeBuilder.shapelessRecipe(LAVA_SPONGE_FRAME.get(), 4)
-							.addIngredient(Blocks.WET_SPONGE)
-							.addIngredient(AllBlocks.SAIL_FRAME.get(), 4)
-							.addIngredient(AllItems.BLAZE_CAKE.get())
-							.addCriterion("has_sponge", prov.hasItem(Blocks.SPONGE))
-							.build(prov, CreateAutomated.asResource("lava_sponge_frame_from_sponge"));
+					ShapelessRecipeBuilder.shapeless(LAVA_SPONGE_FRAME.get(), 4)
+							.requires(Blocks.WET_SPONGE)
+							.requires(AllBlocks.SAIL_FRAME.get(), 4)
+							.requires(AllItems.BLAZE_CAKE.get())
+							.unlockedBy("has_sponge", prov.hasItem(Blocks.SPONGE))
+							.save(prov, CreateAutomated.asResource("lava_sponge_frame_from_sponge"));
 
-					ShapelessRecipeBuilder.shapelessRecipe(ctx.get(), 4)
-							.addIngredient(Blocks.SPONGE)
-							.addIngredient(AllBlocks.SAIL_FRAME.get(), 4)
-							.addCriterion("has_sponge", prov.hasItem(Blocks.SPONGE))
-							.build(prov);
+					ShapelessRecipeBuilder.shapeless(ctx.get(), 4)
+							.requires(Blocks.SPONGE)
+							.requires(AllBlocks.SAIL_FRAME.get(), 4)
+							.unlockedBy("has_sponge", prov.hasItem(Blocks.SPONGE))
+							.save(prov);
 
 					prov.smelting(DataIngredient.items(WET_SPONGE_FRAME), ctx, 0);
 					RecipeItems.SPLASHING.add("wet_sponge_frame", b -> b.require(ctx.get()).output(WET_SPONGE_FRAME.get()));

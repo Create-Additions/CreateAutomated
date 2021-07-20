@@ -46,8 +46,8 @@ public class PickingRecipeGen extends RecipeProvider {
 	}
 
 	@Override
-	protected void registerRecipes(Consumer<IFinishedRecipe> c) {
-		for (PickingRecipe built : all) c.accept(built);
+	protected void buildShapelessRecipes(Consumer<IFinishedRecipe> c) {
+		for (PickingRecipe built : all) c.accept(built.finished);
 	}
 
 	@Override

@@ -24,24 +24,24 @@ public class SpongeFrameBlock extends DirectionalBlock implements ISpongeFrame {
 	public SpongeFrameBlock(Properties p_i48415_1_, @Nullable InWorldProcessing.Type type) {
 		super(p_i48415_1_);
 		this.type = type;
-		setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
+		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> b) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> b) {
 		b.add(FACING);
-		super.fillStateContainer(b);
+		super.createBlockStateDefinition(b);
 	}
 
 	@Override
-	public ActionResultType onUse(BlockState p_225533_1_, World p_225533_2_, BlockPos p_225533_3_, PlayerEntity p_225533_4_, Hand p_225533_5_, BlockRayTraceResult p_225533_6_) {
-		return super.onUse(p_225533_1_, p_225533_2_, p_225533_3_, p_225533_4_, p_225533_5_, p_225533_6_);
+	public ActionResultType use(BlockState p_225533_1_, World p_225533_2_, BlockPos p_225533_3_, PlayerEntity p_225533_4_, Hand p_225533_5_, BlockRayTraceResult p_225533_6_) {
+		return super.use(p_225533_1_, p_225533_2_, p_225533_3_, p_225533_4_, p_225533_5_, p_225533_6_);
 	}
 
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
-		return super.getStateForPlacement(ctx).with(FACING, ctx.getNearestLookingDirection());
+		return super.getStateForPlacement(ctx).setValue(FACING, ctx.getNearestLookingDirection());
 	}
 
 	@Nullable

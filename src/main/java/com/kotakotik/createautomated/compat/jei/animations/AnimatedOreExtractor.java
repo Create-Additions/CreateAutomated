@@ -24,18 +24,18 @@ public class AnimatedOreExtractor extends AnimatedKinetics {
 	}
 
 	public void drawWithBlock(MatrixStack matrixStack, int xOffset, int yOffset, @Nullable BlockState block) {
-		matrixStack.push();
+		matrixStack.pushPose();
 
 		float shadowScale = 1.3f;
 		matrixStack.scale(shadowScale, shadowScale, shadowScale);
 
 		AllGuiTextures.JEI_SHADOW.draw(matrixStack, (int) (xOffset / shadowScale - 11), (int) (yOffset / shadowScale + 38));
 
-		matrixStack.pop();
-		matrixStack.push();
+		matrixStack.popPose();
+		matrixStack.pushPose();
 		matrixStack.translate(xOffset, yOffset, 200);
-		matrixStack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(-15.5f));
-		matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(22.5f));
+		matrixStack.mulPose(Vector3f.XP.rotationDegrees(-15.5f));
+		matrixStack.mulPose(Vector3f.YP.rotationDegrees(22.5f));
 
 //        matrixStack.scale(0.5f,0.5f,0.5f);
 
@@ -71,6 +71,6 @@ public class AnimatedOreExtractor extends AnimatedKinetics {
 		}
 
 
-		matrixStack.pop();
+		matrixStack.popPose();
 	}
 }
