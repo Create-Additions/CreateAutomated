@@ -11,7 +11,10 @@ public enum CALocalization {
 	JEI_ORE_EXTRACTOR_TIME("jei.ore_extractor", "time", "%f seconds at 128 RPM"),
 	JEI_PICKER_TITLE("jei.picker", "title", "Picking"),
 
-	CONFIG_TITLE("config", "title", "Create: Automated");
+	CONFIG_TITLE("config", "title", "Create: Automated"),
+	CONFIG_CLIENT_TITLE("config", "title.client", "Client Settings"),
+	CONFIG_COMMON_TITLE("config", "title.common", "World Generation Settings"),
+	CONFIG_SERVER_TITLE("config", "title.server", "Gameplay Settings");
 
 	public final String key;
 	public final String english;

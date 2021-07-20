@@ -1,5 +1,6 @@
 package com.kotakotik.createautomated.content.configUI;
 
+import com.kotakotik.createautomated.CALocalization;
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.register.config.ModCommonConfig;
 import com.kotakotik.createautomated.register.config.ModServerConfig;
@@ -11,7 +12,9 @@ import javax.annotation.Nonnull;
 public class CAConfigScreen extends BaseConfigScreen {
 	public static CAConfigScreen forCA(Screen parent) {
 		return (CAConfigScreen) new CAConfigScreen(parent, CreateAutomated.MODID)
-				.withTitles("Client Settings", "World Generation Settings", "Gameplay Settings")
+				.withTitles(CALocalization.CONFIG_CLIENT_TITLE.translate(),
+						CALocalization.CONFIG_COMMON_TITLE.translate(),
+						CALocalization.CONFIG_SERVER_TITLE.translate())
 				.withSpecs(null, ModCommonConfig.SPEC, ModServerConfig.SPEC);
 	}
 
