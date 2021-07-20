@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "hackforge.refmap.json",
   "mixins": [
+    "CreateConfigUIMixin",
     "temporary.FanCrashFixMixin",
     "temporary.SpongeFrameMixin"
   ],

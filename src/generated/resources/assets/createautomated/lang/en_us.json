@@ -11,6 +11,7 @@
   "block.createautomated.sponge_sail": "Sponge Sail",
   "block.createautomated.wet_sponge_sail": "Wet Sponge Sail",
   "block.createautomated.zinc_node": "Zinc Node",
+  "config.createautomated.title": "Create: Automated",
   "create.ponder.createautomated.ore_extractor.automation.header": "Automating ore extraction",
   "create.ponder.createautomated.ore_extractor.automation.text_1": "Deployers can insert drill heads into Ore Extractors",
   "create.ponder.createautomated.ore_extractor.automation.text_2": "Funnels, hoppers, and chutes can also all be used to input drill heads",

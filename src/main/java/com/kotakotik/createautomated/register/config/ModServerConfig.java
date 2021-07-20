@@ -6,6 +6,7 @@ import net.minecraftforge.fml.config.ModConfig;
 
 public class ModServerConfig extends com.kotakotik.createautomated.register.config.ModConfig.Config {
 	protected static ForgeConfigSpec.Builder BUILDER_SERVER;
+	public static ForgeConfigSpec SPEC;
 
 	public static ForgeConfigSpec.BooleanValue armCanInsertDrills;
 	public static ForgeConfigSpec.BooleanValue armCanExtractOrePieces;
@@ -29,7 +30,8 @@ public class ModServerConfig extends com.kotakotik.createautomated.register.conf
 
 		startCategory("machines", this::machines);
 
-		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, BUILDER_SERVER.build());
+		SPEC = BUILDER_SERVER.build();
+		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SPEC);
 	}
 
 	protected void machines(ForgeConfigSpec.Builder builder) {

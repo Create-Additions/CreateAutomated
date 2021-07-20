@@ -9,7 +9,9 @@ public enum CALocalization {
 	JEI_ORE_EXTRACTOR_TITLE("jei.ore_extractor", "title", "Ore Extraction"),
 	JEI_ORE_EXTRACTOR_DRILL_DAMAGE("jei.ore_extractor", "drill_damage", "Drill damage: %d"),
 	JEI_ORE_EXTRACTOR_TIME("jei.ore_extractor", "time", "%f seconds at 128 RPM"),
-	JEI_PICKER_TITLE("jei.picker", "title", "Picking");
+	JEI_PICKER_TITLE("jei.picker", "title", "Picking"),
+
+	CONFIG_TITLE("config", "title", "Create: Automated");
 
 	public final String key;
 	public final String english;

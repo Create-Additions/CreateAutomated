@@ -16,6 +16,7 @@ public class ModCommonConfig extends ModConfig.Config {
 	public static final HashMap<String, ForgeConfigSpec.BooleanValue> worldGenEnabled = new HashMap<>();
 	protected static final List<WorldGen.FeatureToRegister> worldGenFeatures = new ArrayList<>();
 	protected static ForgeConfigSpec.Builder BUILDER_COMMON;
+	public static ForgeConfigSpec SPEC;
 
 	@Override
 	protected ForgeConfigSpec.Builder getBuilder() {
@@ -31,7 +32,8 @@ public class ModCommonConfig extends ModConfig.Config {
 
 		startCategory("worldgen", this::worldGen);
 
-		ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, BUILDER_COMMON.build());
+		SPEC = BUILDER_COMMON.build();
+		ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, SPEC);
 	}
 
 	protected void worldGen() {
