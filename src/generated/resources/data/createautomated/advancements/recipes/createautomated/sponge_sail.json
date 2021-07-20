@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "createautomated:sponge_frame_from_wet_sponge_frame_smelting"
+      "createautomated:sponge_sail"
     ]
   },
   "criteria": {
-    "has_wet_sponge_frame": {
+    "has_sponge": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "createautomated:wet_sponge_frame"
+            "item": "minecraft:sponge"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "createautomated:sponge_frame_from_wet_sponge_frame_smelting"
+        "recipe": "createautomated:sponge_sail"
       }
     }
   },
   "requirements": [
     [
-      "has_wet_sponge_frame",
+      "has_sponge",
       "has_the_recipe"
     ]
   ]

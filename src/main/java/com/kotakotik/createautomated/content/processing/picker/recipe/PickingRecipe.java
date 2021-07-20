@@ -99,7 +99,7 @@ public class PickingRecipe implements IRecipe<IInventory> {
 
 		@Override
 		public ResourceLocation getId() {
-			return getId();
+			return PickingRecipe.this.getId();
 		}
 	}
 

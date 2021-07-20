@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "createautomated:wet_sponge_frame"
+      "createautomated:wet_sponge_sail"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "createautomated:sponge_frame"
+            "item": "createautomated:sponge_sail"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "createautomated:wet_sponge_frame"
+        "recipe": "createautomated:wet_sponge_sail"
       }
     }
   },

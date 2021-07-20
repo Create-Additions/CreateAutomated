@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "createautomated:lava_sponge_frame"
+          "name": "createautomated:wet_sponge_sail"
         }
       ],
       "conditions": [

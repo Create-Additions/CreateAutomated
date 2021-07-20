@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "createautomated:sponge_frame"
+      "item": "createautomated:sponge_sail"
     },
     {
       "item": "minecraft:water_bucket"
     }
   ],
   "result": {
-    "item": "createautomated:wet_sponge_frame"
+    "item": "createautomated:wet_sponge_sail"
   }
 }

@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "createautomated:wet_sponge_frame",
-    "createautomated:lava_sponge_frame",
-    "createautomated:sponge_frame"
+    "createautomated:wet_sponge_sail",
+    "createautomated:lava_sponge_sail",
+    "createautomated:sponge_sail"
   ]
 }

@@ -2,12 +2,12 @@
   "type": "create:splashing",
   "ingredients": [
     {
-      "item": "createautomated:lava_sponge_frame"
+      "item": "createautomated:lava_sponge_sail"
     }
   ],
   "results": [
     {
-      "item": "createautomated:sponge_frame"
+      "item": "createautomated:sponge_sail"
     }
   ]
 }

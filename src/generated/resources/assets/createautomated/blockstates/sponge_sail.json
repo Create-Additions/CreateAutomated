@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "createautomated:block/sponge_sail",
+      "x": 180
+    },
+    "facing=up": {
+      "model": "createautomated:block/sponge_sail"
+    },
+    "facing=north": {
+      "model": "createautomated:block/sponge_sail",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "createautomated:block/sponge_sail",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "createautomated:block/sponge_sail",
+      "x": 90,
+      "y": 270
+    },
+    "facing=east": {
+      "model": "createautomated:block/sponge_sail",
+      "x": 90,
+      "y": 90
+    }
+  }
+}
