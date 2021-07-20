@@ -10,6 +10,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -18,6 +21,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
@@ -127,5 +131,27 @@ public class TopOreExtractorBlock extends KineticBlock implements ICogWheel, ITE
 
 		}
 		super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
+	}
+
+	@Override
+	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
+		// pain moment
+		ItemStack stack = new ItemStack(this);
+		CompoundNBT nbt = stack.getOrCreateTag();
+		CompoundNBT nbtTile = nbt.getCompound("BlockEntityTag");
+		withTileEntityDo(world, pos, t -> {
+			// i dont just do t.write(nbtTile, false) because then it would write all the data, i only want the data in nbtList to be written
+			CompoundNBT tileNbt = new CompoundNBT();
+			t.write(tileNbt, false);
+			for (String nbtKey : nbtList()) {
+				INBT value = tileNbt.get(nbtKey);
+				if (value != null) {
+					nbtTile.put(nbtKey, value);
+				}
+			}
+		});
+		nbt.put("BlockEntityTag", nbtTile);
+		stack.setTag(nbt);
+		return stack;
 	}
 }

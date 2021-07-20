@@ -112,9 +112,13 @@ public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock
 		return upState.getBlock().use(upState, world, pos.above(), plr, hand, rayTraceResult);
 	}
 
+	public TopOreExtractorBlock getTop() {
+		return ModBlocks.ORE_EXTRACTOR_TOP.get();
+	}
+
 	@Override
 	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-		return new ItemStack(ModBlocks.ORE_EXTRACTOR_TOP.get().asItem());
+		return getTop().getPickBlock(state, target, world, pos, player);
 	}
 
 	@Override
@@ -127,7 +131,7 @@ public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock
 
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder loot) {
-		return ModBlocks.ORE_EXTRACTOR_TOP.get().getDrops(state, loot);
+		return getTop().getDrops(state, loot);
 	}
 
 	@Override
