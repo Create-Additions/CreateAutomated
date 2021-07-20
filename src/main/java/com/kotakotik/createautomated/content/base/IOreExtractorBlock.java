@@ -1,13 +1,17 @@
 package com.kotakotik.createautomated.content.base;
 
+import com.kotakotik.createautomated.register.ModBlocks;
+import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.PushReaction;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 
-public interface IOreExtractorBlock {
+public interface IOreExtractorBlock extends IWrenchable {
 	default PushReaction pushReaction(BlockState state) {
 		return PushReaction.DESTROY;
 	}
@@ -28,6 +32,10 @@ public interface IOreExtractorBlock {
 			}
 		}
 		return state;
+	}
+
+	default ItemStack getWrenchedStack(BlockState state, ItemUseContext ctx) {
+		return new ItemStack(ModBlocks.ORE_EXTRACTOR_TOP.get());
 	}
 
 	class ExtractorProgressBuilder {
