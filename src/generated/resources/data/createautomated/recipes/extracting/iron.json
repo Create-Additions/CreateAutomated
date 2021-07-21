@@ -4,8 +4,8 @@
     "item": "createautomated:iron_node"
   },
   "output": "createautomated:iron_ore_piece",
-  "drillDamage": 5,
+  "drillDamage": 3,
   "requiredProgress": 102400,
-  "minOre": 0,
+  "minOre": 1,
   "maxOre": 2
 }

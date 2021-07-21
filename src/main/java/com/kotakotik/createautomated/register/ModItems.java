@@ -35,7 +35,7 @@ public class ModItems {
 							.pattern("isi")
 							.pattern(" is")
 							.define('s', Tags.Items.STRING)
-							.define('i', RecipeItems.IRON_BIT.itemTag)
+							.define('i', RecipeItems.IRON_EXTRACTABLE.ORE_PIECE_TAG)
 							.unlockedBy("has_string", prov.hasItem(Tags.Items.STRING))
 							.save(prov);
 				})

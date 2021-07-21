@@ -240,7 +240,6 @@ public class RecipeItems {
 	public static RecipeItem<DrillHeadItem> DRILL_HEAD;
 	public static RecipeItem<Item> CRUSHED_PRISMARINE;
 	public static RecipeItem<Item> DIAMOND_BIT;
-	public static RecipeItem<Item> IRON_BIT;
 
 	public static ItemGroup itemGroup = new ItemGroup(CreateAutomated.MODID + "_resources") {
 		@Override
@@ -259,7 +258,7 @@ public class RecipeItems {
 				.oreGen(10, 4, WorldGen.NodeDimension.OVERWORLD);
 
 		IRON_EXTRACTABLE = new IngotExtractableResource("iron", registrate, true, () -> Items.IRON_INGOT, c -> c, c -> c)
-				.node(0, 2, (b) -> b.atSpeedOf(128).takesSeconds(40).build(), c -> c, 5)
+				.node(1, 2, (b) -> b.atSpeedOf(128).takesSeconds(40).build(), c -> c, 3)
 				.oreGen(4, 1, WorldGen.NodeDimension.OVERWORLD);
 
 		ZINC_EXTRACTABLE = new IngotExtractableResource("zinc", registrate, true, AllItems.ZINC_INGOT, c -> c, c -> c)
@@ -332,11 +331,6 @@ public class RecipeItems {
 					MIXING.add("diamond", b -> b.require(DIAMOND_BIT.itemTag).require(ModFluids.MOLTEN_DIAMOND.get(), 800).output(Items.DIAMOND));
 					CRUSHING.add("diamond_bit", b -> b.require(Tags.Items.GEMS_DIAMOND).output(ctx.get(), 3));
 				})
-				.register();
-
-		IRON_BIT = RecipeItem.createBasic("iron_bit", registrate)
-				.quickTag("bits", "iron")
-				.recipe((ctx, prov) -> CRUSHING.add("iron_bit", b -> b.require(Items.IRON_NUGGET).output(ctx.get()).output(.3f, ctx.get(), 2)))
 				.register();
 
 		modEventBus.addListener(RecipeItems::gatherData);
