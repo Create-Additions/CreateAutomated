@@ -59,11 +59,13 @@ public class CreateAutomated {
 			});
 			CALocalization.register(r);
 		}
+		modEventBus.addListener(ModConfig::onLoad);
+		modEventBus.addListener(ModConfig::onReload);
 		modEventBus.addListener(ModPonder::register);
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGen::gen);
 		// uses a new item group so its last not to put any other items in the item group
 		RecipeItems.register(r);
-		ModConfig.reg();
+		ModConfig.register();
 	}
 
 	public static ResourceLocation asResource(String path) {

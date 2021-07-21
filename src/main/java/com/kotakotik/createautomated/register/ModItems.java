@@ -3,7 +3,7 @@ package com.kotakotik.createautomated.register;
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.processing.picker.PickerItem;
 import com.kotakotik.createautomated.content.processing.picker.PickerRenderer;
-import com.kotakotik.createautomated.register.config.ModServerConfig;
+import com.kotakotik.createautomated.register.config.ModConfig;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
@@ -27,7 +27,7 @@ public class ModItems {
 
 		PICKER = registrate.item("picker", PickerItem::new)
 				// pretty sure this is always gonna be the default 32, so this doesnt do anything but just in case
-				.properties(p -> p.durability(ModServerConfig.Picker.durability.get()))
+				.properties(p -> p.durability(ModConfig.SERVER.machines.picker.durability.get()))
 				.transform(CreateRegistrate.customRenderedItem(() -> PickerRenderer.PickerModel::new))
 				.recipe((ctx, prov) -> {
 					ShapedRecipeBuilder.shaped(ctx.get())

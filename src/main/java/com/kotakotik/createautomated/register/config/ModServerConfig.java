@@ -1,111 +1,30 @@
 package com.kotakotik.createautomated.register.config;
 
 import com.simibubi.create.content.contraptions.base.IRotate;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
 
 public class ModServerConfig extends com.kotakotik.createautomated.register.config.ModConfig.Config {
-	protected static ForgeConfigSpec.Builder BUILDER_SERVER;
-	public static ForgeConfigSpec SPEC;
-
-	public abstract static class Extractor {
-		public static ForgeConfigSpec.BooleanValue armCanInsertDrills;
-		public static ForgeConfigSpec.BooleanValue armCanExtractOrePieces;
-		public static ForgeConfigSpec.BooleanValue allowInsertDrills;
-		public static ForgeConfigSpec.BooleanValue allowExtractOrePieces;
-		public static ForgeConfigSpec.BooleanValue extractorAllowToggleRedstone;
-		public static ForgeConfigSpec.BooleanValue allowBreakOres;
-		public static ForgeConfigSpec.BooleanValue allowBreakBlocks;
-		public static ForgeConfigSpec.BooleanValue unbreakableDrills;
-		public static ForgeConfigSpec.IntValue drillDurability;
-		public static ForgeConfigSpec.EnumValue<IRotate.SpeedLevel> requiredSpeed;
-
-		protected Extractor() {
-		}
+	public static class Extractor extends com.kotakotik.createautomated.register.config.ModConfig.Config {
+		public ConfigBool armCanInsertDrills = b(true, "canArmInsertDrills", "Whether or not mechanical arms can insert drills into ore extractors");
+		public ConfigBool armCanExtractOrePieces = b(false, "canArmExtractOrePieces", "Whether or not mechanical arms can extract ore pieces from ore extractors");
+		public ConfigBool allowInsertDrills = b(true, "allowInsertDrills", "Whether or not things like hoppers and funnels can insert drills into ore extractors", "Note: This will also disable the ability to insert drills using mechanical arms");
+		public ConfigBool allowExtractOrePieces = b(true, "allowExtractOrePieces", "Whether or not things like hoppers and funnels can extract ore pieces from ore extractors", "Note: This will also disable the ability to extract items using mechanical arms");
+		public ConfigBool extractorAllowToggleRedstone = b(true, "allowToggleRedstone", "Whether or not the extractor can be toggled with redstone");
+		public ConfigBool allowBreakOres = b(false, "allowBreakOres", "Whether or not the extractor can break ores");
+		public ConfigBool allowBreakBlocks = b(false, "allowBreakBlocks", "Whether or not the extractor can break any block");
+		public ConfigBool unbreakableDrills = b(false, "unbreakableDrills", "Makes drill heads not loose durability", "(why would you use this??)");
+		public ConfigInt drillDurability = i(200, 0, "drillDurability", "The durability of the default drill head");
+		public ConfigEnum<IRotate.SpeedLevel> requiredSpeed = e(IRotate.SpeedLevel.FAST, "requiredSpeed", "The speed requirement for the extractor. The exact number has to be configured in Create's config");
 	}
 
-	public abstract static class Picker {
-		public static ForgeConfigSpec.IntValue useTime;
-		public static ForgeConfigSpec.IntValue durability;
-
-		protected Picker() {
-		}
+	public static class Picker extends com.kotakotik.createautomated.register.config.ModConfig.Config {
+		public ConfigInt useTime = i(16, 0, "useTime", "[in ticks]", "How long it takes to pick");
+		public ConfigInt durability = i(32, 0, "durability", "How many items you can pick before the picker breaks");
 	}
 
-	@Override
-	protected ForgeConfigSpec.Builder getBuilder() {
-		return BUILDER_SERVER;
+	public static class Machines extends com.kotakotik.createautomated.register.config.ModConfig.Config {
+		public Picker picker = nested(1, Picker::new);
+		public Extractor extractor = nested(1, Extractor::new);
 	}
 
-	public static void register() {
-		new ModServerConfig().reg();
-	}
-
-	public void reg() {
-		BUILDER_SERVER = new ForgeConfigSpec.Builder();
-
-		startCategory("machines", this::machines);
-
-		SPEC = BUILDER_SERVER.build();
-		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SPEC);
-	}
-
-	protected void machines(ForgeConfigSpec.Builder builder) {
-		startCategory("ore_extractor", this::extractor);
-		startCategory("picker", this::picker);
-	}
-
-	protected void picker() {
-		Picker.useTime = BUILDER_SERVER
-				.comment("How long it takes to pick in ticks")
-				.defineInRange("useTime", 16, 0, Integer.MAX_VALUE);
-
-		Picker.durability = BUILDER_SERVER
-				.comment("How many items you can pick before the picker breaks")
-				.defineInRange("durability", 32, 0, Integer.MAX_VALUE);
-	}
-
-	protected void extractor() {
-		Extractor.armCanInsertDrills = BUILDER_SERVER
-				.comment("Whether or not mechanical arms can insert drills into ore extractors")
-				.define("canArmInsertDrills", true);
-
-		Extractor.armCanExtractOrePieces = BUILDER_SERVER
-				.comment("Whether or not mechanical arms can extract ore pieces from ore extractors")
-				.define("canArmExtractOrePieces", false);
-
-		Extractor.allowInsertDrills = BUILDER_SERVER
-				.comment("Whether or not things like hoppers and funnels can insert drills into ore extractors")
-				.define("allowInsertDrills", true);
-
-		Extractor.allowExtractOrePieces = BUILDER_SERVER
-				.comment("Whether or not things like hoppers and funnels can extract ore pieces from ore extractors")
-				.define("allowExtractOrePieces", true);
-
-		Extractor.extractorAllowToggleRedstone = BUILDER_SERVER
-				.comment("Whether or not the extractor can be toggled with redstone")
-				.define("allowToggleRedstone", true);
-
-		Extractor.allowBreakOres = BUILDER_SERVER
-				.comment("Whether or not the extractor can break ores")
-				.define("allowBreakOres", false);
-
-		Extractor.allowBreakBlocks = BUILDER_SERVER
-				.comment("Whether or not the extractor can break any block")
-				.define("allowBreakBlocks", false);
-
-		Extractor.drillDurability = BUILDER_SERVER
-				.comment("The durability of the default drill head")
-				.defineInRange("drillDurability", 200, 0, Integer.MAX_VALUE);
-
-		Extractor.unbreakableDrills = BUILDER_SERVER
-				.comment("Makes drill heads not loose durability", "(why would you use this??)")
-				.define("unbreakableDrills", false);
-
-		Extractor.requiredSpeed = BUILDER_SERVER
-				.comment("The speed requirement for the extractor. The exact number has to be configured in Create's config: ",
-						"Server/Gameplay -> Kinetics -> Stress Values -> Stats")
-				.defineEnum("requiredSpeed", IRotate.SpeedLevel.FAST);
-	}
+	public Machines machines = nested(0, Machines::new);
 }

@@ -2,8 +2,7 @@ package com.kotakotik.createautomated.content.configUI;
 
 import com.kotakotik.createautomated.CALocalization;
 import com.kotakotik.createautomated.CreateAutomated;
-import com.kotakotik.createautomated.register.config.ModCommonConfig;
-import com.kotakotik.createautomated.register.config.ModServerConfig;
+import com.kotakotik.createautomated.register.config.ModConfig;
 import com.simibubi.create.foundation.config.ui.BaseConfigScreen;
 import net.minecraft.client.gui.screen.Screen;
 
@@ -15,7 +14,7 @@ public class CAConfigScreen extends BaseConfigScreen {
 				.withTitles(CALocalization.CONFIG_CLIENT_TITLE.translate(),
 						CALocalization.CONFIG_COMMON_TITLE.translate(),
 						CALocalization.CONFIG_SERVER_TITLE.translate())
-				.withSpecs(null, ModCommonConfig.SPEC, ModServerConfig.SPEC);
+				.withSpecs(null, ModConfig.COMMON.specification, ModConfig.SERVER.specification);
 	}
 
 	public CAConfigScreen(Screen parent, @Nonnull String modID) {

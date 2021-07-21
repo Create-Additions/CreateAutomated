@@ -6,7 +6,7 @@ import com.kotakotik.createautomated.api.IExtractable;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.register.ModTags;
-import com.kotakotik.createautomated.register.config.ModServerConfig;
+import com.kotakotik.createautomated.register.config.ModConfig;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPoint;
 import com.simibubi.create.foundation.utility.VecHelper;
@@ -65,7 +65,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public boolean isBreakableOre(BlockPos pos) {
-		return (ModServerConfig.Extractor.allowBreakOres.get() && getBlockToMine() instanceof OreBlock) || (ModServerConfig.Extractor.allowBreakBlocks.get() && !isExtractable(null)) && !level.isEmptyBlock(getBreakingPos());
+		return (ModConfig.SERVER.machines.extractor.allowBreakOres.get() && getBlockToMine() instanceof OreBlock) || (ModConfig.SERVER.machines.extractor.allowBreakBlocks.get() && !isExtractable(null)) && !level.isEmptyBlock(getBreakingPos());
 	}
 
 	public boolean isExtractable(BlockPos pos) {
@@ -73,7 +73,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public boolean isDrillLowEnough() {
-		return drillPos < .05 || !ModServerConfig.Extractor.extractorAllowToggleRedstone.get();
+		return drillPos < .05 || !ModConfig.SERVER.machines.extractor.extractorAllowToggleRedstone.get();
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	protected void doRedstoneStuff() {
-		if (!ModServerConfig.Extractor.extractorAllowToggleRedstone.get()) return;
+		if (!ModConfig.SERVER.machines.extractor.extractorAllowToggleRedstone.get()) return;
 		float toSet = drillPos;
 		if (isRedstonePowered()) {
 			toSet += .03f;
@@ -134,7 +134,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public void updateDurability() {
-		if (ModServerConfig.Extractor.unbreakableDrills.get()) {
+		if (ModConfig.SERVER.machines.extractor.unbreakableDrills.get()) {
 			durability = maxDurability;
 		} else {
 			durability = MathHelper.clamp(durability, 0, maxDurability);
@@ -219,14 +219,14 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		@Nonnull
 		@Override
 		public ItemStack extractItem(int slot, int amount, boolean simulate) {
-			if (!ModServerConfig.Extractor.allowExtractOrePieces.get()) return ItemStack.EMPTY;
+			if (!ModConfig.SERVER.machines.extractor.allowExtractOrePieces.get()) return ItemStack.EMPTY;
 			return super.extractItem(slot, amount, simulate);
 		}
 
 		@Nonnull
 		@Override
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (ModServerConfig.Extractor.allowInsertDrills.get() && stack.getItem() instanceof IDrillHead && durability == 0) {
+			if (ModConfig.SERVER.machines.extractor.allowInsertDrills.get() && stack.getItem() instanceof IDrillHead && durability == 0) {
 				IDrillHead d = (IDrillHead) stack.getItem();
 				setDrill((DrillHeadItem) stack.getItem());
 				stack.setCount(0);
@@ -294,14 +294,14 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
 	public static class OreExtractorInteractionPoint extends ArmInteractionPoint {
 		protected boolean armCanInsertDrills() {
-			if (ModServerConfig.Extractor.armCanInsertDrills != null)
-				return ModServerConfig.Extractor.armCanInsertDrills.get();
+			if (ModConfig.SERVER.machines.extractor.armCanInsertDrills != null)
+				return ModConfig.SERVER.machines.extractor.armCanInsertDrills.get();
 			return true;
 		}
 
 		protected boolean armCanExtractOrePieces() {
-			if (ModServerConfig.Extractor.armCanExtractOrePieces != null)
-				return ModServerConfig.Extractor.armCanExtractOrePieces.get();
+			if (ModConfig.SERVER.machines.extractor.armCanExtractOrePieces != null)
+				return ModConfig.SERVER.machines.extractor.armCanExtractOrePieces.get();
 			return false;
 		}
 
