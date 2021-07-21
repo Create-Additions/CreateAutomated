@@ -63,7 +63,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public boolean isBreakableOre(BlockPos pos) {
-		return (ModServerConfig.allowBreakOres.get() && getBlockToMine() instanceof OreBlock) || (ModServerConfig.allowBreakBlocks.get() && !isExtractable(null)) && !level.isEmptyBlock(getBreakingPos());
+		return (ModServerConfig.Extractor.allowBreakOres.get() && getBlockToMine() instanceof OreBlock) || (ModServerConfig.Extractor.allowBreakBlocks.get() && !isExtractable(null)) && !level.isEmptyBlock(getBreakingPos());
 	}
 
 	public boolean isExtractable(BlockPos pos) {
@@ -71,7 +71,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public boolean isDrillLowEnough() {
-		return drillPos < .05 || !ModServerConfig.extractorAllowToggleRedstone.get();
+		return drillPos < .05 || !ModServerConfig.Extractor.extractorAllowToggleRedstone.get();
 	}
 
 	@Override
@@ -117,26 +117,25 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	protected void doRedstoneStuff() {
-		if(!ModServerConfig.extractorAllowToggleRedstone.get()) return;
+		if (!ModServerConfig.Extractor.extractorAllowToggleRedstone.get()) return;
 		float toSet = drillPos;
-		if(isRedstonePowered()) {
+		if (isRedstonePowered()) {
 			toSet += .03f;
 		} else {
 			toSet -= .03f;
 		}
-		toSet = MathHelper.clamp(toSet,0,.4f);
-		if(toSet != drillPos) {
+		toSet = MathHelper.clamp(toSet, 0, .4f);
+		if (toSet != drillPos) {
 			drillPos = toSet;
 			sendData();
 		}
 	}
 
 	public void updateDurability() {
-		// dunno if any of the libraries have a clamp method so
-		if (durability < 0) {
-			durability = 0;
-		} else if (durability > maxDurability) {
+		if (ModServerConfig.Extractor.unbreakableDrills.get()) {
 			durability = maxDurability;
+		} else {
+			durability = MathHelper.clamp(durability, 0, maxDurability);
 		}
 	}
 
@@ -218,14 +217,14 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		@Nonnull
 		@Override
 		public ItemStack extractItem(int slot, int amount, boolean simulate) {
-			if (!ModServerConfig.allowExtractOrePieces.get()) return ItemStack.EMPTY;
+			if (!ModServerConfig.Extractor.allowExtractOrePieces.get()) return ItemStack.EMPTY;
 			return super.extractItem(slot, amount, simulate);
 		}
 
 		@Nonnull
 		@Override
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (ModServerConfig.allowInsertDrills.get() && stack.getItem() instanceof IDrillHead && durability == 0) {
+			if (ModServerConfig.Extractor.allowInsertDrills.get() && stack.getItem() instanceof IDrillHead && durability == 0) {
 				IDrillHead d = (IDrillHead) stack.getItem();
 				setDrill((DrillHeadItem) stack.getItem());
 				stack.setCount(0);
@@ -293,12 +292,14 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
 	public static class OreExtractorInteractionPoint extends ArmInteractionPoint {
 		protected boolean armCanInsertDrills() {
-			if (ModServerConfig.armCanInsertDrills != null) return ModServerConfig.armCanInsertDrills.get();
+			if (ModServerConfig.Extractor.armCanInsertDrills != null)
+				return ModServerConfig.Extractor.armCanInsertDrills.get();
 			return true;
 		}
 
 		protected boolean armCanExtractOrePieces() {
-			if (ModServerConfig.armCanExtractOrePieces != null) return ModServerConfig.armCanExtractOrePieces.get();
+			if (ModServerConfig.Extractor.armCanExtractOrePieces != null)
+				return ModServerConfig.Extractor.armCanExtractOrePieces.get();
 			return false;
 		}
 

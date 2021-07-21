@@ -1,6 +1,7 @@
 package com.kotakotik.createautomated.content.simple.drillHead;
 
 import com.kotakotik.createautomated.api.IDrillHead;
+import com.kotakotik.createautomated.register.config.ModServerConfig;
 import net.minecraft.item.Item;
 
 public class DrillHeadItem extends Item implements IDrillHead {
@@ -10,6 +11,6 @@ public class DrillHeadItem extends Item implements IDrillHead {
 
 	@Override
 	public int getDurability() {
-		return 200;
+		return ModServerConfig.Extractor.drillDurability.get();
 	}
 }

@@ -2,6 +2,7 @@ package com.kotakotik.createautomated.register;
 
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.processing.picker.PickerItem;
+import com.kotakotik.createautomated.register.config.ModServerConfig;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
@@ -23,7 +24,9 @@ public class ModItems {
 	public static void register(CreateRegistrate registrate) {
 		registrate.itemGroup(() -> itemGroup, "Create Automated");
 
-		PICKER = registrate.item("picker", PickerItem::new).properties(p -> p.durability(32))
+		PICKER = registrate.item("picker", PickerItem::new)
+				// pretty sure this is always gonna be the default 32, so this doesnt do anything but just in case
+				.properties(p -> p.durability(ModServerConfig.Picker.durability.get()))
 				.recipe((ctx, prov) -> {
 					ShapedRecipeBuilder.shaped(ctx.get())
 							.pattern("si ")

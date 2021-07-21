@@ -2,6 +2,7 @@ package com.kotakotik.createautomated.content.processing.picker;
 
 import com.kotakotik.createautomated.content.processing.picker.recipe.PickingRecipe;
 import com.kotakotik.createautomated.register.ModRecipeTypes;
+import com.kotakotik.createautomated.register.config.ModServerConfig;
 import com.simibubi.create.content.contraptions.components.deployer.DeployerFakePlayer;
 import com.simibubi.create.content.curiosities.tools.SandPaperItem;
 import com.simibubi.create.foundation.utility.VecHelper;
@@ -33,6 +34,11 @@ import java.util.Optional;
 public class PickerItem extends Item {
 	public PickerItem(Properties p_i48487_1_) {
 		super(p_i48487_1_);
+	}
+
+	@Override
+	public int getMaxDamage(ItemStack stack) {
+		return ModServerConfig.Picker.durability.get();
 	}
 
 	@Override
@@ -178,6 +184,6 @@ public class PickerItem extends Item {
 
 	@Override
 	public int getUseDuration(ItemStack p_77626_1_) {
-		return 16;
+		return ModServerConfig.Picker.useTime.get();
 	}
 }
