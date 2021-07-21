@@ -32,16 +32,16 @@ public class OreExtractorRenderer extends KineticTileEntityRenderer {
 			OreExtractorTile tile = (OreExtractorTile) te;
 			BlockPos pos = te.getBlockPos();
 			IVertexBuilder vb = buffer.getBuffer(RenderType.solid());
-			SuperByteBuffer superBuffer = PartialBufferer.get(ModBlockPartials.COGWHEEL, blockState);
+			SuperByteBuffer superBuffer = PartialBufferer.get(tile.durability > 0 ? ModBlockPartials.HALF_SHAFT_COGWHEEL : ModBlockPartials.COGWHEEL, blockState);
 			standardKineticRotationTransform(superBuffer, te, light).renderInto(ms, vb);
-			if (tile.extractProgress > 0) {
+			if (tile.durability > 0) {
 				int packedLightmapCoords = WorldRenderer.getLightColor(te.getLevel(), blockState, pos);
 				float speed = Math.abs(tile.getSpeed());
 				float time = AnimationTickHolder.getRenderTime(te.getLevel());
 				float angle = ((time * speed * 6 / 10f) % 360) / 180 * (float) Math.PI;
 				SuperByteBuffer headRender = PartialBufferer.get(ModBlockPartials.DRILL_ORE_EXTRACTOR, blockState);
 				// dunno if i can use standardKineticRotationTransform here?
-				headRender.rotateCentered(Direction.UP, angle).translate(0, -1, 0).light(packedLightmapCoords).renderInto(ms, vb);
+				headRender.rotateCentered(Direction.UP, angle).translate(0, -1 + tile.drillPos, 0).light(packedLightmapCoords).renderInto(ms, vb);
 			}
 		}
 	}
