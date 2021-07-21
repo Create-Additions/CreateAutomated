@@ -56,16 +56,14 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
 	public int maxDurability;
 
-	public static void load() {
-	}
-
 	@Override
 	public BlockPos getBreakingPos() {
 		return getBlockPos().below(2);
 	}
 
 	public boolean isBreakableOre(BlockPos pos) {
-		return (ModConfig.SERVER.machines.extractor.allowBreakOres.get() && getBlockToMine() instanceof OreBlock) || (ModConfig.SERVER.machines.extractor.allowBreakBlocks.get() && !isExtractable(null)) && !level.isEmptyBlock(getBreakingPos());
+		MiningAbility miningAbility = getMiningAbility();
+		return (miningAbility == MiningAbility.ORES && getBlockToMine() instanceof OreBlock) || (miningAbility == MiningAbility.ANY && !isExtractable(null)) && !level.isEmptyBlock(getBreakingPos());
 	}
 
 	public boolean isExtractable(BlockPos pos) {
@@ -144,6 +142,10 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	public void updateDurability(int value) {
 		durability = value;
 		updateDurability();
+	}
+
+	public static MiningAbility getMiningAbility() {
+		return ModConfig.SERVER.machines.extractor.miningAbility.get();
 	}
 
 	@Override
@@ -352,5 +354,11 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 				mode = Mode.TAKE;
 			}
 		}
+	}
+
+	public enum MiningAbility {
+		NONE,
+		ORES,
+		ANY
 	}
 }
