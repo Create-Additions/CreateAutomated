@@ -12,7 +12,7 @@ public class ModServerConfig extends com.kotakotik.createautomated.register.conf
 		public ConfigBool allowBreakOres = b(false, "allowBreakOres", "Whether or not the extractor can break ores");
 		public ConfigBool allowBreakBlocks = b(false, "allowBreakBlocks", "Whether or not the extractor can break any block");
 		public ConfigBool unbreakableDrills = b(false, "unbreakableDrills", "Makes drill heads not loose durability", "(why would you use this??)");
-		public ConfigInt drillDurability = i(200, 0, "drillDurability", "The durability of the default drill head");
+		public ConfigInt drillDurability = i(300, 0, "drillDurability", "The durability of the default drill head");
 		public ConfigEnum<IRotate.SpeedLevel> requiredSpeed = e(IRotate.SpeedLevel.FAST, "requiredSpeed", "The speed requirement for the extractor. The exact number has to be configured in Create's config");
 	}
 
