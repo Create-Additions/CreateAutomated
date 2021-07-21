@@ -19,6 +19,7 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.builders.BlockBuilder;
 import com.simibubi.create.repack.registrate.builders.ItemBuilder;
 import com.simibubi.create.repack.registrate.providers.DataGenContext;
+import com.simibubi.create.repack.registrate.providers.RegistrateLangProvider;
 import com.simibubi.create.repack.registrate.providers.RegistrateRecipeProvider;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
@@ -94,14 +95,29 @@ public class RecipeItems {
 			return oreGen(veinSize, 40, 256, frequency, dimension);
 		}
 
-		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> conf, int drillDamage) {
+		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> conf, int drillDamage, boolean tooltip) {
 			NODE = conf.apply(reg.block(name + "_node", Block::new).recipe((ctx, prov) -> {
 				EXTRACTING.add(name, e -> e.output(ORE_PIECE).node(ctx.get()).ore(minOre, maxOre).requiredProgress(progress.apply(new IOreExtractorBlock.ExtractorProgressBuilder())).drillDamage(drillDamage));
 			})
 					.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, NODE_TAG, ModTags.References.NON_MOVABLE).loot((p, b) -> {
 						p.dropOther(b, Items.AIR);
 					}).simpleItem()).register();
+			if (tooltip) {
+				ModTooltips.onRegister(reg -> {
+					ModTooltips.register(NODE.get(), "Some dirt with ore in it, but _how much?_",
+							"When mined by an extractor",
+							(minOre == maxOre) ? "Gives _" + minOre + " " + getOrePieceName() + "_" : "Gives _" + minOre + "_ to _" + maxOre + " " + getOrePieceName() + "_");
+				});
+			}
 			return this;
+		}
+
+		public String getOrePieceName() {
+			return RegistrateLangProvider.toEnglishName(ORE_PIECE.getId().getPath());
+		}
+
+		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> conf, int drillDamage) {
+			return node(minOre, maxOre, progress, conf, drillDamage, true);
 		}
 
 		public ExtractableResource node(int ore, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> conf, int drillDamage) {

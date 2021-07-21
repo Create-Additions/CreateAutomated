@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import static com.simibubi.create.repack.registrate.providers.RegistrateLangProvider.toEnglishName;
 
@@ -35,6 +36,8 @@ public class ModTooltips {
 
 		register(RecipeItems.DRILL_HEAD.item.get(),
 				"The most important component for _extracting_");
+
+		onRegister.forEach(c -> c.accept(reg));
 	}
 
 	private static List<ModTooltips> registerSpongeSail(Block item, String type, String type_ing) {
@@ -81,52 +84,52 @@ public class ModTooltips {
 		this(key, content, true);
 	}
 
-	protected static ModTooltips registerMain(Item item, String name) {
+	public static ModTooltips registerMain(Item item, String name) {
 		return new ModTooltips(getTooltipKeyStart(item), name.toUpperCase());
 	}
 
-	protected static ModTooltips registerMain(Item item) {
+	public static ModTooltips registerMain(Item item) {
 		return registerMain(item, toEnglishName(item.getRegistryName().getPath()));
 	}
 
-	protected static ModTooltips registerMain(Block item, String name) {
+	public static ModTooltips registerMain(Block item, String name) {
 		return new ModTooltips(getTooltipKeyStart(item), name.toUpperCase());
 	}
 
-	protected static ModTooltips registerMain(Block item) {
+	public static ModTooltips registerMain(Block item) {
 		return registerMain(item, toEnglishName(item.getRegistryName().getPath()));
 	}
 
-	protected static ModTooltips registerSummary(Item item, String content) {
+	public static ModTooltips registerSummary(Item item, String content) {
 		return registerTooltip(item, "summary", content);
 	}
 
-	protected static ModTooltips registerSummary(Block item, String content) {
+	public static ModTooltips registerSummary(Block item, String content) {
 		return registerTooltip(item, "summary", content);
 	}
 
 	protected static HashMap<ResourceLocation, Integer> behaviors = new HashMap<>();
 	protected static HashMap<ResourceLocation, Integer> conditions = new HashMap<>();
 
-	protected static ModTooltips registerBehavior(Item item, String content) {
+	public static ModTooltips registerBehavior(Item item, String content) {
 		int b = behaviors.getOrDefault(item.getRegistryName(), 0) + 1;
 		behaviors.put(item.getRegistryName(), b);
 		return registerTooltip(item, "behaviour" + b, content);
 	}
 
-	protected static ModTooltips registerCondition(Item item, String content) {
+	public static ModTooltips registerCondition(Item item, String content) {
 		int b = conditions.getOrDefault(item.getRegistryName(), 0) + 1;
 		conditions.put(item.getRegistryName(), b);
 		return registerTooltip(item, "condition" + b, content);
 	}
 
-	protected static ModTooltips registerBehavior(Block item, String content) {
+	public static ModTooltips registerBehavior(Block item, String content) {
 		int b = behaviors.getOrDefault(item.getRegistryName(), 0) + 1;
 		behaviors.put(item.getRegistryName(), b);
 		return registerTooltip(item, "behaviour" + b, content);
 	}
 
-	protected static ModTooltips registerCondition(Block item, String content) {
+	public static ModTooltips registerCondition(Block item, String content) {
 		int b = conditions.getOrDefault(item.getRegistryName(), 0) + 1;
 		conditions.put(item.getRegistryName(), b);
 		return registerTooltip(item, "condition" + b, content);
@@ -134,7 +137,7 @@ public class ModTooltips {
 
 
 	@SafeVarargs
-	protected static List<ModTooltips> register(Item item, String summary, Pair<String, String>... behaviors) {
+	public static List<ModTooltips> register(Item item, String summary, Pair<String, String>... behaviors) {
 		ArrayList<ModTooltips> list = new ArrayList<>();
 		list.add(registerMain(item));
 		list.add(registerSummary(item, summary));
@@ -145,13 +148,12 @@ public class ModTooltips {
 		return list;
 	}
 
-	protected static List<ModTooltips> register(Item item, String summary, String condition, String behavior) {
+	public static List<ModTooltips> register(Item item, String summary, String condition, String behavior) {
 		return register(item, summary, Pair.of(condition, behavior));
 	}
 
-
 	@SafeVarargs
-	protected static List<ModTooltips> register(Block item, String summary, Pair<String, String>... behaviors) {
+	public static List<ModTooltips> register(Block item, String summary, Pair<String, String>... behaviors) {
 		ArrayList<ModTooltips> list = new ArrayList<>();
 		list.add(registerMain(item));
 		list.add(registerSummary(item, summary));
@@ -162,7 +164,13 @@ public class ModTooltips {
 		return list;
 	}
 
-	protected static List<ModTooltips> register(Block item, String summary, String condition, String behavior) {
+	public static List<ModTooltips> register(Block item, String summary, String condition, String behavior) {
 		return register(item, summary, Pair.of(condition, behavior));
+	}
+
+	protected static ArrayList<Consumer<CreateRegistrate>> onRegister = new ArrayList<>();
+
+	public static void onRegister(Consumer<CreateRegistrate> consumer) {
+		onRegister.add(consumer);
 	}
 }
