@@ -3,6 +3,7 @@ package com.kotakotik.createautomated.content.processing.oreExtractor;
 import com.kotakotik.createautomated.api.IDrillHead;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.register.ModTiles;
+import com.kotakotik.createautomated.register.config.ModServerConfig;
 import com.simibubi.create.content.contraptions.base.KineticBlock;
 import com.simibubi.create.content.contraptions.relays.elementary.ICogWheel;
 import com.simibubi.create.foundation.block.ITE;
@@ -67,7 +68,7 @@ public class TopOreExtractorBlock extends KineticBlock implements ICogWheel, ITE
 
 	@Override
 	public SpeedLevel getMinimumRequiredSpeedLevel() {
-		return SpeedLevel.FAST;
+		return ModServerConfig.Extractor.requiredSpeed.get();
 	}
 
 	@Override

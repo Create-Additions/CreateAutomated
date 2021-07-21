@@ -1,5 +1,6 @@
 package com.kotakotik.createautomated.register.config;
 
+import com.simibubi.create.content.contraptions.base.IRotate;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
@@ -18,6 +19,7 @@ public class ModServerConfig extends com.kotakotik.createautomated.register.conf
 		public static ForgeConfigSpec.BooleanValue allowBreakBlocks;
 		public static ForgeConfigSpec.BooleanValue unbreakableDrills;
 		public static ForgeConfigSpec.IntValue drillDurability;
+		public static ForgeConfigSpec.EnumValue<IRotate.SpeedLevel> requiredSpeed;
 
 		protected Extractor() {
 		}
@@ -100,5 +102,10 @@ public class ModServerConfig extends com.kotakotik.createautomated.register.conf
 		Extractor.unbreakableDrills = BUILDER_SERVER
 				.comment("Makes drill heads not loose durability", "(why would you use this??)")
 				.define("unbreakableDrills", false);
+
+		Extractor.requiredSpeed = BUILDER_SERVER
+				.comment("The speed requirement for the extractor. The exact number has to be configured in Create's config: ",
+						"Server/Gameplay -> Kinetics -> Stress Values -> Stats")
+				.defineEnum("requiredSpeed", IRotate.SpeedLevel.FAST);
 	}
 }
