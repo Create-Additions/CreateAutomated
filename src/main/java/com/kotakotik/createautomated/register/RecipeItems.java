@@ -13,6 +13,7 @@ import com.kotakotik.createautomated.register.recipes.ModDeployingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModSplashingRecipes;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.builders.BlockBuilder;
@@ -250,6 +251,7 @@ public class RecipeItems {
 
 	public static void register(CreateRegistrate registrate) {
 		registrate.itemGroup(() -> itemGroup, "Create Automated resources");
+		registrate.startSection(AllSections.MATERIALS);
 //		registrate.addRawLang(((TranslationTextComponent) itemGroup.getTranslationKey()).getKey() , "Create Automated resources");
 //		CreateRegistrate registrate = CreateAutomated.registrate.get();
 		LAPIS_EXTRACTABLE = new GlueableExtractableResource("lapis", registrate, true, () -> Items.LAPIS_LAZULI, c -> c)

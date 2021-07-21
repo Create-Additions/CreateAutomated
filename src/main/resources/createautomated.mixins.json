@@ -2,7 +2,7 @@
   "required": true,
   "package": "com.kotakotik.createautomated.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "hackforge.refmap.json",
+  "refmap": "createautomated.refmap.json",
   "mixins": [
     "temporary.FanCrashFixMixin",
     "temporary.SpongeFrameMixin"

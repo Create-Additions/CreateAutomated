@@ -3,6 +3,7 @@ package com.kotakotik.createautomated;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.*;
 import com.kotakotik.createautomated.register.config.ModConfig;
+import com.simibubi.create.content.AllSections;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import com.simibubi.create.repack.registrate.util.OneTimeEventReceiver;
@@ -36,6 +37,7 @@ public class CreateAutomated {
 	public CreateAutomated() {
 		modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		CreateRegistrate r = registrate.get();
+		r.startSection(AllSections.KINETICS);
 		ModRecipeTypes.reg(r);
 		ModItems.register(r);
 		ModBlocks.register(r);
@@ -51,7 +53,10 @@ public class CreateAutomated {
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
 				() -> ModBlockPartials::load);
 		if (DatagenModLoader.isRunningDataGen()) {
-			modEventBus.addListener((GatherDataEvent g) -> ModPonder.generateLang(r, g));
+			modEventBus.addListener((GatherDataEvent g) -> {
+				ModPonder.generateLang(r, g);
+				ModTooltips.register(r);
+			});
 			CALocalization.register(r);
 		}
 		modEventBus.addListener(ModPonder::register);
