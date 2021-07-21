@@ -13,7 +13,6 @@ public class ModTiles {
 
 	public static void register(CreateRegistrate registrate) {
 		ORE_EXTRACTOR = registrate.tileEntity("ore_extractor", OreExtractorTile::new)
-//                .instance(() -> ShaftInstance::new)
 				.instance(() -> OreExtractorInstance::new)
 				.validBlocks(ModBlocks.ORE_EXTRACTOR_TOP)
 				.renderer(() -> OreExtractorRenderer::new)

@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.gui.widgets.BoxWidget;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -17,7 +18,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import java.lang.reflect.Field;
 import java.util.List;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(Dist.CLIENT)
 public class CAConfigOptionRenderer {
 	/**
 	 * The offset to render the button, for addon compatibility.

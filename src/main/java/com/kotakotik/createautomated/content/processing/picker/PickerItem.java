@@ -25,12 +25,10 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 import java.util.Optional;
 
-@Mod.EventBusSubscriber
 public class PickerItem extends Item {
 	public PickerItem(Properties p_i48487_1_) {
 		super(p_i48487_1_);

@@ -14,7 +14,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.OreBlock;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.IParticleData;
@@ -56,6 +55,9 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	protected LazyOptional<IItemHandler> invHandler = LazyOptional.of(() -> this.inventory);
 
 	public int maxDurability;
+
+	public static void load() {
+	}
 
 	@Override
 	public BlockPos getBreakingPos() {
@@ -275,7 +277,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 			if (lastRenderDurability != durability && durability == 0) {
 				// TODO: subtitle shows item breaking instead of drill breaking
 				// TODO: probably just make a custom sound for this
-				level.playSound(Minecraft.getInstance().player, worldPosition, SoundEvents.ITEM_BREAK, SoundCategory.BLOCKS, 1, 10);
+				level.playSound(null, worldPosition, SoundEvents.ITEM_BREAK, SoundCategory.BLOCKS, 1, 10);
 				particles(RandomUtils.nextInt(30, 50), new ItemStack(Blocks.IRON_BLOCK)); // SUMMON **ALL** THE PARTICLES!!!
 			}
 		}
