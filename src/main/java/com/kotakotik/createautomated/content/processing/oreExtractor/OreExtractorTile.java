@@ -157,7 +157,9 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		compound.putInt("Durability", durability);
 		compound.putInt("MaxDurability", maxDurability);
 		compound.putFloat("DrillPos", drillPos);
-		compound.putString("DrillId", drillId == null ? CreateAutomated.MODID + ":block/ore_extractor/drill" : drillId.toString());
+		if (drillId != null && durability != 0) {
+			compound.putString("DrillId", drillId == null ? CreateAutomated.MODID + ":block/ore_extractor/drill" : drillId.toString());
+		}
 	}
 
 	@Override
@@ -170,7 +172,10 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		durability = compound.getInt("Durability");
 		maxDurability = compound.getInt("MaxDurability");
 		drillPos = compound.getFloat("DrillPos");
-		drillId = new ResourceLocation(compound.getString("DrillId"));
+		String drillIdTempt = compound.getString("DrillId");
+		if (!drillIdTempt.equals("")) {
+			drillId = new ResourceLocation(drillIdTempt);
+		}
 	}
 
 	public void setDrill(int durability, ResourceLocation id) {
