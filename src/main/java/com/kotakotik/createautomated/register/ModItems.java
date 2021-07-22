@@ -4,7 +4,6 @@ import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.processing.picker.PickerItem;
 import com.kotakotik.createautomated.content.processing.picker.PickerRenderer;
 import com.kotakotik.createautomated.register.config.ModConfig;
-import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
 import net.minecraft.data.ShapedRecipeBuilder;
@@ -16,7 +15,7 @@ public class ModItems {
 	public static ItemGroup itemGroup = new ItemGroup(CreateAutomated.MODID) {
 		@Override
 		public ItemStack makeIcon() {
-			return new ItemStack(AllItems.WRENCH.get());
+			return new ItemStack(ModBlocks.ORE_EXTRACTOR_TOP.get());
 		}
 	};
 
