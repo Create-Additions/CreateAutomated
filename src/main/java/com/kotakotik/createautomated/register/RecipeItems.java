@@ -117,7 +117,7 @@ public class RecipeItems {
 		}
 
 		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> conf, int drillDamage) {
-			return node(minOre, maxOre, progress, conf, drillDamage, true);
+			return node(minOre, maxOre, progress, conf, drillDamage, false);
 		}
 
 		public ExtractableResource node(int ore, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> conf, int drillDamage) {
