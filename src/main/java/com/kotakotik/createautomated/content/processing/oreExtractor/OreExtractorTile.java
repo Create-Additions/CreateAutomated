@@ -113,7 +113,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public boolean isRedstonePowered() {
-		return level.getBlockState(worldPosition.below()).getValue(BlockStateProperties.POWERED) || getBlockState().getValue(BlockStateProperties.POWERED);
+		return level.getBlockState(worldPosition.below()).getOptionalValue(BlockStateProperties.POWERED).orElse(false) || getBlockState().getValue(BlockStateProperties.POWERED);
 	}
 
 	protected void doRedstoneStuff() {
