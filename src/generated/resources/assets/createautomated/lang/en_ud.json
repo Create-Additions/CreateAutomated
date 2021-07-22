@@ -79,7 +79,7 @@
   "itemGroup.createautomated_resources": "s\u01DD\u0254\u0279nos\u01DD\u0279 p\u01DD\u0287\u0250\u026Fo\u0287n\u2C6F \u01DD\u0287\u0250\u01DD\u0279\u0186",
   "jei.ore_extractor.createautomated.between": "%d o\u0287 %d \u026Fo\u0279\u2132",
   "jei.ore_extractor.createautomated.drill_damage": "%d :\u01DDb\u0250\u026F\u0250p \u05DF\u05DF\u0131\u0279\u15E1",
-  "jei.ore_extractor.createautomated.time": "W\u0500\u1D1A 8\u1105\u0196 \u0287\u0250 spuo\u0254\u01DDs \u025F%",
+  "jei.ore_extractor.createautomated.time": "W\u0500\u1D1A 8\u1105\u0196 \u0287\u0250 spuo\u0254\u01DDs %d",
   "jei.ore_extractor.createautomated.title": "uo\u0131\u0287\u0254\u0250\u0279\u0287x\u018E \u01DD\u0279O",
   "jei.picker.createautomated.title": "bu\u0131\u029E\u0254\u0131\u0500"
 }

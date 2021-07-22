@@ -111,7 +111,7 @@ public class OreExtractionCategory implements IRecipeCategory<ExtractingRecipe> 
 			return Lists.newArrayList(
 					new TranslationTextComponent(node.getItem().getDescriptionId()),
 					CALocalization.JEI_ORE_EXTRACTOR_DRILL_DAMAGE.getComponent(recipe.drillDamage).withStyle(TextFormatting.GOLD),
-					CALocalization.JEI_ORE_EXTRACTOR_TIME.getComponent(recipe.requiredProgress / 128f / 20f).withStyle(TextFormatting.GOLD) // dunno if i actually need to include that they are float but shouldnt hurt right?
+					CALocalization.JEI_ORE_EXTRACTOR_TIME.getComponent(Math.round(recipe.requiredProgress / 128f / 20f)).withStyle(TextFormatting.GOLD) // dunno if i actually need to include that they are float but shouldnt hurt right?
 			);
 		}
 		return IRecipeCategory.super.getTooltipStrings(recipe, mouseX, mouseY);
