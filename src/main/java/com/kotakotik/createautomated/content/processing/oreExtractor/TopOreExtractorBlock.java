@@ -134,11 +134,7 @@ public class TopOreExtractorBlock extends KineticBlock implements ICogWheel, ITE
 		super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
 	}
 
-	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-		// pain moment
-		ItemStack stack = new ItemStack(this);
-		CompoundNBT nbt = stack.getOrCreateTag();
+	public CompoundNBT fillDropNbt(CompoundNBT nbt, IBlockReader world, BlockPos pos) {
 		CompoundNBT nbtTile = nbt.getCompound("BlockEntityTag");
 		withTileEntityDo(world, pos, t -> {
 			// i dont just do t.write(nbtTile, false) because then it would write all the data, i only want the data in nbtList to be written
@@ -152,7 +148,14 @@ public class TopOreExtractorBlock extends KineticBlock implements ICogWheel, ITE
 			}
 		});
 		nbt.put("BlockEntityTag", nbtTile);
-		stack.setTag(nbt);
+		return nbt;
+	}
+
+	@Override
+	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
+		// pain moment
+		ItemStack stack = new ItemStack(this);
+		stack.setTag(fillDropNbt(stack.getOrCreateTag(), world, pos));
 		return stack;
 	}
 }

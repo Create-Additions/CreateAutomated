@@ -11,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.loot.LootContext;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -28,8 +29,10 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -122,16 +125,49 @@ public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock
 	}
 
 	@Override
+	public ActionResultType onSneakWrenched(BlockState state, ItemUseContext context) {
+		World world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
+		PlayerEntity player = context.getPlayer();
+		if (world instanceof ServerWorld) {
+			Block.getDrops(world.getBlockState(pos.above()), (ServerWorld) world, pos.above(), world.getBlockEntity(pos.above()), player, context.getItemInHand()).forEach((stack) -> {
+				player.inventory.placeItemBackInInventory(world, fillStackNbt(stack, world, pos));
+			});
+
+			state.spawnAfterBreak((ServerWorld) world, pos, ItemStack.EMPTY);
+			world.destroyBlock(pos, false);
+			this.playRemoveSound(world, pos);
+		}
+
+		return ActionResultType.SUCCESS;
+	}
+
+	public ItemStack fillStackNbt(ItemStack stack, World world, BlockPos pos) {
+		if (stack.getItem().getRegistryName().equals(ModBlocks.ORE_EXTRACTOR_TOP.getId())) {
+			stack.setTag(ModBlocks.ORE_EXTRACTOR_TOP.get().fillDropNbt(stack.getOrCreateTag(), world, pos.above()));
+		}
+		return stack;
+	}
+
+	@Override
 	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity plr) {
 		Direction d = IOreExtractorBlock.getDirectionToOther(false);
 		BlockPos updatingPos = pos.relative(d);
 		checkForOther(state, d, world.getBlockState(updatingPos), world, pos, updatingPos, !plr.isCreative());
+		if (!plr.isCreative() && world instanceof ServerWorld) {
+			BlockPos pos2 = pos.above().south();
+			BlockState state2 = world.getBlockState(pos2);
+			TileEntity tile = world.getBlockEntity(pos2);
+			Block.getDrops(state2, (ServerWorld) world, pos2, tile).forEach(s -> {
+				popResource(world, pos, fillStackNbt(s, world, pos));
+			});
+		}
 		super.playerWillDestroy(world, pos, state, plr);
 	}
 
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder loot) {
-		return getTop().getDrops(state, loot);
+		return new ArrayList<>();
 	}
 
 	@Override
