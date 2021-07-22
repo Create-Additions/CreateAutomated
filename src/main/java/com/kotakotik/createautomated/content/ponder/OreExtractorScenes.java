@@ -124,7 +124,7 @@ public class OreExtractorScenes {
 		scene.idle(5);
 		scene.overlay.showControls((new InputWindowElement(util.vector.centerOf(funnelIn), Pointing.UP))
 				.withItem(drill), 60);
-		scene.overlay.showControls((new InputWindowElement(util.vector.centerOf(hopper), Pointing.LEFT))
+		scene.overlay.showControls((new InputWindowElement(util.vector.centerOf(hopper), Pointing.DOWN))
 				.withItem(drill), 60);
 		scene.overlay.showControls((new InputWindowElement(util.vector.centerOf(chute), Pointing.DOWN))
 				.withItem(drill), 60);
