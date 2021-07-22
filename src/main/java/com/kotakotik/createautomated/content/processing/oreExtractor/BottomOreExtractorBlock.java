@@ -121,7 +121,7 @@ public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock
 
 	@Override
 	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-		return getTop().getPickBlock(state, target, world, pos, player);
+		return getTop().getPickBlock(state, target, world, pos.above(), player);
 	}
 
 	@Override
