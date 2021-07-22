@@ -17,7 +17,7 @@ public abstract class FanCrashFixMixin extends TickableSound {
 		super(p_i46532_1_, p_i46532_2_);
 	}
 
-	@Inject(method = "stop", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "stop", at = @At("HEAD"), cancellable = true, remap = false)
 	public void stop(CallbackInfo ci) {
 		super.stop();
 		ci.cancel();
