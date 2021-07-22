@@ -28,7 +28,7 @@ public class ExtractingManager implements IRecipeManager {
 		ResourceLocation resourceLocation = new ResourceLocation("crafttweaker", name);
 		CraftTweakerAPI.apply(new ActionAddRecipe(this,
 				new ExtractingRecipe(resourceLocation, node.asVanillaIngredient(),
-						output.getRegistryName().getPath(), drillDamage, requiredProgress, minOre, maxOre)
+						output.getRegistryName().toString(), drillDamage, requiredProgress, minOre, maxOre)
 				, ""));
 	}
 
