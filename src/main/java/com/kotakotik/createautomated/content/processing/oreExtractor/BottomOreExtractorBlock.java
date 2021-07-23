@@ -155,12 +155,13 @@ public class BottomOreExtractorBlock extends Block implements IOreExtractorBlock
 		BlockPos updatingPos = pos.relative(d);
 		checkForOther(state, d, world.getBlockState(updatingPos), world, pos, updatingPos, !plr.isCreative());
 		if (!plr.isCreative() && world instanceof ServerWorld) {
-			BlockPos pos2 = pos.above().south();
+			BlockPos pos2 = pos.above();
 			BlockState state2 = world.getBlockState(pos2);
 			TileEntity tile = world.getBlockEntity(pos2);
 			Block.getDrops(state2, (ServerWorld) world, pos2, tile).forEach(s -> {
 				popResource(world, pos, fillStackNbt(s, world, pos));
 			});
+			// 36 56 71
 		}
 		super.playerWillDestroy(world, pos, state, plr);
 	}

@@ -12,6 +12,7 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.processing.InWorldProcessing;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.repack.registrate.providers.DataGenContext;
 import com.simibubi.create.repack.registrate.providers.RegistrateBlockstateProvider;
 import com.simibubi.create.repack.registrate.providers.loot.RegistrateBlockLootTables;
@@ -78,6 +79,7 @@ public abstract class ModBlocks extends BlockLootTables {
 							.save(prov);
 				}).model((ctx, prov) -> prov.withExistingParent(ctx.getName(), prov.modLoc("block/ore_extractor/item"))).build()
 				.loot(ModBlocks::oreExtractorLootTable)
+				.initialProperties(SharedProperties::stone)
 				.register();
 
 		ORE_EXTRACTOR_BOTTOM = registrate.block("ore_extractor_bottom", BottomOreExtractorBlock::new)
@@ -87,6 +89,7 @@ public abstract class ModBlocks extends BlockLootTables {
 				.addLayer(() -> RenderType::cutoutMipped)
 				// P A I N
 				.loot(ModBlocks::oreExtractorLootTable)
+				.initialProperties(SharedProperties::stone)
 				.register();
 
 		WET_SPONGE_SAIL = registrate.block("wet_sponge_sail", p -> new SpongeFrameBlock(p, InWorldProcessing.Type.SPLASHING))
@@ -94,6 +97,7 @@ public abstract class ModBlocks extends BlockLootTables {
 				.tag(AllTags.AllBlockTags.FAN_TRANSPARENT.tag)
 				.blockstate(ModBlocks::spongeSailBlockstate)
 				.simpleItem()
+				.initialProperties(SharedProperties::wooden)
 				.register();
 
 		LAVA_SPONGE_SAIL = registrate.block("lava_sponge_sail", p -> new SpongeFrameBlock(p, InWorldProcessing.Type.BLASTING))
@@ -101,6 +105,7 @@ public abstract class ModBlocks extends BlockLootTables {
 				.tag(AllTags.AllBlockTags.FAN_TRANSPARENT.tag)
 				.blockstate(ModBlocks::spongeSailBlockstate)
 				.simpleItem()
+				.initialProperties(SharedProperties::wooden)
 				.register();
 
 		SPONGE_SAIL = registrate.block("sponge_sail", p -> new SpongeFrameBlock(p, InWorldProcessing.Type.NONE))
@@ -108,6 +113,7 @@ public abstract class ModBlocks extends BlockLootTables {
 				.tag(AllTags.AllBlockTags.FAN_TRANSPARENT.tag)
 				.blockstate(ModBlocks::spongeSailBlockstate)
 				.simpleItem()
+				.initialProperties(SharedProperties::wooden)
 				.recipe((ctx, prov) -> {
 					ShapelessRecipeBuilder.shapeless(WET_SPONGE_SAIL.get())
 							.requires(ctx.get())

@@ -96,7 +96,7 @@ public class RecipeItems {
 		}
 
 		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> conf, int drillDamage, boolean tooltip) {
-			NODE = conf.apply(reg.block(name + "_node", Block::new).recipe((ctx, prov) -> {
+			NODE = conf.apply(reg.block(name + "_node", Block::new).properties(p -> p.strength(0.5F)).recipe((ctx, prov) -> {
 				EXTRACTING.add(name, e -> e.output(ORE_PIECE).node(ctx.get()).ore(minOre, maxOre).requiredProgress(progress.apply(new IOreExtractorBlock.ExtractorProgressBuilder())).drillDamage(drillDamage));
 			})
 					.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, NODE_TAG, ModTags.References.NON_MOVABLE).loot((p, b) -> {
