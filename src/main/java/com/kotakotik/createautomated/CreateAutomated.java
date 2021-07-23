@@ -47,7 +47,7 @@ public class CreateAutomated {
 		ModFluids.register(r);
 		modEventBus.addGenericListener(IRecipeSerializer.class, ModRecipeTypes::register);
 		OneTimeEventReceiver.addListener(modEventBus, FMLCommonSetupEvent.class, (e) -> {
-			WorldGen.reg(e);
+			WorldGen.reg();
 			ModActors.register();
 		});
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT,

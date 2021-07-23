@@ -6,8 +6,8 @@ import com.kotakotik.createautomated.content.processing.oreExtractor.TopOreExtra
 import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipeGen;
 import com.kotakotik.createautomated.content.processing.picker.recipe.PickingRecipeGen;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
+import com.kotakotik.createautomated.content.worldgen.DimensionalConfigDrivenFeatureEntry;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
-import com.kotakotik.createautomated.register.config.ModCommonConfig;
 import com.kotakotik.createautomated.register.recipes.ModCrushingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModDeployingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
@@ -16,6 +16,7 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.worldgen.ConfigDrivenFeatureEntry;
 import com.simibubi.create.repack.registrate.builders.BlockBuilder;
 import com.simibubi.create.repack.registrate.builders.ItemBuilder;
 import com.simibubi.create.repack.registrate.providers.DataGenContext;
@@ -38,7 +39,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.gen.feature.template.TagMatchRuleTest;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
@@ -63,7 +63,6 @@ public class RecipeItems {
 		public final Tags.IOptionalNamedTag<Item> ORE_PIECE_TAG;
 
 		List<BiConsumer<RegistrateRecipeProvider, ExtractableResource>> recipeGen = new ArrayList<>();
-		public WorldGen.FeatureToRegister oreGenFeature;
 		public Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> nodeConf = c -> c;
 
 		public ExtractableResource(String name, CreateRegistrate reg, Function<ItemBuilder<Item, CreateRegistrate>, ItemBuilder<Item, CreateRegistrate>> orePieceConf) {
@@ -82,17 +81,19 @@ public class RecipeItems {
 			})).register();
 		}
 
-		public ExtractableResource oreGen(int veinSize, int minHeight, int maxHeight, int frequency, WorldGen.NodeDimension dim) {
-			oreGenFeature = WorldGen.add(name + "_node", NODE::get, veinSize, minHeight, maxHeight, frequency, dim == WorldGen.NodeDimension.NETHER ? new TagMatchRuleTest(Tags.Blocks.NETHERRACK) : new TagMatchRuleTest(Tags.Blocks.DIRT), dim);
-			ModCommonConfig.addWorldGen(oreGenFeature);
+		public ExtractableResource oreGen(int veinSize, int minHeight, int maxHeight, int frequency, boolean nether) {
+			ConfigDrivenFeatureEntry entry;
+			if (nether) {
+				entry = DimensionalConfigDrivenFeatureEntry.nether(name + "_node", NODE, veinSize, frequency);
+			} else {
+				entry = DimensionalConfigDrivenFeatureEntry.overworld(name + "_node", NODE, veinSize, frequency);
+			}
+			WorldGen.register(entry.between(minHeight, maxHeight));
 			return this;
-//            WorldGen.register(name + "_node", f);
-//            this.oreGenFeature = f;
-//            return this;
 		}
 
-		public ExtractableResource oreGen(int veinSize, int frequency, WorldGen.NodeDimension dimension) {
-			return oreGen(veinSize, 40, 256, frequency, dimension);
+		public ExtractableResource oreGen(int veinSize, int frequency, boolean nether) {
+			return oreGen(veinSize, 40, 256, frequency, nether);
 		}
 
 		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> conf, int drillDamage, boolean tooltip) {
@@ -271,27 +272,27 @@ public class RecipeItems {
 //		CreateRegistrate registrate = CreateAutomated.registrate.get();
 		LAPIS_EXTRACTABLE = new GlueableExtractableResource("lapis", registrate, true, () -> Items.LAPIS_LAZULI, c -> c)
 				.node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(10).build(), c -> c, 1)
-				.oreGen(10, 4, WorldGen.NodeDimension.OVERWORLD);
+				.oreGen(10, 4, false);
 
 		IRON_EXTRACTABLE = new IngotExtractableResource("iron", registrate, true, () -> Items.IRON_INGOT, c -> c, c -> c)
 				.node(1, 2, (b) -> b.atSpeedOf(128).takesSeconds(40).build(), c -> c, 3)
-				.oreGen(4, 1, WorldGen.NodeDimension.OVERWORLD);
+				.oreGen(4, 1, false);
 
 		ZINC_EXTRACTABLE = new IngotExtractableResource("zinc", registrate, true, AllItems.ZINC_INGOT, c -> c, c -> c)
 				.node(1, 2, (b) -> b.atSpeedOf(128).takesSeconds(20).build(), c -> c, 3)
-				.oreGen(9, 2, WorldGen.NodeDimension.OVERWORLD);
+				.oreGen(9, 2, false);
 
 		GOLD_EXTRACTABLE = new IngotExtractableResource("gold", registrate, true, () -> Items.GOLD_INGOT, c -> c, c -> c)
 				.node(0, 2, (b) -> b.atSpeedOf(128).takesSeconds(35).build(), c -> c, 4)
-				.oreGen(6, 1, WorldGen.NodeDimension.OVERWORLD);
+				.oreGen(6, 1, false);
 
 		COPPER_EXTRACTABLE = new IngotExtractableResource("copper", registrate, true, AllItems.COPPER_INGOT, c -> c, c -> c)
 				.node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(10).build(), c -> c, 3)
-				.oreGen(16, 2, WorldGen.NodeDimension.OVERWORLD);
+				.oreGen(16, 2, false);
 
 		CINDER_FLOUR_EXTRACTABLE = new ExtractableResource("cinder_flour", registrate, c -> c.lang("Cinder Dust"))
 				.node(1, 3, b -> b.atSpeedOf(128).takesSeconds(5).build(), c -> c, 2)
-				.oreGen(16, 0, 256, 10, WorldGen.NodeDimension.NETHER)
+				.oreGen(16, 0, 256, 10, true)
 				.recipe((prov, r) -> {
 					MIXING.add("cinder_flour_from_ore_pieces", b -> {
 						for (int i = 0; i < 9; i++) {

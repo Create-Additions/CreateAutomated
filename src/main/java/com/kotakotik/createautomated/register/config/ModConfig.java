@@ -7,6 +7,7 @@ import net.minecraftforge.fml.config.ModConfig.Type;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -19,6 +20,13 @@ public class ModConfig {
 
 		@Override
 		protected void registerAll(ForgeConfigSpec.Builder builder) {
+			// prevent crashes with empty config
+			if (children == null) {
+				children = new ArrayList<>();
+			}
+			if (allValues == null) {
+				allValues = new ArrayList<>();
+			}
 			super.registerAll(builder);
 		}
 
