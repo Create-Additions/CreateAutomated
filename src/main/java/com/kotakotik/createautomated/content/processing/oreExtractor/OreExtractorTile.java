@@ -7,6 +7,7 @@ import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.register.ModTags;
 import com.kotakotik.createautomated.register.config.ModConfig;
+import com.kotakotik.createautomated.register.config.ModServerConfig;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
 import com.simibubi.create.content.logistics.block.mechanicalArm.ArmInteractionPoint;
 import com.simibubi.create.foundation.utility.VecHelper;
@@ -62,8 +63,8 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public boolean isBreakableOre(BlockPos pos) {
-		MiningAbility miningAbility = getMiningAbility();
-		return (miningAbility == MiningAbility.ORES && getBlockToMine() instanceof OreBlock) || (miningAbility == MiningAbility.ANY && !isExtractable(null)) && !level.isEmptyBlock(getBreakingPos());
+		ModServerConfig.Extractor.MiningAbility miningAbility = getMiningAbility();
+		return (miningAbility == ModServerConfig.Extractor.MiningAbility.ORES && getBlockToMine() instanceof OreBlock) || (miningAbility == ModServerConfig.Extractor.MiningAbility.ANY && !isExtractable(null)) && !level.isEmptyBlock(getBreakingPos());
 	}
 
 	public boolean isExtractable(BlockPos pos) {
@@ -144,7 +145,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		updateDurability();
 	}
 
-	public static MiningAbility getMiningAbility() {
+	public static ModServerConfig.Extractor.MiningAbility getMiningAbility() {
 		return ModConfig.SERVER.machines.extractor.miningAbility.get();
 	}
 
@@ -226,14 +227,15 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		@Nonnull
 		@Override
 		public ItemStack extractItem(int slot, int amount, boolean simulate) {
-			if (!ModConfig.SERVER.machines.extractor.allowOutputExtraction.get()) return ItemStack.EMPTY;
+			if (!ModConfig.SERVER.machines.extractor.extractionAbility.get().canHopperInteract())
+				return ItemStack.EMPTY;
 			return super.extractItem(slot, amount, simulate);
 		}
 
 		@Nonnull
 		@Override
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (ModConfig.SERVER.machines.extractor.allowDrillInsertion.get() && stack.getItem() instanceof IDrillHead && durability == 0) {
+			if (ModConfig.SERVER.machines.extractor.insertionAbility.get().canHopperInteract() && stack.getItem() instanceof IDrillHead && durability == 0) {
 				IDrillHead d = (IDrillHead) stack.getItem();
 				setDrill((DrillHeadItem) stack.getItem());
 				stack.setCount(0);
@@ -301,14 +303,14 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
 	public static class OreExtractorInteractionPoint extends ArmInteractionPoint {
 		protected boolean armCanInsertDrills() {
-			if (ModConfig.SERVER.machines.extractor.allowArmDrillInsertion != null)
-				return ModConfig.SERVER.machines.extractor.allowArmDrillInsertion.get();
+			if (ModConfig.SERVER.machines.extractor.insertionAbility != null)
+				return ModConfig.SERVER.machines.extractor.insertionAbility.get().canArmInteract();
 			return true;
 		}
 
 		protected boolean armCanExtractOrePieces() {
-			if (ModConfig.SERVER.machines.extractor.allowArmOutputExtraction != null)
-				return ModConfig.SERVER.machines.extractor.allowArmOutputExtraction.get();
+			if (ModConfig.SERVER.machines.extractor.extractionAbility != null)
+				return ModConfig.SERVER.machines.extractor.extractionAbility.get().canArmInteract();
 			return false;
 		}
 
@@ -361,9 +363,4 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		}
 	}
 
-	public enum MiningAbility {
-		NONE,
-		ORES,
-		ANY
-	}
 }
