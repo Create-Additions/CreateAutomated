@@ -71,7 +71,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	public boolean isDrillLowEnough() {
-		return drillPos < .05 || !ModConfig.SERVER.machines.extractor.extractorAllowToggleRedstone.get();
+		return drillPos < .05 || !ModConfig.SERVER.machines.extractor.allowTogglingWithRedstone.get();
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	}
 
 	protected void doRedstoneStuff() {
-		if (!ModConfig.SERVER.machines.extractor.extractorAllowToggleRedstone.get()) return;
+		if (!ModConfig.SERVER.machines.extractor.allowTogglingWithRedstone.get()) return;
 		float toSet = drillPos;
 		if (isRedstonePowered()) {
 			toSet += .03f;
@@ -226,14 +226,14 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		@Nonnull
 		@Override
 		public ItemStack extractItem(int slot, int amount, boolean simulate) {
-			if (!ModConfig.SERVER.machines.extractor.allowExtractOrePieces.get()) return ItemStack.EMPTY;
+			if (!ModConfig.SERVER.machines.extractor.allowOutputExtraction.get()) return ItemStack.EMPTY;
 			return super.extractItem(slot, amount, simulate);
 		}
 
 		@Nonnull
 		@Override
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (ModConfig.SERVER.machines.extractor.allowInsertDrills.get() && stack.getItem() instanceof IDrillHead && durability == 0) {
+			if (ModConfig.SERVER.machines.extractor.allowDrillInsertion.get() && stack.getItem() instanceof IDrillHead && durability == 0) {
 				IDrillHead d = (IDrillHead) stack.getItem();
 				setDrill((DrillHeadItem) stack.getItem());
 				stack.setCount(0);
@@ -301,14 +301,14 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 
 	public static class OreExtractorInteractionPoint extends ArmInteractionPoint {
 		protected boolean armCanInsertDrills() {
-			if (ModConfig.SERVER.machines.extractor.armCanInsertDrills != null)
-				return ModConfig.SERVER.machines.extractor.armCanInsertDrills.get();
+			if (ModConfig.SERVER.machines.extractor.allowArmDrillInsertion != null)
+				return ModConfig.SERVER.machines.extractor.allowArmDrillInsertion.get();
 			return true;
 		}
 
 		protected boolean armCanExtractOrePieces() {
-			if (ModConfig.SERVER.machines.extractor.armCanExtractOrePieces != null)
-				return ModConfig.SERVER.machines.extractor.armCanExtractOrePieces.get();
+			if (ModConfig.SERVER.machines.extractor.allowArmOutputExtraction != null)
+				return ModConfig.SERVER.machines.extractor.allowArmOutputExtraction.get();
 			return false;
 		}
 

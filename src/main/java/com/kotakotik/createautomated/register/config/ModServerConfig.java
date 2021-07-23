@@ -5,11 +5,11 @@ import com.simibubi.create.content.contraptions.base.IRotate;
 
 public class ModServerConfig extends com.kotakotik.createautomated.register.config.ModConfig.Config {
 	public static class Extractor extends com.kotakotik.createautomated.register.config.ModConfig.Config {
-		public ConfigBool armCanInsertDrills = b(true, "canArmInsertDrills", "Whether or not mechanical arms can insert drills into ore extractors");
-		public ConfigBool armCanExtractOrePieces = b(false, "canArmExtractOrePieces", "Whether or not mechanical arms can extract ore pieces from ore extractors");
-		public ConfigBool allowInsertDrills = b(true, "allowInsertDrills", "Whether or not things like hoppers and funnels can insert drills into ore extractors", "Note: This will also disable the ability to insert drills using mechanical arms");
-		public ConfigBool allowExtractOrePieces = b(true, "allowExtractOrePieces", "Whether or not things like hoppers and funnels can extract ore pieces from ore extractors", "Note: This will also disable the ability to extract items using mechanical arms");
-		public ConfigBool extractorAllowToggleRedstone = b(true, "allowToggleRedstone", "Whether or not the extractor can be toggled with redstone");
+		public ConfigBool allowArmDrillInsertion = b(true, "allowArmDrillInsertion", "Whether or not mechanical arms can insert drills into ore extractors");
+		public ConfigBool allowArmOutputExtraction = b(false, "allowArmOutputExtraction", "Whether or not mechanical arms can extract ore pieces from ore extractors");
+		public ConfigBool allowDrillInsertion = b(true, "allowDrillInsertion", "Whether or not things like hoppers and funnels can insert drills into ore extractors", "Note: This will also disable the ability to insert drills using mechanical arms");
+		public ConfigBool allowOutputExtraction = b(true, "allowOutputExtraction", "Whether or not things like hoppers and funnels can extract ore pieces from ore extractors", "Note: This will also disable the ability to extract items using mechanical arms");
+		public ConfigBool allowTogglingWithRedstone = b(true, "allowTogglingWithRedstone", "Whether or not the extractor can be toggled with redstone");
 		public ConfigBool unbreakableDrills = b(false, "unbreakableDrills", "Makes drill heads not loose durability", "(why would you use this??)");
 		public ConfigInt drillDurability = i(300, 0, "drillDurability", "The durability of the default drill head");
 		public ConfigEnum<IRotate.SpeedLevel> requiredSpeed = e(IRotate.SpeedLevel.FAST, "requiredSpeed", "The speed requirement for the extractor. The exact number has to be configured in Create's config");
