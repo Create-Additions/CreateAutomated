@@ -1,6 +1,11 @@
 package com.kotakotik.createautomated.compat.kubejs;
 
 import com.kotakotik.createautomated.CreateAutomated;
+import com.kotakotik.createautomated.compat.kubejs.item.drillHead.item.DrillHeadBuilderJS;
+import com.kotakotik.createautomated.compat.kubejs.item.drillHead.item.DrillHeadItemJS;
+import com.kotakotik.createautomated.compat.kubejs.item.drillHead.item.DrillHeadRegistryEventJS;
+import com.kotakotik.createautomated.compat.kubejs.recipe.ExtractingJS;
+import com.kotakotik.createautomated.compat.kubejs.recipe.PickingJS;
 import dev.latvian.kubejs.script.ScriptType;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;

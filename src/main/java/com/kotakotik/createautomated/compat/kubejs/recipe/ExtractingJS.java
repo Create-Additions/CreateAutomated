@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.compat.kubejs;
+package com.kotakotik.createautomated.compat.kubejs.recipe;
 
 import dev.latvian.kubejs.recipe.RecipeJS;
 import dev.latvian.kubejs.util.ListJS;

@@ -1,4 +1,4 @@
-package com.kotakotik.createautomated.compat.kubejs;
+package com.kotakotik.createautomated.compat.kubejs.item.drillHead.item;
 
 import com.kotakotik.createautomated.api.IDrillHead;
 import dev.latvian.kubejs.item.ItemJS;
