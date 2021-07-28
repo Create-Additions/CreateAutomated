@@ -1,14 +1,37 @@
 package com.kotakotik.createautomated.compat.kubejs;
 
 import com.kotakotik.createautomated.CreateAutomated;
+import dev.latvian.kubejs.script.ScriptType;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.DeferredWorkQueue;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static dev.latvian.kubejs.recipe.RegisterRecipeHandlersEvent.EVENT;
 
 public class CAKubeJS {
+	public static final Map<ResourceLocation, DrillHeadBuilderJS> DRILL_HEADS = new LinkedHashMap<>();
+
 	public CAKubeJS() {
 		EVENT.register(event -> {
 			event.register(CreateAutomated.asResource("extracting"), ExtractingJS::new);
 			event.register(CreateAutomated.asResource("picking"), PickingJS::new);
+		});
+
+		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerDrillHeads);
+
+		DeferredWorkQueue.runLater(() -> (new DrillHeadRegistryEventJS()).post(ScriptType.STARTUP, "item.registry.drillhead"));
+	}
+
+	public void registerDrillHeads(final RegistryEvent.Register<Item> event) {
+		DRILL_HEADS.forEach((id, builder) -> {
+			DrillHeadItemJS item = new DrillHeadItemJS(builder);
+			item.setRegistryName(id);
+			event.getRegistry().register(item);
 		});
 	}
 }
