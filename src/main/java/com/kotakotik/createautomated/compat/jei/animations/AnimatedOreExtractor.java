@@ -6,7 +6,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.gui.GuiGameElement;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.vector.Vector3f;
@@ -64,7 +63,7 @@ public class AnimatedOreExtractor extends AnimatedKinetics {
 				.render(matrixStack);
 
 		if (block != null) {
-			GuiGameElement.of(block)
+			defaultBlockElement(block)
 					.atLocal(0, 2, 0)
 					.scale(scale)
 					.render(matrixStack);
