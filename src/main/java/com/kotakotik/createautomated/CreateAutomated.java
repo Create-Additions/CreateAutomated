@@ -1,5 +1,7 @@
 package com.kotakotik.createautomated;
 
+import com.kotakotik.createautomated.compat.ModDependencies;
+import com.kotakotik.createautomated.compat.kubejs.CAKubeJS;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.*;
 import com.kotakotik.createautomated.register.config.ModConfig;
@@ -59,6 +61,7 @@ public class CreateAutomated {
 			});
 			CALocalization.register(r);
 		}
+		ModDependencies.KUBEJS.runIfInstalled(() -> CAKubeJS::new);
 		modEventBus.addListener(ModConfig::onLoad);
 		modEventBus.addListener(ModConfig::onReload);
 		modEventBus.addListener(ModPonder::register);
