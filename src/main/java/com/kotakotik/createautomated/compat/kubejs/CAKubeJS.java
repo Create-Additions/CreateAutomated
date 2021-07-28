@@ -1,9 +1,11 @@
 package com.kotakotik.createautomated.compat.kubejs;
 
+import com.jozufozu.flywheel.core.PartialModel;
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.compat.kubejs.item.drillHead.item.DrillHeadBuilderJS;
 import com.kotakotik.createautomated.compat.kubejs.item.drillHead.item.DrillHeadItemJS;
 import com.kotakotik.createautomated.compat.kubejs.item.drillHead.item.DrillHeadRegistryEventJS;
+import com.kotakotik.createautomated.compat.kubejs.item.drillHead.partial.DrillPartialRegistryEventJS;
 import com.kotakotik.createautomated.compat.kubejs.recipe.ExtractingJS;
 import com.kotakotik.createautomated.compat.kubejs.recipe.PickingJS;
 import dev.latvian.kubejs.script.ScriptType;
@@ -20,6 +22,7 @@ import static dev.latvian.kubejs.recipe.RegisterRecipeHandlersEvent.EVENT;
 
 public class CAKubeJS {
 	public static final Map<ResourceLocation, DrillHeadBuilderJS> DRILL_HEADS = new LinkedHashMap<>();
+	public static final Map<ResourceLocation, ResourceLocation> DRILL_PARTIALS = new LinkedHashMap<>();
 
 	public CAKubeJS() {
 		EVENT.register(event -> {
@@ -30,6 +33,7 @@ public class CAKubeJS {
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerDrillHeads);
 
 		DeferredWorkQueue.runLater(() -> (new DrillHeadRegistryEventJS()).post(ScriptType.STARTUP, "item.registry.drillhead"));
+		DeferredWorkQueue.runLater(() -> new DrillPartialRegistryEventJS().post(ScriptType.CLIENT, "partial.registry.drillhead"));
 	}
 
 	public void registerDrillHeads(final RegistryEvent.Register<Item> event) {
@@ -39,4 +43,6 @@ public class CAKubeJS {
 			event.getRegistry().register(item);
 		});
 	}
+
+	public static final Map<ResourceLocation, PartialModel> BUILD_DRILL_PARTIALS = new LinkedHashMap<>();
 }
