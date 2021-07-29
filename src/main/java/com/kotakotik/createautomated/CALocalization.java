@@ -16,6 +16,7 @@ public enum CALocalization {
 	CONFIG_COMMON_TITLE("config", "title.common", "World Generation Settings"),
 	CONFIG_SERVER_TITLE("config", "title.server", "Gameplay Settings");
 
+	public static String noPickupNodeKey = "contraption.minecart_contraption_illegal_pickup";
 	public final String key;
 	public final String english;
 
