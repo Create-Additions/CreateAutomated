@@ -2,7 +2,14 @@ package com.kotakotik.createautomated.compat.kubejs.recipe;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.kotakotik.createautomated.register.ModItems;
+import com.simibubi.create.AllRecipeTypes;
+import com.simibubi.create.content.contraptions.components.deployer.DeployerApplicationRecipe;
+import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder;
+import com.simibubi.create.content.contraptions.processing.ProcessingRecipeSerializer;
 import dev.latvian.kubejs.item.ItemStackJS;
+import dev.latvian.kubejs.recipe.RecipeEventJS;
 import dev.latvian.kubejs.recipe.RecipeJS;
 import dev.latvian.kubejs.util.ListJS;
 
@@ -33,5 +40,19 @@ public class PickingJS extends RecipeJS {
 			jsonOutputs.add(is.toResultJson());
 		}
 		json.add("results", jsonOutputs);
+	}
+
+	public PickingJS addDeploying(RecipeEventJS event) {
+		// omg this sucks
+		DeployerApplicationRecipe r = new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<DeployerApplicationRecipe>) AllRecipeTypes.DEPLOYING.serializer).getFactory(), id)
+				.require(inputItems.get(0).createVanillaIngredient())
+				.require(ModItems.PICKER.get())
+				.output((float) outputItems.get(0).getChance(), outputItems.get(0).getItemStack())
+				.build();
+		JsonObject json = new JsonObject();
+		((ProcessingRecipeSerializer) AllRecipeTypes.DEPLOYING.serializer).write(json, r);
+		json.addProperty("type", "create:deploying");
+		event.custom(json);
+		return this;
 	}
 }
