@@ -6,6 +6,7 @@ import com.kotakotik.createautomated.content.processing.oreExtractor.TopOreExtra
 import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipeGen;
 import com.kotakotik.createautomated.content.processing.picker.recipe.PickingRecipeGen;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
+import com.kotakotik.createautomated.content.simple.node.NodeBlock;
 import com.kotakotik.createautomated.content.worldgen.DimensionalConfigDrivenFeatureEntry;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.recipes.ModCrushingRecipes;
@@ -56,7 +57,7 @@ public class RecipeItems extends ModFluids {
 		public final String name;
 		public CreateRegistrate reg;
 
-		public BlockEntry<Block> NODE;
+		public BlockEntry<NodeBlock> NODE;
 		public ItemEntry<Item> ORE_PIECE;
 
 		public final Tags.IOptionalNamedTag<Block> NODE_TAG;
@@ -96,11 +97,11 @@ public class RecipeItems extends ModFluids {
 			return oreGen(veinSize, 40, 256, frequency, nether);
 		}
 
-		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> conf, int drillDamage, boolean tooltip) {
-			NODE = conf.apply(reg.block(name + "_node", Block::new).properties(p -> p.strength(0.5F)).recipe((ctx, prov) -> {
+		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage, boolean tooltip) {
+			NODE = conf.apply(reg.block(name + "_node", NodeBlock::new).properties(p -> p.strength(0.5F)).recipe((ctx, prov) -> {
 				EXTRACTING.add(name, e -> e.output(ORE_PIECE).node(ctx.get()).ore(minOre, maxOre).requiredProgress(progress.apply(new IOreExtractorBlock.ExtractorProgressBuilder())).drillDamage(drillDamage));
 			})
-					.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, NODE_TAG, ModTags.References.NON_MOVABLE).loot((p, b) -> {
+					.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, NODE_TAG).loot((p, b) -> {
 						p.dropOther(b, Items.AIR);
 					}).simpleItem()).register();
 			if (tooltip) {
@@ -117,11 +118,11 @@ public class RecipeItems extends ModFluids {
 			return RegistrateLangProvider.toEnglishName(ORE_PIECE.getId().getPath());
 		}
 
-		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> conf, int drillDamage) {
+		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage) {
 			return node(minOre, maxOre, progress, conf, drillDamage, false);
 		}
 
-		public ExtractableResource node(int ore, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> conf, int drillDamage) {
+		public ExtractableResource node(int ore, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage) {
 			return node(ore, ore, progress, conf, drillDamage);
 		}
 
