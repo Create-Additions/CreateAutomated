@@ -442,7 +442,6 @@ public class RecipeItems extends ModFluids {
 				.register();
 
 		EMERALD_RENEWABLE = new RenewableGem("emerald", registrate, () -> Items.EMERALD, () -> Ingredient.of(Items.ENDER_PEARL), .4f)
-				.noModel()
 				.register();
 
 		modEventBus.addListener(RecipeItems::gatherData);
