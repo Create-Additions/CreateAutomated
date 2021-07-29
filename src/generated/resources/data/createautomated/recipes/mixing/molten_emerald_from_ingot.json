@@ -2,12 +2,12 @@
   "type": "create:mixing",
   "ingredients": [
     {
-      "item": "minecraft:diamond"
+      "item": "minecraft:emerald"
     }
   ],
   "results": [
     {
-      "fluid": "createautomated:molten_diamond",
+      "fluid": "createautomated:molten_emerald",
       "amount": 1000
     }
   ],

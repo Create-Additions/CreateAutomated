@@ -1,0 +1,17 @@
+{
+  "type": "create:deploying",
+  "ingredients": [
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "createautomated:picker"
+    }
+  ],
+  "results": [
+    {
+      "item": "createautomated:emerald_bit",
+      "chance": 0.4
+    }
+  ]
+}

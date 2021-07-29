@@ -2,12 +2,12 @@
   "type": "create:crushing",
   "ingredients": [
     {
-      "item": "minecraft:diamond"
+      "item": "minecraft:emerald"
     }
   ],
   "results": [
     {
-      "item": "createautomated:diamond_bit"
+      "item": "createautomated:emerald_bit"
     }
   ]
 }

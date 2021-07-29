@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "createautomated:flowing_molten_diamond",
-    "createautomated:molten_diamond"
+    "createautomated:molten_diamond",
+    "createautomated:flowing_molten_emerald",
+    "createautomated:molten_emerald"
   ]
 }

@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "createautomated:diamond_bit",
     "createautomated:emerald_bit"
   ]
 }

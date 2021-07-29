@@ -1,0 +1,18 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "createautomated:bits/emerald"
+    },
+    {
+      "fluid": "createautomated:molten_emerald",
+      "nbt": {},
+      "amount": 800
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:emerald"
+    }
+  ]
+}

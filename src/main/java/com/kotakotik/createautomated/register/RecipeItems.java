@@ -18,11 +18,13 @@ import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.worldgen.ConfigDrivenFeatureEntry;
 import com.simibubi.create.repack.registrate.builders.BlockBuilder;
+import com.simibubi.create.repack.registrate.builders.FluidBuilder;
 import com.simibubi.create.repack.registrate.builders.ItemBuilder;
 import com.simibubi.create.repack.registrate.providers.DataGenContext;
 import com.simibubi.create.repack.registrate.providers.RegistrateLangProvider;
 import com.simibubi.create.repack.registrate.providers.RegistrateRecipeProvider;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
+import com.simibubi.create.repack.registrate.util.entry.FluidEntry;
 import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullBiConsumer;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullConsumer;
@@ -33,25 +35,23 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import java.util.function.UnaryOperator;
+import java.util.function.*;
 
 import static com.kotakotik.createautomated.CreateAutomated.modEventBus;
 
-public class RecipeItems {
+public class RecipeItems extends ModFluids {
 	public static class ExtractableResource {
 		public final String name;
 		public CreateRegistrate reg;
@@ -246,6 +246,96 @@ public class RecipeItems {
 		}
 	}
 
+	public static class RenewableGem {
+		public final String name;
+		protected final CreateRegistrate registrate;
+		protected Supplier<Ingredient> start;
+		public Supplier<Item> gem;
+
+		protected String bitName() {
+			return name + "_bit";
+		}
+
+		protected String fluidName() {
+			return "molten_" + name;
+		}
+
+		public RenewableGem(String name,
+							CreateRegistrate registrate,
+							Supplier<Item> gem,
+							Supplier<Ingredient> start,
+							float pickingChance) {
+			this.name = name;
+			this.gem = gem;
+			this.registrate = registrate;
+			this.start = start;
+			// CRUSHED_PRISMARINE.generalTag
+			BIT = RecipeItem.createBasic(bitName(), registrate)
+					.quickTag("bits", name)
+					.recipe((ctx, prov) -> {
+						PICKING.add(bitName(), b -> b.require(start.get()).output(pickingChance, ctx.get()));
+						MIXING.add(name + "_from_bits", b -> b.require(BIT.itemTag).require(FLUID.get(), 800).output(this.gem.get()));
+						CRUSHING.add(bitName(), b -> b.require(gem.get()).output(ctx.get()));
+					})
+					.register();
+			FLUID_BUILDER = registrate.fluid(fluidName(), still(fluidName()), flow(fluidName()), NoColorFluidAttributes::new)
+					.attributes(b -> b.viscosity(500)
+							.density(1400))
+					.properties(p -> p.levelDecreasePerBlock(2)
+							.tickRate(25)
+							.slopeFindDistance(3)
+							.explosionResistance(100f))
+					.removeTag(FluidTags.WATER)
+					.tag(FluidTags.LAVA);
+		}
+
+		public RenewableGem bit(Consumer<RecipeItem<Item>> cons) {
+			cons.accept(BIT);
+			return this;
+		}
+
+		public RenewableGem fluid(Consumer<FluidBuilder<ForgeFlowingFluid.Flowing, CreateRegistrate>> cons) {
+			cons.accept(FLUID_BUILDER);
+			return this;
+		}
+
+		public RenewableGem bucket(Consumer<ItemBuilder<BucketItem, FluidBuilder<ForgeFlowingFluid.Flowing, CreateRegistrate>>> cons) {
+			bucketTransform = bucketTransform.andThen(cons);
+			return this;
+		}
+
+		public RenewableGem register() {
+			BIT.register();
+			ItemBuilder<BucketItem, FluidBuilder<ForgeFlowingFluid.Flowing, CreateRegistrate>> bucket = FLUID_BUILDER.bucket();
+			bucketTransform.accept(bucket);
+			bucket.build();
+			FLUID = FLUID_BUILDER.register();
+			return this;
+		}
+
+		public RenewableGem noModel() {
+			CreateAutomated.LOGGER.warn("Renewable " + name + " using no models");
+			return fluid(b -> b.block().blockstate(($, $$) -> {
+			}).build()).bit(RecipeItem::noModel).bucket(b -> b.model(($, $$) -> {
+			}));
+		}
+
+		protected FluidBuilder<ForgeFlowingFluid.Flowing, CreateRegistrate> FLUID_BUILDER;
+		public FluidEntry<ForgeFlowingFluid.Flowing> FLUID;
+		public RecipeItem<Item> BIT;
+
+		public Consumer<ItemBuilder<BucketItem, FluidBuilder<ForgeFlowingFluid.Flowing, CreateRegistrate>>> bucketTransform = b2 -> b2.recipe((ctx, prov) -> {
+			RecipeItems.MIXING.add(fluidName(), b -> {
+				for (int i = 0; i < 3; i++) {
+					b.require(BIT.itemTag);
+				}
+				return b.requiresHeat(HeatCondition.SUPERHEATED).output(FLUID.get(), 150);
+			});
+			RecipeItems.MIXING.add(fluidName() + "_from_ingot", b -> b.require(gem.get()).requiresHeat(HeatCondition.SUPERHEATED).output(FLUID.get(), 1000));
+		})
+				.properties(p -> p.stacksTo(1));
+	}
+
 	public static ExtractableResource LAPIS_EXTRACTABLE;
 	public static ExtractableResource IRON_EXTRACTABLE;
 	public static ExtractableResource ZINC_EXTRACTABLE;
@@ -256,7 +346,8 @@ public class RecipeItems {
 	//    public static ItemEntry<DrillHead> DRILL_HEAD;
 	public static RecipeItem<DrillHeadItem> DRILL_HEAD;
 	public static RecipeItem<Item> CRUSHED_PRISMARINE;
-	public static RecipeItem<Item> DIAMOND_BIT;
+	public static RenewableGem DIAMOND_RENEWABLE;
+	public static RenewableGem EMERALD_RENEWABLE;
 
 	public static ItemGroup itemGroup = new ItemGroup(CreateAutomated.MODID + "_resources") {
 		@Override
@@ -341,13 +432,11 @@ public class RecipeItems {
 				.recipe((ctx, prov) -> CRUSHING.add("crushed_prismarine", b -> b.duration(150).require(Tags.Items.DUSTS_PRISMARINE).output(.3f, ctx.get(), 1).output(.1f, ctx.get(), 2)))
 				.register();
 
-		DIAMOND_BIT = RecipeItem.createBasic("diamond_bit", registrate)
-				.quickTag("bits", "diamond")
-				.recipe((ctx, prov) -> {
-					PICKING.add("diamond_bit", b -> b.require(CRUSHED_PRISMARINE.generalTag).output(.2f, ctx.get()));
-					MIXING.add("diamond", b -> b.require(DIAMOND_BIT.itemTag).require(ModFluids.MOLTEN_DIAMOND.get(), 800).output(Items.DIAMOND));
-					CRUSHING.add("diamond_bit", b -> b.require(Tags.Items.GEMS_DIAMOND).output(ctx.get()));
-				})
+		DIAMOND_RENEWABLE = new RenewableGem("diamond", registrate, () -> Items.DIAMOND, () -> Ingredient.of(CRUSHED_PRISMARINE.generalTag), .2f)
+				.register();
+
+		EMERALD_RENEWABLE = new RenewableGem("emerald", registrate, () -> Items.EMERALD, () -> Ingredient.of(Items.ENDER_PEARL), .4f)
+				.noModel()
 				.register();
 
 		modEventBus.addListener(RecipeItems::gatherData);

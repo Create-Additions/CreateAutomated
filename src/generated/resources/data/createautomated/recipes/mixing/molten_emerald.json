@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "createautomated:bits/emerald"
+    },
+    {
+      "tag": "createautomated:bits/emerald"
+    },
+    {
+      "tag": "createautomated:bits/emerald"
+    }
+  ],
+  "results": [
+    {
+      "fluid": "createautomated:molten_emerald",
+      "amount": 150
+    }
+  ],
+  "heatRequirement": "superheated"
+}
