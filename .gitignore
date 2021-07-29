@@ -119,4 +119,5 @@ server/
 !gradle-wrapper.jar
 
 !run/kubejs/
+!run/scripts/
 run/kubejs/exported
