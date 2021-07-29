@@ -14,11 +14,20 @@ import dev.latvian.kubejs.recipe.RecipeJS;
 import dev.latvian.kubejs.util.ListJS;
 
 public class PickingJS extends RecipeJS {
+	public boolean deployingAdded = false;
+
 	@Override
 	public void create(ListJS args) {
 		inputItems.add(parseIngredientItem(args.get(0)));
 		for (Object o : ListJS.orSelf(args.get(1))) {
 			outputItems.add(parseResultItem(o));
+		}
+		deployingAdded = false;
+		if (args.size() >= 3) {
+			Object event = args.get(2);
+			if (event instanceof RecipeEventJS) {
+				addDeploying((RecipeEventJS) event);
+			}
 		}
 	}
 
@@ -44,15 +53,18 @@ public class PickingJS extends RecipeJS {
 
 	public PickingJS addDeploying(RecipeEventJS event) {
 		// omg this sucks
-		DeployerApplicationRecipe r = new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<DeployerApplicationRecipe>) AllRecipeTypes.DEPLOYING.serializer).getFactory(), id)
-				.require(inputItems.get(0).createVanillaIngredient())
-				.require(ModItems.PICKER.get())
-				.output((float) outputItems.get(0).getChance(), outputItems.get(0).getItemStack())
-				.build();
-		JsonObject json = new JsonObject();
-		((ProcessingRecipeSerializer) AllRecipeTypes.DEPLOYING.serializer).write(json, r);
-		json.addProperty("type", "create:deploying");
-		event.custom(json);
+		if (!deployingAdded) {
+			DeployerApplicationRecipe r = new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<DeployerApplicationRecipe>) AllRecipeTypes.DEPLOYING.serializer).getFactory(), id)
+					.require(inputItems.get(0).createVanillaIngredient())
+					.require(ModItems.PICKER.get())
+					.output((float) outputItems.get(0).getChance(), outputItems.get(0).getItemStack())
+					.build();
+			JsonObject json = new JsonObject();
+			((ProcessingRecipeSerializer) AllRecipeTypes.DEPLOYING.serializer).write(json, r);
+			json.addProperty("type", "create:deploying");
+			event.custom(json);
+			deployingAdded = true;
+		}
 		return this;
 	}
 }
