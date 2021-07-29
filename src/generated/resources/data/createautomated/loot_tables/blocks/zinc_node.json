@@ -6,10 +6,13 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "createautomated:zinc_node"
         }
       ],
       "conditions": [
+        {
+          "condition": "createautomated:config_nodes_drop"
+        },
         {
           "condition": "minecraft:survives_explosion"
         }

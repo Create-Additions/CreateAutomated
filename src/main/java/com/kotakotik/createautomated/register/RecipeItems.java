@@ -2,6 +2,7 @@ package com.kotakotik.createautomated.register;
 
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
+import com.kotakotik.createautomated.content.conditions.ConfigEnabledCondition;
 import com.kotakotik.createautomated.content.processing.oreExtractor.TopOreExtractorBlock;
 import com.kotakotik.createautomated.content.processing.oreExtractor.recipe.ExtractingRecipeGen;
 import com.kotakotik.createautomated.content.processing.picker.recipe.PickingRecipeGen;
@@ -38,6 +39,11 @@ import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.loot.ConstantRange;
+import net.minecraft.loot.ItemLootEntry;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.conditions.SurvivesExplosion;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
@@ -101,9 +107,8 @@ public class RecipeItems extends ModFluids {
 			NODE = conf.apply(reg.block(name + "_node", NodeBlock::new).properties(p -> p.strength(0.5F)).recipe((ctx, prov) -> {
 				EXTRACTING.add(name, e -> e.output(ORE_PIECE).node(ctx.get()).ore(minOre, maxOre).requiredProgress(progress.apply(new IOreExtractorBlock.ExtractorProgressBuilder())).drillDamage(drillDamage));
 			})
-					.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, NODE_TAG).loot((p, b) -> {
-						p.dropOther(b, Items.AIR);
-					}).simpleItem()).register();
+					.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, NODE_TAG).loot((p, b) ->
+							p.add(b, LootTable.lootTable().withPool(LootPool.lootPool().when(((ConfigEnabledCondition.Serializer) ModConditions.CONFIG_NODES_DROP.getSerializer()).get()).when(SurvivesExplosion.survivesExplosion()).setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(b))))).simpleItem()).register();
 			if (tooltip) {
 				ModTooltips.onRegister(reg -> {
 					ModTooltips.register(NODE.get(), "Some dirt with ore in it, but _how much?_",

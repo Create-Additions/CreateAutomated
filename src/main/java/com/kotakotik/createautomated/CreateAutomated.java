@@ -69,6 +69,7 @@ public class CreateAutomated {
 		// uses a new item group so its last not to put any other items in the item group
 		RecipeItems.register(r);
 		ModConfig.register();
+		ModConditions.register();
 	}
 
 	public static ResourceLocation asResource(String path) {
