@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 public class DrillPartialRegistryEventJS extends EventJS {
 	public DrillPartialRegistryEventJS create(ResourceLocation item, ResourceLocation partial) {
 		CAKubeJS.DRILL_PARTIALS.put(item, partial);
-		PartialModel model = new PartialModel(item);
+		PartialModel model = new PartialModel(partial);
 		CAKubeJS.BUILD_DRILL_PARTIALS.put(item, model);
 		DrillPartialIndex.add(item, model);
 		return this;
