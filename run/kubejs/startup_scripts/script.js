@@ -6,6 +6,19 @@ onEvent('item.registry', event => {
 	// Register new items here
 	// event.create('example_item').displayName('Example Item')
 	 event.create('floppa_bit').displayName('Floppa Bit')
+	 event.create("dripping_floppa").displayName("Dripping Floppa")
+	    .tooltip("epic floppa!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+	    // i SAID MAIININING SPEED 9999
+	 event.create("engineer_floppa").miningSpeed(999).displayName("Engineer Floppa").miningSpeed(999)
+	            .tier("netherite")
+                .attackDamage(999).miningSpeed(999)
+                .attackSpeed(999).miningSpeed(999)
+        	    .miningSpeed(999)
+        	                    	    .maxDamage(9999999)
+        	    	    .miningSpeed(999)
+.miningSpeed(999)
+        	    .unstackable().miningSpeed(999)
+
 })
 
 onEvent('block.registry', event => {
@@ -14,10 +27,6 @@ onEvent('block.registry', event => {
 	event.create('floppa_node').material('wood').hardness(1.0).displayName('Floppa Node')
 })
 
-onEvent('item.registry.drillhead', event => {
-    event.create('test_item').displayName('Test Item').durability(3)
-})
-
-onEvent('partial.registry.drillhead', event => {
-    event.create("kubejs:test_item", "kubejs:test_item_partial")
+onEvent("item.registry.drillhead", event => {
+    event.create('floppa_drill').displayName('Floppa Drill Head').durability(9999999)
 })

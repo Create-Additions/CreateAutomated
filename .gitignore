@@ -121,3 +121,4 @@ server/
 !run/kubejs/
 !run/scripts/
 run/kubejs/exported
+run/kubejs/kubejs.zip

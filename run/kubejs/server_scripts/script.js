@@ -8,32 +8,57 @@ settings.logErroringRecipes = true
 console.info('Hello, World! (You will see this line every time server resources reload)')
 
 onEvent('recipes', event => {
-	// Change recipes here
-	for(var i = 0 ; i < 20 ; i++) {
-	    console.info("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww" + i)
-	    	event.recipes.createautomated.extracting("minecraft:obsidian", "minecraft:netherrack")
-                .drillDamage(304 + i)
-                .ore(30)
-                .requiredProgressMinutes(128, 60)
-	}
-
-	const p = event.recipes.createautomated.picking("minecraft:diamond_block", Item.of("minecraft:diamond")
-	    .withChance(0.5)
-	    .withCount(64))
-//	console.info(p)
-//	console.info(event)
-	p.addDeploying(event)
-
 	event.recipes.createautomated.extracting("kubejs:floppa_node", "kubejs:floppa_bit")
 	    .drillDamage(0)
 	    .ore(2)
 	    .requiredProgressSeconds(128, 3)
-})
 
-onEvent('item.tags', event => {
-	// Get the #forge:cobblestone tag collection and add Diamond Ore to it
-	// event.get('forge:cobblestone').add('minecraft:diamond_ore')
+  event.custom({
+    type: 'create:splashing',
+    ingredients: [
+      Ingredient.of('kubejs:floppa_bit').toJson()
+    ],
+    results: [
+      Item.of('kubejs:dripping_floppa').toResultJson(),
+    ]
+  })
 
-	// Get the #forge:cobblestone tag collection and remove Mossy Cobblestone from it
-	// event.get('forge:cobblestone').remove('minecraft:mossy_cobblestone')
+  event.shaped("kubejs:floppa_node", [
+  "yyy",
+  "yfy",
+  "yyy"
+  ], {
+    "y": "kubejs:floppa_bit",
+    "f": "minecraft:leather"
+  })
+
+  event.shapeless("kubejs:floppa_bit", "9x minecraft:diamond_block")
+
+  event.shapeless("9x minecraft:diamond_block", "kubejs:floppa_bit")
+
+  event.shapeless("minecraft:netherite_block", "kubejs:dripping_floppa")
+
+  event.shaped("kubejs:engineer_floppa", [
+  " gb",
+  "wft",
+  " n "
+  ], {
+  "g": "create:goggles",
+  "b": "create:copper_backtank",
+  "w": "create:wrench",
+  "f": "kubejs:floppa_bit",
+  "t": "create:builders_tea",
+  "n": "kubejs:floppa_node"
+  })
+
+  event.shapeless("minecraft:bedrock", ["minecraft:stone", "kubejs:dripping_floppa"])
+
+  event.shaped("kubejs:floppa_drill", [
+  "nnn",
+  "ini",
+  " i "
+  ], {
+    "n": "kubejs:floppa_node",
+    "i": "kubejs:floppa_bit"
+  })
 })
