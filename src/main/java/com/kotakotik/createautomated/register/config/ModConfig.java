@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 public class ModConfig {
 	public static ModCommonConfig COMMON;
 	public static ModServerConfig SERVER;
+	public static ModClientConfig CLIENT;
 
 	public static class Config extends ConfigBase {
 
@@ -54,6 +55,7 @@ public class ModConfig {
 	public static void register() {
 		COMMON = register(ModCommonConfig::new, Type.COMMON);
 		SERVER = register(ModServerConfig::new, Type.SERVER);
+		CLIENT = register(ModClientConfig::new, Type.CLIENT);
 
 		for (Map.Entry<Config, Type> pair : configs.entrySet())
 			ModLoadingContext.get()

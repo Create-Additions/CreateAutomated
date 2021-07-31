@@ -14,7 +14,7 @@ public class CAConfigScreen extends BaseConfigScreen {
 				.withTitles(CALocalization.CONFIG_CLIENT_TITLE.translate(),
 						CALocalization.CONFIG_COMMON_TITLE.translate(),
 						CALocalization.CONFIG_SERVER_TITLE.translate())
-				.withSpecs(null, ModConfig.COMMON.specification, ModConfig.SERVER.specification);
+				.withSpecs(ModConfig.CLIENT.specification, ModConfig.COMMON.specification, ModConfig.SERVER.specification);
 	}
 
 	public CAConfigScreen(Screen parent, @Nonnull String modID) {

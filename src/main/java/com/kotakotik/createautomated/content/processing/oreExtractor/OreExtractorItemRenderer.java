@@ -4,6 +4,7 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.kotakotik.createautomated.api.DrillPartialIndex;
 import com.kotakotik.createautomated.register.ModBlockPartials;
 import com.kotakotik.createautomated.register.ModBlocks;
+import com.kotakotik.createautomated.register.config.ModConfig;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.simibubi.create.foundation.render.PartialBufferer;
@@ -26,8 +27,8 @@ public class OreExtractorItemRenderer extends ItemStackTileEntityRenderer {
 
 	public BlockState state = ModBlocks.ORE_EXTRACTOR_TOP.getDefaultState();
 
-	float offset = 1.4f;
-	float inventoryOffset = -.3f;
+	public float offset = 1.4f;
+	public float inventoryOffset = -.3f;
 
 	@Override
 	public void renderByItem(ItemStack stack, ItemCameraTransforms.TransformType type, MatrixStack ms, IRenderTypeBuffer buffer, int p_239207_5_, int p_239207_6_) {
@@ -43,7 +44,7 @@ public class OreExtractorItemRenderer extends ItemStackTileEntityRenderer {
 				.translate(0, -1 + o, 0)
 				.renderInto(ms, vb);
 		PartialModel cogModel = ModBlockPartials.COGWHEEL;
-		if (!stack.isEmpty()) {
+		if (ModConfig.CLIENT.machines.extractor.renderDrillInItem.get() && !stack.isEmpty()) {
 			CompoundNBT tag = stack.getOrCreateTag();
 			if (tag.contains("BlockEntityTag")) {
 				CompoundNBT tileData = tag.getCompound("BlockEntityTag");
