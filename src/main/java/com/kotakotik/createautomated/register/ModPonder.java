@@ -11,7 +11,7 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
 public class ModPonder {
 	public static void register(FMLClientSetupEvent event) {
-		register();
+		event.enqueueWork((Runnable) ModPonder::register);
 	}
 
 	protected static void register() {
