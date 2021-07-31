@@ -41,7 +41,7 @@ public class OreExtractorInstance extends KineticTileInstance<OreExtractorTile> 
 	}
 
 	public RotatingData createDrill() {
-		drill = materialManager.defaultTransparent().material(AllMaterialSpecs.ROTATING).getModel(DrillPartialIndex.get(tile.drillId), blockState).createInstance();
+		drill = materialManager.defaultCutout().material(AllMaterialSpecs.ROTATING).getModel(DrillPartialIndex.get(tile.drillId), blockState).createInstance();
 		drill.setRotationAxis(Direction.Axis.Y);
 		updateDrillRotation();
 		drill.setPosition(getInstancePosition().below());

@@ -30,7 +30,7 @@ public class OreExtractorRenderer extends KineticTileEntityRenderer {
 			BlockState blockState = te.getBlockState();
 			OreExtractorTile tile = (OreExtractorTile) te;
 			BlockPos pos = te.getBlockPos();
-			IVertexBuilder vb = buffer.getBuffer(RenderType.solid());
+			IVertexBuilder vb = buffer.getBuffer(RenderType.cutout());
 			SuperByteBuffer superBuffer = PartialBufferer.get(tile.durability > 0 ? ModBlockPartials.HALF_SHAFT_COGWHEEL : ModBlockPartials.COGWHEEL, blockState);
 			standardKineticRotationTransform(superBuffer, te, light).renderInto(ms, vb);
 			if (tile.durability > 0) {
