@@ -6,6 +6,8 @@ import com.simibubi.create.Create;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public abstract class ModBlockPartials {
+	public static PartialModel ORE_EXTRACTOR_BOTTOM = get("ore_extractor/bottom");
+	public static PartialModel ORE_EXTRACTOR_TOP = get("ore_extractor/top");
 	public static PartialModel COGWHEEL = getCreate("cogwheel");
 	public static PartialModel HALF_SHAFT_COGWHEEL = get("half_shaft_cogwheel");
 	public static PartialModel DRILL_ORE_EXTRACTOR = get("ore_extractor/drill");

@@ -3,6 +3,7 @@ package com.kotakotik.createautomated.register;
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.processing.oreExtractor.BottomOreExtractorBlock;
+import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorItemRenderer;
 import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorTile;
 import com.kotakotik.createautomated.content.processing.oreExtractor.TopOreExtractorBlock;
 import com.kotakotik.createautomated.content.processing.spongeFrame.SpongeFrameBlock;
@@ -64,7 +65,11 @@ public abstract class ModBlocks extends BlockLootTables {
 						}
 						return p;
 					}
+
 				})
+				.properties(p ->
+						p.setISTER(() -> () -> OreExtractorItemRenderer.INSTANCE == null ? new OreExtractorItemRenderer() : OreExtractorItemRenderer.INSTANCE)
+				)
 				.recipe((ctx, prov) -> {
 					ShapedRecipeBuilder.shaped(ctx.get())
 							.pattern("cgc")
