@@ -19,7 +19,7 @@ public class ModSplashingRecipes extends CAProcessingRecipeWrapper<SplashingReci
 
 	@Override
 	public ProcessingRecipeBuilder<SplashingRecipe> createBuilder(ResourceLocation id) {
-		return new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<SplashingRecipe>) AllRecipeTypes.SPLASHING.serializer).getFactory(), id);
+		return new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<SplashingRecipe>) AllRecipeTypes.SPLASHING.getSerializer()).getFactory(), id);
 	}
 
 	@Override

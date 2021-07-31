@@ -6,11 +6,11 @@ import com.kotakotik.createautomated.content.processing.oreExtractor.BottomOreEx
 import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorTile;
 import com.kotakotik.createautomated.content.processing.oreExtractor.TopOreExtractorBlock;
 import com.kotakotik.createautomated.content.processing.spongeFrame.SpongeFrameBlock;
-import com.kotakotik.createautomated.util.AddonStressConfigDefaults;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.processing.InWorldProcessing;
+import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.repack.registrate.providers.DataGenContext;
@@ -39,11 +39,10 @@ public abstract class ModBlocks extends BlockLootTables {
 	public static BlockEntry<SpongeFrameBlock> WET_SPONGE_SAIL;
 	public static BlockEntry<SpongeFrameBlock> SPONGE_SAIL;
 	public static BlockEntry<SpongeFrameBlock> LAVA_SPONGE_SAIL;
-
 	public static void register(CreateRegistrate registrate) {
 		ORE_EXTRACTOR_TOP = registrate.block("ore_extractor", TopOreExtractorBlock::new)
 				.properties(AbstractBlock.Properties::noOcclusion)
-				.transform(AddonStressConfigDefaults.setImpact(OreExtractorTile.getDefaultStress()))
+				.transform(BlockStressDefaults.setImpact(OreExtractorTile.getDefaultStress()))
 //                .blockstate(BlockStateGen.directionalBlockProvider(true))
 				.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.itemModels().getExistingFile(prov.modLoc("block/ore_extractor/top"))))
 				.addLayer(() -> RenderType::cutoutMipped)

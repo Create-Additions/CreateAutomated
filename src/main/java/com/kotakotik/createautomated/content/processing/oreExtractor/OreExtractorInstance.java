@@ -3,7 +3,7 @@ package com.kotakotik.createautomated.content.processing.oreExtractor;
 import com.jozufozu.flywheel.backend.instancing.IDynamicInstance;
 import com.jozufozu.flywheel.backend.instancing.InstanceData;
 import com.jozufozu.flywheel.backend.instancing.Instancer;
-import com.jozufozu.flywheel.backend.instancing.MaterialManager;
+import com.jozufozu.flywheel.backend.material.MaterialManager;
 import com.kotakotik.createautomated.api.DrillPartialIndex;
 import com.kotakotik.createautomated.register.ModBlockPartials;
 import com.simibubi.create.content.contraptions.base.KineticData;
@@ -23,8 +23,8 @@ public class OreExtractorInstance extends KineticTileInstance<OreExtractorTile> 
 
 	public RotatingData drill;
 
-	public Instancer<RotatingData> shortModel = materialManager.getMaterial(AllMaterialSpecs.ROTATING).getModel(ModBlockPartials.HALF_SHAFT_COGWHEEL, tile.getBlockState());
-	public Instancer<RotatingData> model = materialManager.getMaterial(AllMaterialSpecs.ROTATING).getModel(ModBlockPartials.COGWHEEL, tile.getBlockState());
+	public Instancer<RotatingData> shortModel = materialManager.defaultTransparent().material(AllMaterialSpecs.ROTATING).getModel(ModBlockPartials.HALF_SHAFT_COGWHEEL, tile.getBlockState());
+	public Instancer<RotatingData> model = materialManager.defaultTransparent().material(AllMaterialSpecs.ROTATING).getModel(ModBlockPartials.COGWHEEL, tile.getBlockState());
 
 	protected RotatingData rotatingModel = this.setup(model.createInstance());
 
@@ -35,23 +35,17 @@ public class OreExtractorInstance extends KineticTileInstance<OreExtractorTile> 
 	public OreExtractorInstance(MaterialManager<?> modelManager, OreExtractorTile tile) {
 		super(modelManager, tile);
 
-		if (getTile().durability > 0) {
+		if (tile.durability > 0) {
 			createDrill();
 		}
 	}
 
-	public OreExtractorTile getTile() {
-		return (OreExtractorTile) tile;
-	}
-
 	public RotatingData createDrill() {
-		drill = getRotatingMaterial().getModel(DrillPartialIndex.get(getTile().drillId), blockState).createInstance();
+		drill = materialManager.defaultTransparent().material(AllMaterialSpecs.ROTATING).getModel(DrillPartialIndex.get(tile.drillId), blockState).createInstance();
 		drill.setRotationAxis(Direction.Axis.Y);
 		updateDrillRotation();
 		drill.setPosition(getInstancePosition().below());
-		rotatingModel.delete();
-		rotatingModel = createShortCogwheel();
-		rotatingModel.setPosition(getInstancePosition());
+		shortModel.stealInstance(rotatingModel);
 		return drill;
 	}
 
@@ -67,18 +61,8 @@ public class OreExtractorInstance extends KineticTileInstance<OreExtractorTile> 
 
 	public void deleteDrill() {
 		drill.delete();
-		rotatingModel.delete();
-		rotatingModel = createCogwheel();
-		rotatingModel.setPosition(getInstancePosition());
+		model.stealInstance(rotatingModel);
 		updateLight();
-	}
-
-	public RotatingData createShortCogwheel() {
-		return shortModel.createInstance();
-	}
-
-	public RotatingData createCogwheel() {
-		return model.createInstance();
 	}
 
 	@Override
@@ -98,7 +82,7 @@ public class OreExtractorInstance extends KineticTileInstance<OreExtractorTile> 
 
 	@Override
 	public void update() {
-		if (getTile().durability <= 0) {
+		if (tile.durability <= 0) {
 			if (!isDrillRemoved()) {
 				deleteDrill();
 			}
@@ -111,7 +95,7 @@ public class OreExtractorInstance extends KineticTileInstance<OreExtractorTile> 
 			updateDrillRotation();
 			updateLight();
 			BlockPos p = getInstancePosition();
-			drill.setPosition(p.getX(), p.getY() - 1 + getTile().drillPos, p.getZ());
+			drill.setPosition(p.getX(), p.getY() - 1 + tile.drillPos, p.getZ());
 		}
 		this.updateRotation(this.rotatingModel);
 		super.update();

@@ -33,15 +33,15 @@ public class PickingManager implements IRecipeManager {
 		ResourceLocation resourceLocation = new ResourceLocation("crafttweaker", name);
 		ResourceLocation deployingRes = new ResourceLocation("crafttweaker", deployingName);
 		PickingRecipe r = new PickingRecipe(resourceLocation).require(input.asVanillaIngredient());
-		ProcessingRecipeBuilder<DeployerApplicationRecipe> deployingRecipe = new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<DeployerApplicationRecipe>) AllRecipeTypes.DEPLOYING.serializer).getFactory(), deployingRes)
+		ProcessingRecipeBuilder<DeployerApplicationRecipe> deployingRecipe = new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<DeployerApplicationRecipe>) AllRecipeTypes.DEPLOYING.getSerializer()).getFactory(), deployingRes)
 				.require(input.asVanillaIngredient())
 				.require(ModItems.PICKER.get());
-		for(MCWeightedItemStack output : outputs) {
+		for (MCWeightedItemStack output : outputs) {
 			r.output((float) output.getWeight(), output.getItemStack().getInternal());
 			deployingRecipe.output((float) output.getWeight(), output.getItemStack().getInternal());
 		}
 		CraftTweakerAPI.apply(new ActionAddRecipe(this, r, ""));
-		if(addDeployingRecipe) {
+		if (addDeployingRecipe) {
 			CraftTweakerAPI.apply(new ActionAddRecipe(this, deployingRecipe.build(), ""));
 		}
 	}

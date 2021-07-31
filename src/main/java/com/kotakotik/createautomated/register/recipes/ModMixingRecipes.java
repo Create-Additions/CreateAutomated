@@ -14,7 +14,7 @@ public class ModMixingRecipes extends CAProcessingRecipeWrapper<MixingRecipe> {
 
 	@Override
 	public ProcessingRecipeBuilder<MixingRecipe> createBuilder(ResourceLocation id) {
-		return new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<MixingRecipe>) AllRecipeTypes.MIXING.serializer).getFactory(), id);
+		return new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<MixingRecipe>) AllRecipeTypes.MIXING.getSerializer()).getFactory(), id);
 	}
 
 	@Override

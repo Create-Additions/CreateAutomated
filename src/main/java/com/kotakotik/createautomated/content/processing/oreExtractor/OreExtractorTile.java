@@ -71,6 +71,11 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		return getBlockToMine() instanceof IExtractable || IExtractable.getRecipe(level, getBreakingPos()).isPresent();
 	}
 
+	@Override
+	public float calculateStressApplied() {
+		return super.calculateStressApplied();
+	}
+
 	public boolean isDrillLowEnough() {
 		return drillPos < .05 || !ModConfig.SERVER.machines.extractor.allowTogglingWithRedstone.get();
 	}

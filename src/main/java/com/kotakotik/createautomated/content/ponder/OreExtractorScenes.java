@@ -1,6 +1,5 @@
 package com.kotakotik.createautomated.content.ponder;
 
-import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorTile;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.register.RecipeItems;
@@ -25,7 +24,7 @@ public class OreExtractorScenes {
 		BlockPos funnel = util.grid.at(1, 2, 0);
 
 		// Configure
-		scene.title(CreateAutomated.MODID + ".ore_extractor.intro", "Extracting from nodes using Ore Extractors");
+		scene.title("ore_extractor.intro", "Extracting from nodes using Ore Extractors");
 		scene.world.setKineticSpeed(util.select.everywhere(), 32);
 //        scene.world.hideSection(util.select.layers(1, 3), Direction.DOWN);
 
@@ -84,7 +83,7 @@ public class OreExtractorScenes {
 		ItemStack drill = new ItemStack(RecipeItems.DRILL_HEAD.item.get());
 
 		// Configure
-		scene.title(CreateAutomated.MODID + ".ore_extractor.automation", "Automating ore extraction");
+		scene.title("ore_extractor.automation", "Automating ore extraction");
 		scene.world.setKineticSpeed(util.select.everywhere(), 128);
 		scene.showBasePlate();
 		scene.world.showSection(util.select.fromTo(extractorBottom, extractorTop), Direction.UP);

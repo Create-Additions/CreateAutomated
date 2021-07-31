@@ -14,7 +14,7 @@ public class ModCrushingRecipes extends CAProcessingRecipeWrapper<CrushingRecipe
 
 	@Override
 	public ProcessingRecipeBuilder<CrushingRecipe> createBuilder(ResourceLocation id) {
-		return new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<CrushingRecipe>) AllRecipeTypes.CRUSHING.serializer).getFactory(), id);
+		return new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<CrushingRecipe>) AllRecipeTypes.CRUSHING.getSerializer()).getFactory(), id);
 	}
 
 	@Override

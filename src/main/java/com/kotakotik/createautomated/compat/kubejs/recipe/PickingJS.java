@@ -51,13 +51,13 @@ public class PickingJS extends RecipeJS {
 
 	public PickingJS addDeploying(RecipeEventJS event) {
 		// omg this sucks
-		ProcessingRecipeBuilder<DeployerApplicationRecipe> b = new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<DeployerApplicationRecipe>) AllRecipeTypes.DEPLOYING.serializer).getFactory(), new ResourceLocation("deploying_recipe"))
+		ProcessingRecipeBuilder<DeployerApplicationRecipe> b = new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<DeployerApplicationRecipe>) AllRecipeTypes.DEPLOYING.getSerializer()).getFactory(), new ResourceLocation("deploying_recipe"))
 				.require(inputItems.get(0).createVanillaIngredient())
 				.require(ModItems.PICKER.get())
 				.output((float) outputItems.get(0).getChance(), outputItems.get(0).getItemStack());
 		DeployerApplicationRecipe r = b.build();
 		JsonObject json = new JsonObject();
-		((ProcessingRecipeSerializer) AllRecipeTypes.DEPLOYING.serializer).write(json, r);
+		((ProcessingRecipeSerializer) AllRecipeTypes.DEPLOYING.getSerializer()).write(json, r);
 		json.addProperty("type", "create:deploying");
 		event.custom(json);
 		return this;

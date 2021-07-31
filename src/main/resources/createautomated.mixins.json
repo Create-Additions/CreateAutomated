@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "createautomated.refmap.json",
   "mixins": [
-    "temporary.FanCrashFixMixin",
     "temporary.SpongeFrameMixin"
   ],
   "injectors": {

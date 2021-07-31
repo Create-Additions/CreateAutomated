@@ -1,7 +1,16 @@
 package com.kotakotik.createautomated.register.config;
 
+import com.kotakotik.createautomated.CreateAutomated;
 import com.simibubi.create.content.contraptions.base.IRotate;
+import com.simibubi.create.foundation.block.BlockStressDefaults;
+import com.simibubi.create.foundation.block.BlockStressValues;
 import com.simibubi.create.foundation.config.CKinetics;
+import net.minecraft.block.Block;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeConfigSpec;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ModServerConfig extends com.kotakotik.createautomated.register.config.ModConfig.Config {
 	protected static class Comments {
@@ -49,9 +58,49 @@ public class ModServerConfig extends com.kotakotik.createautomated.register.conf
 		public ConfigInt durability = i(32, 0, "durability", "How many items you can pick before the picker breaks");
 	}
 
+	public static class Stress extends ModConfig.Config implements BlockStressValues.IStressValueProvider {
+		protected Map<ResourceLocation, ForgeConfigSpec.ConfigValue<Double>> impacts = new HashMap();
+
+		@Override
+		protected void registerAll(ForgeConfigSpec.Builder builder) {
+			builder.comment(new String[]{"", " [in Stress Units]", "Configure the individual stress impact of mechanical blocks. Note that this cost is doubled for every speed increase it receives"}).push("impact");
+			BlockStressDefaults.DEFAULT_IMPACTS.forEach((r, i) -> {
+				if (r.getNamespace().equals(CreateAutomated.MODID)) {
+					impacts.put(r, builder.define(r.getPath(), i));
+				}
+			});
+			builder.pop();
+			BlockStressValues.registerProvider(CreateAutomated.MODID, this);
+			super.registerAll(builder);
+		}
+
+		@Override
+		public double getCapacity(Block block) {
+			return 0;
+		}
+
+		@Override
+		public boolean hasImpact(Block block) {
+			return impacts.containsKey(block.getRegistryName());
+		}
+
+		@Override
+		public double getImpact(Block block) {
+			ResourceLocation key = block.getRegistryName();
+			ForgeConfigSpec.ConfigValue<Double> value = impacts.get(key);
+			return value != null ? value.get() : 0.0D;
+		}
+
+		@Override
+		public boolean hasCapacity(Block block) {
+			return false;
+		}
+	}
+
 	public static class Machines extends com.kotakotik.createautomated.register.config.ModConfig.Config {
 		public Picker picker = nested(1, Picker::new);
 		public Extractor extractor = nested(1, Extractor::new);
+		public Stress stress = nested(1, Stress::new);
 	}
 
 	public Machines machines = nested(0, Machines::new);

@@ -14,7 +14,7 @@ public class ModDeployingRecipes extends CAProcessingRecipeWrapper<DeployerAppli
 
 	@Override
 	public ProcessingRecipeBuilder<DeployerApplicationRecipe> createBuilder(ResourceLocation id) {
-		return new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<DeployerApplicationRecipe>) AllRecipeTypes.DEPLOYING.serializer).getFactory(), id);
+		return new ProcessingRecipeBuilder<>(((ProcessingRecipeSerializer<DeployerApplicationRecipe>) AllRecipeTypes.DEPLOYING.getSerializer()).getFactory(), id);
 	}
 
 	@Override
