@@ -3,7 +3,7 @@ package com.kotakotik.createautomated.register;
 import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.processing.oreExtractor.BottomOreExtractorBlock;
-import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorItemRenderer;
+import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorItem;
 import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorTile;
 import com.kotakotik.createautomated.content.processing.oreExtractor.TopOreExtractorBlock;
 import com.kotakotik.createautomated.content.processing.spongeFrame.SpongeFrameBlock;
@@ -21,18 +21,15 @@ import com.simibubi.create.repack.registrate.util.DataIngredient;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.data.loot.BlockLootTables;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.loot.functions.CopyNbt;
-
-import javax.annotation.Nullable;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 
 public abstract class ModBlocks extends BlockLootTables {
 	public static BlockEntry<TopOreExtractorBlock> ORE_EXTRACTOR_TOP;
@@ -48,28 +45,11 @@ public abstract class ModBlocks extends BlockLootTables {
 				.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.itemModels().getExistingFile(prov.modLoc("block/ore_extractor/top"))))
 				.addLayer(() -> RenderType::cutoutMipped)
 				.lang("Ore Extractor")
-				.item((b, p) -> new BlockItem(b, p) {
-					@Nullable
-					@Override
-					public BlockState getPlacementState(BlockItemUseContext p_195945_1_) {
-						BlockState blockstate = ORE_EXTRACTOR_BOTTOM.get().getStateForPlacement(p_195945_1_);
-						return blockstate != null && this.canPlace(p_195945_1_, blockstate) ? blockstate : null;
-					}
-
-					@Override
-					protected boolean placeBlock(BlockItemUseContext ctx, BlockState state) {
-						boolean p = super.placeBlock(ctx, state);
-						if (p) {
-							ORE_EXTRACTOR_BOTTOM.get().setPlacedBy(ctx.getLevel(), ctx.getClickedPos(), state, ctx.getPlayer(), ctx.getItemInHand());
-							updateCustomBlockEntityTag(ctx.getLevel(), ctx.getPlayer(), ctx.getClickedPos().above(), ctx.getItemInHand());
-						}
-						return p;
-					}
-
+				.item(OreExtractorItem::new)
+				.properties(p -> {
+					DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> p.setISTER(OreExtractorItem.renderer()));
+					return p;
 				})
-				.properties(p ->
-						p.setISTER(() -> () -> OreExtractorItemRenderer.INSTANCE == null ? new OreExtractorItemRenderer() : OreExtractorItemRenderer.INSTANCE)
-				)
 				.recipe((ctx, prov) -> {
 					ShapedRecipeBuilder.shaped(ctx.get())
 							.pattern("cgc")
@@ -161,4 +141,5 @@ public abstract class ModBlocks extends BlockLootTables {
 	public static <T extends Block> void spongeSailBlockstate(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov) {
 		prov.directionalBlock(ctx.get(), prov.models().getExistingFile(prov.modLoc(ctx.getName())));
 	}
+
 }
