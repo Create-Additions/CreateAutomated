@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "createautomated.refmap.json",
   "mixins": [
+    "WrenchPickupMixin",
     "temporary.SpongeFrameMixin"
   ],
   "injectors": {
