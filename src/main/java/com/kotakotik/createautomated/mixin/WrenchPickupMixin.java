@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
-// mixin abuse? 😩
+// mixin abuse? :weary: but the compiler gets mad at me when i use an actual emoji
 @Mixin(MinecartContraptionItem.class)
 public class WrenchPickupMixin {
 	@Inject(method = "wrenchCanBeUsedToPickUpMinecartContraptions", at = @At("HEAD"), cancellable = true, remap = false)
