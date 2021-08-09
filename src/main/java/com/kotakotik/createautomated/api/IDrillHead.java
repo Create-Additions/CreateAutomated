@@ -4,14 +4,16 @@ import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtracto
 import com.kotakotik.createautomated.register.RecipeItems;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.common.extensions.IForgeItem;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public interface IDrillHead {
+public interface IDrillHead extends IItemProvider, IForgeItem {
 	HashMap<ResourceLocation, Item> cachedById = new HashMap<>();
 
 	@Nullable

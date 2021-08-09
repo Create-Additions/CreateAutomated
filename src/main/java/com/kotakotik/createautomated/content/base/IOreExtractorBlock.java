@@ -7,11 +7,12 @@ import net.minecraft.block.material.PushReaction;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import net.minecraftforge.common.extensions.IForgeBlock;
 
 import java.util.Arrays;
 import java.util.List;
 
-public interface IOreExtractorBlock extends IWrenchable {
+public interface IOreExtractorBlock extends IWrenchable, IForgeBlock {
 	default PushReaction pushReaction(BlockState state) {
 		return PushReaction.DESTROY;
 	}

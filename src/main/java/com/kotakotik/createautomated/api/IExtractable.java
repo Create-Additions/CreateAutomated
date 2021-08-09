@@ -7,13 +7,14 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.extensions.IForgeBlock;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import java.util.Objects;
 import java.util.Optional;
 
-public interface IExtractable {
+public interface IExtractable extends IForgeBlock {
 	void extractTick(OreExtractorTile oreExtractorTile);
 
 	static void tryExtract(OreExtractorTile tile) {
