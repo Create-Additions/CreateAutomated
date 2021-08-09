@@ -1,0 +1,9 @@
+{
+  "nav": {
+    "Mods": {
+      "Createautomated": {
+        "DrillHeadBuilder": "mods/createautomated/DrillHeadBuilder.md"
+      }
+    }
+  }
+}

@@ -151,6 +151,10 @@ dependencies {
         runtimeOnly "net.darkhax.openloader:OpenLoader-${openloader_version}"
     }
 
+    annotationProcessor "org.reflections:reflections:0.9.10"
+    annotationProcessor "com.blamejared.crafttweaker:CraftTweaker-${crafttweaker_version}"
+    annotationProcessor "com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-${crafttweaker_annotation_version}"
+    annotationProcessor "com.blamejared.contenttweaker:ContentTweaker-${contenttweaker_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8:processor'
 }
 

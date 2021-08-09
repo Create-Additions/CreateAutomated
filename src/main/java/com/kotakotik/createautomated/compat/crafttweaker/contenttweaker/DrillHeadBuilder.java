@@ -3,13 +3,11 @@ package com.kotakotik.createautomated.compat.crafttweaker.contenttweaker;
 import com.blamejared.contenttweaker.VanillaFactory;
 import com.blamejared.contenttweaker.api.items.IIsCotItem;
 import com.blamejared.contenttweaker.api.items.ItemTypeBuilder;
-import com.blamejared.contenttweaker.api.resources.ResourceType;
 import com.blamejared.contenttweaker.api.resources.WriteableResource;
-import com.blamejared.contenttweaker.api.resources.WriteableResourceTemplate;
 import com.blamejared.contenttweaker.items.ItemBuilder;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.jozufozu.flywheel.core.PartialModel;
-import com.kotakotik.createautomated.CreateAutomated;
 import com.kotakotik.createautomated.api.DrillPartialIndex;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import net.minecraft.util.ResourceLocation;
@@ -21,13 +19,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Test
+ */
 @ZenRegister(modDeps = {"contenttweaker"})
 @ZenCodeType.Name("mods.createautomated.item.DrillHeadBuilder")
+@Document("mods/createautomated/DrillHeadBuilder")
 public class DrillHeadBuilder extends ItemTypeBuilder {
 	public int durability;
 	public boolean noPartial = false;
-
-	public boolean generateDrillModel = true;
 
 	public DrillHeadBuilder(ItemBuilder itemBuilder) {
 		super(itemBuilder);
@@ -37,12 +37,17 @@ public class DrillHeadBuilder extends ItemTypeBuilder {
 	public void build(ResourceLocation resourceLocation) {
 		CustomDrillHead item = new CustomDrillHead(itemBuilder.getItemProperties(), durability, resourceLocation, this);
 		VanillaFactory.queueItemForRegistration(item);
-		if(!noPartial) {
+		if (!noPartial) {
 			DrillPartialIndex.add(resourceLocation, new PartialModel(new ResourceLocation(resourceLocation.getNamespace(), "block/drills/" + resourceLocation.getPath())));
-
 		}
 	}
 
+	/**
+	 * ee
+	 *
+	 * @param newDurability Eeeeeeee
+	 * @return eeeeee
+	 */
 	@ZenCodeType.Method
 	public DrillHeadBuilder durability(int newDurability) {
 		this.durability = newDurability;
@@ -52,12 +57,6 @@ public class DrillHeadBuilder extends ItemTypeBuilder {
 	@ZenCodeType.Method
 	public DrillHeadBuilder noPartial() {
 		noPartial = true;
-		return this;
-	}
-
-	@ZenCodeType.Method
-	public DrillHeadBuilder noDrillModel() {
-		generateDrillModel = false;
 		return this;
 	}
 
@@ -82,11 +81,6 @@ public class DrillHeadBuilder extends ItemTypeBuilder {
 		public Collection<WriteableResource> getResourcePackResources() {
 			List<WriteableResource> resources = new ArrayList<>();
 			ResourceLocation id = getRegistryNameNonNull();
-			if(builder.generateDrillModel) {
-				resources.add(new WriteableResourceTemplate(ResourceType.ASSETS,
-						id, "models", "block", "drills").withTemplate(ResourceType.ASSETS,
-						new ResourceLocation(CreateAutomated.MODID, "models/block/drill")).setLocationProperty(id));
-			}
 			return resources;
 		}
 
