@@ -47,7 +47,8 @@ public interface IExtractable {
 		int progress = (int) (tile.extractProgress + Math.abs(tile.getSpeed()));
 		if (progress >= r.requiredProgress) {
 			progress = 0;
-			tile.updateDurability(tile.durability - r.drillDamage);
+//			tile.getDrillHeadItem().takeDamage(tile, r.drillDamage);
+			tile.takeDamage(r.drillDamage);
 			ItemStack stack = tile.inventory.getStackInSlot(0);
 			ItemStack toAdd = r.getCraftingResult();
 			if (stack.getItem().getRegistryName().equals(toAdd.getItem().getRegistryName())) {

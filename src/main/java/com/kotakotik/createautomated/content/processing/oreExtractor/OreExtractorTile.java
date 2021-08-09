@@ -6,6 +6,7 @@ import com.kotakotik.createautomated.api.IExtractable;
 import com.kotakotik.createautomated.content.base.IOreExtractorBlock;
 import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.register.ModTags;
+import com.kotakotik.createautomated.register.RecipeItems;
 import com.kotakotik.createautomated.register.config.ModConfig;
 import com.kotakotik.createautomated.register.config.ModServerConfig;
 import com.simibubi.create.content.contraptions.components.actors.BlockBreakingKineticTileEntity;
@@ -40,6 +41,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.apache.commons.lang3.RandomUtils;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 	public ResourceLocation drillId;
@@ -137,18 +139,18 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		}
 	}
 
-	public void updateDurability() {
-		if (ModConfig.SERVER.machines.extractor.unbreakableDrills.get()) {
-			durability = maxDurability;
-		} else {
-			durability = MathHelper.clamp(durability, 0, maxDurability);
-		}
-	}
-
-	public void updateDurability(int value) {
-		durability = value;
-		updateDurability();
-	}
+//	public void updateDurability() {
+//		if (ModConfig.SERVER.machines.extractor.unbreakableDrills.get()) {
+//			durability = maxDurability;
+//		} else {
+//			durability = MathHelper.clamp(durability, 0, maxDurability);
+//		}
+//	}
+//
+//	public void updateDurability(int value) {
+//		durability = value;
+//		updateDurability();
+//	}
 
 	public static ModServerConfig.Extractor.MiningAbility getMiningAbility() {
 		return ModConfig.SERVER.machines.extractor.miningAbility.get();
@@ -188,6 +190,17 @@ public class OreExtractorTile extends BlockBreakingKineticTileEntity {
 		this.maxDurability = durability;
 		this.durability = durability;
 		this.drillId = id;
+	}
+
+	@Nullable
+	public IDrillHead getDrillHeadItem() {
+		return drillId.equals(new ResourceLocation("")) ? RecipeItems.DRILL_HEAD.item.get() : IDrillHead.getFromId(drillId);
+	}
+
+	public void takeDamage(int amount) {
+		IDrillHead drill = getDrillHeadItem();
+		if (drill == null) return;
+		drill.takeDamage(this, amount);
 	}
 
 	public void setDrill(IDrillHead head, ResourceLocation id) {
