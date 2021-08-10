@@ -19,15 +19,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Test
- */
 @ZenRegister(modDeps = {"contenttweaker"})
 @ZenCodeType.Name("mods.createautomated.item.DrillHeadBuilder")
 @Document("mods/createautomated/DrillHeadBuilder")
 public class DrillHeadBuilder extends ItemTypeBuilder {
 	public int durability;
-	public boolean noPartial = false;
+	public ResourceLocation partial;
 
 	public DrillHeadBuilder(ItemBuilder itemBuilder) {
 		super(itemBuilder);
@@ -37,17 +34,11 @@ public class DrillHeadBuilder extends ItemTypeBuilder {
 	public void build(ResourceLocation resourceLocation) {
 		CustomDrillHead item = new CustomDrillHead(itemBuilder.getItemProperties(), durability, resourceLocation, this);
 		VanillaFactory.queueItemForRegistration(item);
-		if (!noPartial) {
-			DrillPartialIndex.add(resourceLocation, new PartialModel(new ResourceLocation(resourceLocation.getNamespace(), "block/drills/" + resourceLocation.getPath())));
+		if (partial != null) {
+			DrillPartialIndex.add(resourceLocation, new PartialModel(partial));
 		}
 	}
 
-	/**
-	 * ee
-	 *
-	 * @param newDurability Eeeeeeee
-	 * @return eeeeee
-	 */
 	@ZenCodeType.Method
 	public DrillHeadBuilder durability(int newDurability) {
 		this.durability = newDurability;
@@ -55,8 +46,13 @@ public class DrillHeadBuilder extends ItemTypeBuilder {
 	}
 
 	@ZenCodeType.Method
-	public DrillHeadBuilder noPartial() {
-		noPartial = true;
+	public DrillHeadBuilder partial(String id) {
+		partial = new ResourceLocation("contenttweaker", id);
+		return this;
+	}
+
+	public DrillHeadBuilder partial(ResourceLocation id) {
+		partial = id;
 		return this;
 	}
 

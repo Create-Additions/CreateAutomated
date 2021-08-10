@@ -22,23 +22,22 @@ public class ExtractingManager implements IRecipeManager {
 	}
 
 	@ZenCodeType.Method
-	public void addRecipe(String name, IIngredient node, IItemStack output, int drillDamage, int requiredProgress, int minOre, int maxOre) {
-
+	public void addRecipe(String name, IIngredient node, IItemStack output, int drillDamage, int requiredProgress, int minOre, @ZenCodeType.OptionalInt(-1) int maxOre) {
 		name = fixRecipeName(name);
 		ResourceLocation resourceLocation = new ResourceLocation("crafttweaker", name);
 		CraftTweakerAPI.apply(new ActionAddRecipe(this,
 				new ExtractingRecipe(resourceLocation, node.asVanillaIngredient(),
-						output.getRegistryName().toString(), drillDamage, requiredProgress, minOre, maxOre)
+						output.getRegistryName().toString(), drillDamage, requiredProgress, minOre, maxOre == -1 ? minOre : maxOre)
 				, ""));
 	}
 
 	@ZenCodeType.Method
-	public void addRecipe(String name, IIngredient node, IItemStack output, int drillDamage, int requiredProgress, int ore) {
-		addRecipe(name, node, output, drillDamage, requiredProgress, ore, ore);
+	public void addRecipe(String name, IIngredient node, IItemStack output, int drillDamage, IOreExtractorBlock.ExtractorProgressBuilder progress, int minOre, @ZenCodeType.OptionalInt(-1) int maxOre) {
+		addRecipe(name, node, output, drillDamage, progress.build(), minOre, maxOre);
 	}
 
-	@ZenCodeType.Method
-	public void addRecipe(String name, IIngredient node, IItemStack output, int drillDamage, int speedOf, int takesTicks, int minOre, int maxOre) {
-		addRecipe(name, node, output, drillDamage, IOreExtractorBlock.ExtractorProgressBuilder.atSpeedOfS(speedOf).takesTicks(takesTicks).build(), minOre, maxOre);
-	}
+//	@ZenCodeType.Method
+//	public void addRecipe(String name, IIngredient node, IItemStack output, int drillDamage, int speedOf, int takesTicks, int minOre, int maxOre) {
+//		addRecipe(name, node, output, drillDamage, IOreExtractorBlock.ExtractorProgressBuilder.atSpeedOfS(speedOf).takesTicks(takesTicks).build(), minOre, maxOre);
+//	}
 }
