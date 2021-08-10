@@ -53,7 +53,7 @@ public class OreExtractorItemRenderer extends ItemStackTileEntityRenderer {
 				if (tileData.contains("DrillId") && tileData.getInt("Durability") != 0) {
 					ResourceLocation drillId = new ResourceLocation(tileData.getString("DrillId"));
 					SuperByteBuffer headRender = PartialBufferer.get(DrillPartialIndex.get(drillId), state);
-					headRender.translate(0, -1 + o, 0).light(0).renderInto(ms, vb);
+					headRender.translate(0, -1 + o, 0).light(light).renderInto(ms, vb);
 					cogModel = ModBlockPartials.HALF_SHAFT_COGWHEEL;
 				}
 			}
