@@ -11,10 +11,9 @@ public enum CALocalization {
 	JEI_ORE_EXTRACTOR_TIME("jei.ore_extractor", "time", "%d seconds at 128 RPM"),
 	JEI_PICKER_TITLE("jei.picker", "title", "Picking"),
 
-	CONFIG_TITLE("config", "title", "Create: Automated"),
-	CONFIG_CLIENT_TITLE("config", "title.client", "Client Settings"),
-	CONFIG_COMMON_TITLE("config", "title.common", "World Generation Settings"),
-	CONFIG_SERVER_TITLE("config", "title.server", "Gameplay Settings");
+	CONFIG_CLIENT_TITLE("config", "client", "Client Settings"),
+	CONFIG_COMMON_TITLE("config", "common", "Startup Settings"),
+	CONFIG_SERVER_TITLE("config", "server", "Gameplay Settings");
 
 	public static String noPickupNodeKey = "contraption.minecart_contraption_illegal_pickup";
 	public final String key;

@@ -14,7 +14,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import java.util.Objects;
 import java.util.Optional;
 
-public interface IExtractable extends IForgeBlock {
+public interface IExtractable extends IForgeBlock, INode {
 	void extractTick(OreExtractorTile oreExtractorTile);
 
 	static void tryExtract(OreExtractorTile tile) {
@@ -52,6 +52,10 @@ public interface IExtractable extends IForgeBlock {
 			tile.takeDamage(r.drillDamage);
 			ItemStack stack = tile.inventory.getStackInSlot(0);
 			ItemStack toAdd = r.getCraftingResult();
+			if (below instanceof INode) {
+				INode node = (INode) below;
+				node.takeCount(tile, belowBlock, toAdd.getCount());
+			}
 			if (stack.getItem().getRegistryName().equals(toAdd.getItem().getRegistryName())) {
 				stack.setCount(Math.min(stack.getMaxStackSize(), stack.getCount() + toAdd.getCount()));
 			} else if (stack.isEmpty()) {
@@ -60,5 +64,10 @@ public interface IExtractable extends IForgeBlock {
 		}
 		tile.extractProgress = progress;
 		tile.notifyUpdate();
+	}
+
+	@Override
+	default void takeCount(OreExtractorTile tile, BlockPos pos, int oreAdded) {
+
 	}
 }

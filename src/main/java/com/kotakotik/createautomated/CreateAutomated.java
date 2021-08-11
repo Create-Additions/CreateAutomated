@@ -6,6 +6,7 @@ import com.kotakotik.createautomated.content.worldgen.WorldGen;
 import com.kotakotik.createautomated.register.*;
 import com.kotakotik.createautomated.register.config.ModConfig;
 import com.simibubi.create.content.AllSections;
+import com.simibubi.create.foundation.config.ui.BaseConfigScreen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import com.simibubi.create.repack.registrate.util.OneTimeEventReceiver;
@@ -44,13 +45,17 @@ public class CreateAutomated {
 		ModItems.register(r);
 		ModBlocks.register(r);
 		ModEntities.register(r);
-		ModTiles.register(r);
 		WorldGen.register();
 		ModFluids.register(r);
 		modEventBus.addGenericListener(IRecipeSerializer.class, ModRecipeTypes::register);
 		OneTimeEventReceiver.addListener(modEventBus, FMLCommonSetupEvent.class, (e) -> {
 			WorldGen.reg();
 			ModActors.register();
+			BaseConfigScreen.setDefaultActionFor(CreateAutomated.MODID, c ->
+					c.withTitles(CALocalization.CONFIG_CLIENT_TITLE.translate(),
+							CALocalization.CONFIG_COMMON_TITLE.translate(),
+							CALocalization.CONFIG_SERVER_TITLE.translate())
+							.withSpecs(ModConfig.CLIENT.specification, ModConfig.COMMON.specification, ModConfig.SERVER.specification));
 		});
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
 				() -> ModBlockPartials::load);
@@ -70,6 +75,7 @@ public class CreateAutomated {
 		RecipeItems.register(r);
 		ModConfig.register();
 		ModConditions.register();
+		ModTiles.register(r);
 	}
 
 	public static ResourceLocation asResource(String path) {

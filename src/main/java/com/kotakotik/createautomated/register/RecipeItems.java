@@ -10,6 +10,7 @@ import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.content.simple.node.NodeBlock;
 import com.kotakotik.createautomated.content.worldgen.DimensionalConfigDrivenFeatureEntry;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
+import com.kotakotik.createautomated.register.config.ModCommonConfig;
 import com.kotakotik.createautomated.register.recipes.ModCrushingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModDeployingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
@@ -73,6 +74,8 @@ public class RecipeItems extends ModFluids {
 		public Function<BlockBuilder<Block, CreateRegistrate>, BlockBuilder<Block, CreateRegistrate>> nodeConf = c -> c;
 
 		public ExtractableResource(String name, CreateRegistrate reg, Function<ItemBuilder<Item, CreateRegistrate>, ItemBuilder<Item, CreateRegistrate>> orePieceConf) {
+			EXTRACTABLES.add(this);
+
 			this.name = name;
 			this.reg = reg;
 
@@ -103,8 +106,9 @@ public class RecipeItems extends ModFluids {
 			return oreGen(veinSize, 40, 256, frequency, nether);
 		}
 
-		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage, boolean tooltip) {
-			NODE = conf.apply(reg.block(name + "_node", NodeBlock::new).properties(p -> p.strength(0.5F)).recipe((ctx, prov) -> {
+		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage, boolean tooltip, int count) {
+			String nodeName = name + "_node";
+			NODE = conf.apply(reg.block(nodeName, NodeBlock::new).properties(p -> p.strength(0.5F)).recipe((ctx, prov) -> {
 				EXTRACTING.add(name, e -> e.output(ORE_PIECE).node(ctx.get()).ore(minOre, maxOre).requiredProgress(progress.apply(new IOreExtractorBlock.ExtractorProgressBuilder())).drillDamage(drillDamage));
 			})
 					.blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), prov.models().cubeAll(ctx.getName(), prov.modLoc("block/nodes/" + name)))).tag(ModTags.Blocks.NODES, NODE_TAG).loot((p, b) ->
@@ -116,6 +120,9 @@ public class RecipeItems extends ModFluids {
 							(minOre == maxOre) ? "Gives _" + minOre + " " + getOrePieceName() + "_" : "Gives _" + minOre + "_ to _" + maxOre + " " + getOrePieceName() + "_");
 				});
 			}
+			if (count > 0) {
+				ModCommonConfig.Extractor.Nodes.reg(() -> new ModCommonConfig.Extractor.Nodes.Node(new ResourceLocation(CreateAutomated.MODID, nodeName), true, count, false));
+			}
 			return this;
 		}
 
@@ -123,12 +130,12 @@ public class RecipeItems extends ModFluids {
 			return RegistrateLangProvider.toEnglishName(ORE_PIECE.getId().getPath());
 		}
 
-		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage) {
-			return node(minOre, maxOre, progress, conf, drillDamage, false);
+		public ExtractableResource node(int minOre, int maxOre, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage, int count) {
+			return node(minOre, maxOre, progress, conf, drillDamage, false, count);
 		}
 
-		public ExtractableResource node(int ore, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage) {
-			return node(ore, ore, progress, conf, drillDamage);
+		public ExtractableResource node(int ore, Function<TopOreExtractorBlock.ExtractorProgressBuilder, Integer> progress, Function<BlockBuilder<NodeBlock, CreateRegistrate>, BlockBuilder<NodeBlock, CreateRegistrate>> conf, int drillDamage, int count) {
+			return node(ore, ore, progress, conf, drillDamage, count);
 		}
 
 		public ExtractableResource recipe(BiConsumer<RegistrateRecipeProvider, ExtractableResource> consumer) {
@@ -342,6 +349,8 @@ public class RecipeItems extends ModFluids {
 				.properties(p -> p.stacksTo(1));
 	}
 
+	public static List<ExtractableResource> EXTRACTABLES = new ArrayList<>();
+
 	public static ExtractableResource LAPIS_EXTRACTABLE;
 	public static ExtractableResource IRON_EXTRACTABLE;
 	public static ExtractableResource ZINC_EXTRACTABLE;
@@ -367,28 +376,29 @@ public class RecipeItems extends ModFluids {
 		registrate.startSection(AllSections.MATERIALS);
 //		registrate.addRawLang(((TranslationTextComponent) itemGroup.getTranslationKey()).getKey() , "Create Automated resources");
 //		CreateRegistrate registrate = CreateAutomated.registrate.get();
+		// TODO: theese are test counts, fix them!
 		LAPIS_EXTRACTABLE = new GlueableExtractableResource("lapis", registrate, true, () -> Items.LAPIS_LAZULI, c -> c)
-				.node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(10).build(), c -> c, 1)
+				.node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(10).build(), c -> c, 1, 5)
 				.oreGen(10, 4, false);
 
 		IRON_EXTRACTABLE = new IngotExtractableResource("iron", registrate, true, () -> Items.IRON_INGOT, c -> c, c -> c)
-				.node(1, 2, (b) -> b.atSpeedOf(128).takesSeconds(40).build(), c -> c, 3)
+				.node(1, 2, (b) -> b.atSpeedOf(128).takesSeconds(40).build(), c -> c, 3, 4)
 				.oreGen(4, 1, false);
 
 		ZINC_EXTRACTABLE = new IngotExtractableResource("zinc", registrate, true, AllItems.ZINC_INGOT, c -> c, c -> c)
-				.node(1, 2, (b) -> b.atSpeedOf(128).takesSeconds(20).build(), c -> c, 3)
+				.node(1, 2, (b) -> b.atSpeedOf(128).takesSeconds(20).build(), c -> c, 3, 3)
 				.oreGen(9, 2, false);
 
 		GOLD_EXTRACTABLE = new IngotExtractableResource("gold", registrate, true, () -> Items.GOLD_INGOT, c -> c, c -> c)
-				.node(0, 2, (b) -> b.atSpeedOf(128).takesSeconds(35).build(), c -> c, 4)
+				.node(0, 2, (b) -> b.atSpeedOf(128).takesSeconds(35).build(), c -> c, 4, 2)
 				.oreGen(6, 1, false);
 
 		COPPER_EXTRACTABLE = new IngotExtractableResource("copper", registrate, true, AllItems.COPPER_INGOT, c -> c, c -> c)
-				.node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(10).build(), c -> c, 3)
+				.node(1, 4, (b) -> b.atSpeedOf(128).takesSeconds(10).build(), c -> c, 3, 1)
 				.oreGen(16, 2, false);
 
 		CINDER_FLOUR_EXTRACTABLE = new ExtractableResource("cinder_flour", registrate, c -> c.lang("Cinder Dust"))
-				.node(1, 3, b -> b.atSpeedOf(128).takesSeconds(5).build(), c -> c, 2)
+				.node(1, 3, b -> b.atSpeedOf(128).takesSeconds(5).build(), c -> c, 2, 6)
 				.oreGen(16, 0, 256, 10, true)
 				.recipe((prov, r) -> {
 					MIXING.add("cinder_flour_from_ore_pieces", b -> {
