@@ -5,7 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ModCommonConfig extends ModConfig.Config {
 	public static class WorldGen extends ModConfig.Config {
-		public ConfigBool enabled = b(true, "enabled", "Whether or not CreateAutomated config is enabled");
+		public ConfigBool enabled = b(true, "enabled", "Whether or not CreateAutomated worldgen is enabled");
 
 		@Override
 		protected void registerAll(ForgeConfigSpec.Builder builder) {
