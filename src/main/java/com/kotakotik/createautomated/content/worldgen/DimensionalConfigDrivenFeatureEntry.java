@@ -28,7 +28,7 @@ public class DimensionalConfigDrivenFeatureEntry extends ConfigDrivenFeatureEntr
 		this.target = target;
 	}
 
-	public static final Predicate<BiomeLoadingEvent> isNether = e -> e.getCategory().equals(Biome.Category.NETHER);
+	public static final Predicate<BiomeLoadingEvent> isNether = e -> e.getCategory().equals(Biome.Category.THEEND);
 	public static final Predicate<BiomeLoadingEvent> isEnd = e -> e.getName() == Biomes.THE_END.getRegistryName();
 	public static final Predicate<BiomeLoadingEvent> isOverworld = e -> !isNether.test(e) && !isEnd.test(e);
 
@@ -42,7 +42,7 @@ public class DimensionalConfigDrivenFeatureEntry extends ConfigDrivenFeatureEntr
 
 	Optional<ConfiguredFeature<?, ?>> cachedFeature = Optional.empty();
 
-	// pain intensities
+	// pain intensifies
 	public ConfiguredFeature<?, ?> getFeature() {
 		if (!this.cachedFeature.isPresent()) {
 			this.cachedFeature = Optional.of(this.createFeature());
