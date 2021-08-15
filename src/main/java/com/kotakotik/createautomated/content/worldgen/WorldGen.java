@@ -28,7 +28,7 @@ public class WorldGen {
 		entries.values().forEach((entry) -> {
 			boolean shouldReg = true;
 			if (entry instanceof DimensionalConfigDrivenFeatureEntry) {
-				shouldReg = ((DimensionalConfigDrivenFeatureEntry) entry).shouldRegister.test(e);
+				shouldReg = ((DimensionalConfigDrivenFeatureEntry) entry).shouldRegister(e);
 			}
 			if (shouldReg) {
 				e.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, entry.getFeature());
