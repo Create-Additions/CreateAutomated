@@ -3,8 +3,8 @@ package com.kotakotik.createautomated.content.simple.node;
 import com.kotakotik.createautomated.api.INode;
 import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorTile;
 import com.kotakotik.createautomated.register.ModTiles;
-import com.kotakotik.createautomated.register.config.ModCommonConfig;
 import com.kotakotik.createautomated.register.config.ModConfig;
+import com.kotakotik.createautomated.register.config.ModServerConfig;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.config.CKinetics;
 import net.minecraft.block.Block;
@@ -26,8 +26,8 @@ public class NodeBlock extends Block implements INode, ITE<NodeTile> {
 		return ModConfig.SERVER.machines.extractor.nodeMovement.get() == CKinetics.SpawnerMovementSetting.UNMOVABLE ? PushReaction.BLOCK : PushReaction.NORMAL;
 	}
 
-	public ModCommonConfig.Extractor.Nodes.Node getConfig() {
-		return ModCommonConfig.Extractor.Nodes.all.get(getRegistryName());
+	public ModServerConfig.Extractor.Nodes.Node getConfig() {
+		return ModServerConfig.Extractor.Nodes.all.get(getRegistryName());
 	}
 
 	@Override

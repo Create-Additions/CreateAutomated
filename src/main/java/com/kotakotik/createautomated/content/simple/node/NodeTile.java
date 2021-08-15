@@ -1,6 +1,6 @@
 package com.kotakotik.createautomated.content.simple.node;
 
-import com.kotakotik.createautomated.register.config.ModCommonConfig;
+import com.kotakotik.createautomated.register.config.ModServerConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -30,7 +30,7 @@ public class NodeTile extends TileEntity {
 		super.load(p_230337_1_, nbt);
 	}
 
-	public ModCommonConfig.Extractor.Nodes.Node getConfig() {
+	public ModServerConfig.Extractor.Nodes.Node getConfig() {
 		return ((NodeBlock) getBlockState().getBlock()).getConfig();
 	}
 

@@ -1,16 +1,21 @@
 package com.kotakotik.createautomated.register.config;
 
 import com.kotakotik.createautomated.CreateAutomated;
+import com.kotakotik.createautomated.api.NodeInfo;
 import com.simibubi.create.content.contraptions.base.IRotate;
 import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.block.BlockStressValues;
 import com.simibubi.create.foundation.config.CKinetics;
+import com.simibubi.create.foundation.config.ui.ConfigAnnotations;
 import net.minecraft.block.Block;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
+import org.apache.commons.lang3.StringUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class ModServerConfig extends com.kotakotik.createautomated.register.config.ModConfig.Config {
 	protected static class Comments {
@@ -51,6 +56,79 @@ public class ModServerConfig extends com.kotakotik.createautomated.register.conf
 				return this == HOPPERS_AND_ARMS;
 			}
 		}
+
+		public static class Nodes extends ModConfig.Config {
+			public static class Node extends ModConfig.Config implements NodeInfo.Entry {
+				public final ResourceLocation id;
+
+				public Node(ResourceLocation id, boolean defaultInfinite, int defaultCount, boolean defaultRandomizeDamage) {
+					depth = 2;
+					this.id = id;
+					isInfinite = b(defaultInfinite, "isInfinite", "Whether or not this node is infinite", ConfigAnnotations.RequiresRestart.SERVER.asComment());
+					count = i(defaultCount, 1, "count", "How many ore pieces can be extracted. Ignored if is infinite");
+					randomizeDamage = b(defaultRandomizeDamage, "randomizeDamage", "Whether or not to randomize the amount of ore to remove each time it is extracted");
+				}
+
+				@Override
+				public String getName() {
+					// converts snake case to camel case
+					return StringUtils.uncapitalize(
+							Arrays.stream(id.getPath().split("_"))
+									.map(StringUtils::capitalize).collect(Collectors.joining()));
+				}
+
+				protected ConfigBool isInfinite;
+				public ConfigInt count;
+				public ConfigBool randomizeDamage;
+
+				public final LazyValue<Boolean> infinite = new LazyValue<>(() -> isInfinite.get());
+
+				@Override
+				public boolean isInfinite() {
+					return infinite.get();
+				}
+
+				@Override
+				public int getCount() {
+					return count.get();
+				}
+
+				@Override
+				public boolean randomizeDamage() {
+					return randomizeDamage.get();
+				}
+			}
+
+			protected static List<Supplier<Node>> toReg = new ArrayList<>();
+
+			public static void reg(Supplier<Node> constructor) {
+				toReg.add(constructor);
+			}
+
+			@Override
+			protected void registerAll(ForgeConfigSpec.Builder builder) {
+				super.registerAll(builder);
+				for (Supplier<Node> constructor : toReg) {
+					registerNow(constructor, builder);
+				}
+//				super.registerAll(builder);
+			}
+
+			public Node registerNow(Supplier<Node> constructor, ForgeConfigSpec.Builder builder) {
+				Node node = constructor.get();
+				builder.push(node.getName());
+				node.registerAll(builder);
+				builder.pop();
+//				Node node = nested(2, constructor);
+				all.put(node.id, node);
+				NodeInfo.info.put(node.id, node);
+				return node;
+			}
+
+			public static final HashMap<ResourceLocation, Node> all = new HashMap<>();
+		}
+
+		public ModServerConfig.Extractor.Nodes nodes = nested(1, Nodes::new);
 	}
 
 	public static class Picker extends com.kotakotik.createautomated.register.config.ModConfig.Config {

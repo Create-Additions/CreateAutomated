@@ -10,7 +10,7 @@ import com.kotakotik.createautomated.content.simple.drillHead.DrillHeadItem;
 import com.kotakotik.createautomated.content.simple.node.NodeBlock;
 import com.kotakotik.createautomated.content.worldgen.DimensionalConfigDrivenFeatureEntry;
 import com.kotakotik.createautomated.content.worldgen.WorldGen;
-import com.kotakotik.createautomated.register.config.ModCommonConfig;
+import com.kotakotik.createautomated.register.config.ModServerConfig;
 import com.kotakotik.createautomated.register.recipes.ModCrushingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModDeployingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
@@ -121,7 +121,7 @@ public class RecipeItems extends ModFluids {
 				});
 			}
 			if (count > 0) {
-				ModCommonConfig.Extractor.Nodes.reg(() -> new ModCommonConfig.Extractor.Nodes.Node(new ResourceLocation(CreateAutomated.MODID, nodeName), true, count, false));
+				ModServerConfig.Extractor.Nodes.reg(() -> new ModServerConfig.Extractor.Nodes.Node(new ResourceLocation(CreateAutomated.MODID, nodeName), true, count, false));
 			}
 			return this;
 		}

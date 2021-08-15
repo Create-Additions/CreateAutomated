@@ -12,7 +12,7 @@ public enum CALocalization {
 	JEI_PICKER_TITLE("jei.picker", "title", "Picking"),
 
 	CONFIG_CLIENT_TITLE("config", "client", "Client Settings"),
-	CONFIG_COMMON_TITLE("config", "common", "Startup Settings"),
+	CONFIG_COMMON_TITLE("config", "common", "World Generation Settings"),
 	CONFIG_SERVER_TITLE("config", "server", "Gameplay Settings");
 
 	public static String noPickupNodeKey = "contraption.minecart_contraption_illegal_pickup";
