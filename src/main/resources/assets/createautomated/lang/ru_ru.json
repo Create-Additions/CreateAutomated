@@ -1,9 +1,7 @@
 {
   "block.createautomated.cinder_flour_node": "Незеритовая жила",
-
-"block.createautomated.copper_node": "Медная жила",
-
-"block.createautomated.gold_node": "Золотая жила",
+  "block.createautomated.copper_node": "Медная жила",
+  "block.createautomated.gold_node": "Золотая жила",
   "block.createautomated.iron_node": "Железная жила",
   "block.createautomated.lapis_node": "Лазуритовая жила",
   "block.createautomated.lava_sponge_sail": "Парус из лавовой губки",
