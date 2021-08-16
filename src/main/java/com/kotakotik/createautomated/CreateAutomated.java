@@ -19,6 +19,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DatagenModLoader;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -51,6 +52,8 @@ public class CreateAutomated {
 		OneTimeEventReceiver.addListener(modEventBus, FMLCommonSetupEvent.class, (e) -> {
 			WorldGen.reg();
 			ModActors.register();
+		});
+		OneTimeEventReceiver.addListener(modEventBus, FMLClientSetupEvent.class, e -> {
 			BaseConfigScreen.setDefaultActionFor(CreateAutomated.MODID, c ->
 					c.withTitles(CALocalization.CONFIG_CLIENT_TITLE.translate(),
 							CALocalization.CONFIG_COMMON_TITLE.translate(),
