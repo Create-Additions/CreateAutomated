@@ -16,6 +16,7 @@ import com.kotakotik.createautomated.register.recipes.ModDeployingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModMixingRecipes;
 import com.kotakotik.createautomated.register.recipes.ModSplashingRecipes;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.AllTags;
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.processing.HeatCondition;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -299,7 +300,7 @@ public class RecipeItems extends ModFluids {
 							.slopeFindDistance(3)
 							.explosionResistance(100f))
 					.removeTag(FluidTags.WATER)
-					.tag(FluidTags.LAVA);
+					.tag(FluidTags.LAVA, AllTags.AllFluidTags.NO_INFINITE_DRAINING.tag);
 		}
 
 		public RenewableGem bit(Consumer<RecipeItem<Item>> cons) {
