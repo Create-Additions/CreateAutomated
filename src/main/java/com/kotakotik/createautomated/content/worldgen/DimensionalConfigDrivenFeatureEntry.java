@@ -186,7 +186,7 @@ public class DimensionalConfigDrivenFeatureEntry extends ConfigDrivenFeatureEntr
 	}
 
 	public boolean categoryMatches(String name) {
-		return categories.list.get().stream().anyMatch(s -> s.equals(name)) != biomes.blacklist.get();
+		return categories.list.get().stream().anyMatch(s -> s.equals(name)) != categories.blacklist.get();
 	}
 
 	public boolean shouldRegister(BiomeLoadingEvent event) {
