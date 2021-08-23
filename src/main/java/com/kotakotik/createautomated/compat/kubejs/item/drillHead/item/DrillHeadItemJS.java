@@ -4,12 +4,15 @@ import com.kotakotik.createautomated.api.IDrillHead;
 import dev.latvian.kubejs.item.ItemJS;
 
 public class DrillHeadItemJS extends ItemJS implements IDrillHead {
+	public final DrillHeadBuilderJS properties;
+
 	public DrillHeadItemJS(DrillHeadBuilderJS p) {
 		super(p);
+		properties = p;
 	}
 
 	@Override
 	public int getDurability() {
-		return ((DrillHeadBuilderJS) properties).durability;
+		return properties.durability;
 	}
 }
