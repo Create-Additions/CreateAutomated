@@ -10,12 +10,11 @@ public class ExtractingJS extends RecipeJS {
 //	public int requiredProgress;
 //	public int minOre;
 //	public int maxOre;
-	public String output;
 
 	@Override
 	public void create(ListJS args) {
 		inputItems.add(parseIngredientItem(args.get(0)));
-		output = parseResultItem(args.get(1)).getId();
+		outputItems.add(parseResultItem(args.get(1)));
 
 		// defaults
 		drillDamage(1);
@@ -79,8 +78,8 @@ public class ExtractingJS extends RecipeJS {
 
 	@Override
 	public void deserialize() {
-		output = json.get("output").getAsString();
-		inputItems.add(parseResultItem(json.get("node")));
+		outputItems.add(parseResultItem(json.get("output")));
+		inputItems.add(parseIngredientItem(json.get("node")));
 //		drillDamage = json.get("drillDamage").getAsInt();
 //		requiredProgress = json.get("requiredProgress").getAsInt();
 //		minOre = json.get("minOre").getAsInt();
@@ -89,7 +88,7 @@ public class ExtractingJS extends RecipeJS {
 
 	@Override
 	public void serialize() {
-		json.addProperty("output", output);
+		json.addProperty("output", outputItems.get(0).getId());
 		json.add("node", inputItems.get(0).toJson());
 //		json.addProperty("drillDamage", drillDamage);
 //		json.addProperty("requiredProgress", requiredProgress);
