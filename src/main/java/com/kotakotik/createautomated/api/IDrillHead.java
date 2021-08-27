@@ -2,6 +2,7 @@ package com.kotakotik.createautomated.api;
 
 import com.kotakotik.createautomated.content.processing.oreExtractor.OreExtractorTile;
 import com.kotakotik.createautomated.register.RecipeItems;
+import com.kotakotik.createautomated.register.config.ModConfig;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.IItemProvider;
@@ -32,6 +33,7 @@ public interface IDrillHead extends IItemProvider, IForgeItem {
 	int getDurability();
 
 	default boolean takeDamage(OreExtractorTile tile, int amount) {
+		if (ModConfig.SERVER.machines.extractor.unbreakableDrills.get()) return false;
 		int unclampedOut = tile.durability - amount;
 		int out = MathHelper.clamp(unclampedOut, 0, getDurability());
 		tile.durability = out;
