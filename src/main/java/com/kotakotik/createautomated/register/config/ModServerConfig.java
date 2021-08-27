@@ -8,6 +8,7 @@ import com.simibubi.create.foundation.block.BlockStressValues;
 import com.simibubi.create.foundation.config.CKinetics;
 import com.simibubi.create.foundation.config.ui.ConfigAnnotations;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.LazyValue;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -80,6 +81,15 @@ public class ModServerConfig extends com.kotakotik.createautomated.register.conf
 				protected ConfigBool isInfinite;
 				public ConfigInt count;
 				public ConfigBool randomizeDamage;
+				public ForgeConfigSpec.ConfigValue<String> blockReplace;
+
+				@Override
+				protected void registerAll(ForgeConfigSpec.Builder builder) {
+					builder.comment("Which block a node is replaced by once it is drained, set to `minecraft:air` to remove the block instead");
+					blockReplace = builder.define("blockReplace", Blocks.DIRT.getRegistryName().toString());
+
+					super.registerAll(builder);
+				}
 
 				public final LazyValue<Boolean> infinite = new LazyValue<>(() -> isInfinite.get());
 

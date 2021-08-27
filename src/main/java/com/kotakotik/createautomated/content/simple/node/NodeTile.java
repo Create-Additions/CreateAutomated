@@ -6,6 +6,10 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.LazyValue;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class NodeTile extends TileEntity {
 	public LazyValue<Integer> count = new LazyValue<>(() -> getConfig().getCount());
@@ -37,7 +41,11 @@ public class NodeTile extends TileEntity {
 	public void takeCount(int amount) {
 		setCount(count.get() - amount * (getConfig().randomizeDamage() ? getLevel().random.nextInt(2) + 1 : 1));
 		if (count.get() < 1) {
-			getLevel().destroyBlock(getBlockPos(), true);
+			getLevel().setBlock(getBlockPos(),
+					RegistryObject.of(
+							new ResourceLocation(ModServerConfig.Extractor.Nodes.all.get(getType().getRegistryName()).blockReplace.get()),
+							ForgeRegistries.BLOCKS).get().defaultBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+//			getLevel().destroyBlock(getBlockPos(), true);
 		}
 	}
 }
