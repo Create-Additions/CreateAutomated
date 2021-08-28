@@ -34,6 +34,7 @@ jobs:
                 with:
                     arguments: jar --max-workers 1
                     wrapper-cache-enabled: true
+                    dependencies-cache-enabled: true
                     configuration-cache-enabled: true
                 env:
                     CA_VERSION: preview-${{ steps.get_commit.outputs.commit }}
