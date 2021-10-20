@@ -63,7 +63,7 @@ public interface IExtractable extends IForgeBlock, INode {
 			}
 		}
 		tile.extractProgress = progress;
-		tile.notifyUpdate();
+//		tile.notifyUpdate();
 	}
 
 	@Override
