@@ -15,4 +15,9 @@ public class DrillHeadItemJS extends ItemJS implements IDrillHead {
 	public int getDurability() {
 		return properties.durability;
 	}
+
+	@Override
+	public boolean shouldIgnoreDamage() {
+		return IDrillHead.super.shouldIgnoreDamage() || properties.ignoreDamage;
+	}
 }

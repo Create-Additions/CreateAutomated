@@ -28,5 +28,5 @@ onEvent('block.registry', event => {
 })
 
 onEvent("item.registry.drillhead", event => {
-    event.create('floppa_drill').displayName('Floppa Drill Head').durability(9999999)
+    event.create('floppa_drill').displayName('Floppa Drill Head').infinite()
 })

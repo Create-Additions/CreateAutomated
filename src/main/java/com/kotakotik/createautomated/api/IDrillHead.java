@@ -32,8 +32,12 @@ public interface IDrillHead extends IItemProvider, IForgeItem {
 
 	int getDurability();
 
+	default boolean shouldIgnoreDamage() {
+		return ModConfig.SERVER.machines.extractor.unbreakableDrills.get();
+	}
+
 	default boolean takeDamage(OreExtractorTile tile, int amount) {
-		if (ModConfig.SERVER.machines.extractor.unbreakableDrills.get()) return false;
+		if (shouldIgnoreDamage()) return false;
 		int unclampedOut = tile.durability - amount;
 		int out = MathHelper.clamp(unclampedOut, 0, getDurability());
 		tile.durability = out;

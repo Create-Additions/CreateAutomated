@@ -24,6 +24,7 @@ import java.util.List;
 @Document("mods/createautomated/DrillHeadBuilder")
 public class DrillHeadBuilder extends ItemTypeBuilder {
 	public int durability;
+	public boolean ignoreDamage = false;
 	public ResourceLocation partial;
 
 	public DrillHeadBuilder(ItemBuilder itemBuilder) {
@@ -32,7 +33,7 @@ public class DrillHeadBuilder extends ItemTypeBuilder {
 
 	@Override
 	public void build(ResourceLocation resourceLocation) {
-		CustomDrillHead item = new CustomDrillHead(itemBuilder.getItemProperties(), durability, resourceLocation, this);
+		CustomDrillHead item = new CustomDrillHead(itemBuilder.getItemProperties(), durability, ignoreDamage, resourceLocation, this);
 		VanillaFactory.queueItemForRegistration(item);
 		if (partial != null) {
 			DrillPartialIndex.add(resourceLocation, new PartialModel(partial));
@@ -56,20 +57,40 @@ public class DrillHeadBuilder extends ItemTypeBuilder {
 		return this;
 	}
 
+	public DrillHeadBuilder ignoreDamage(@ZenCodeType.OptionalBoolean(true) boolean value) {
+		ignoreDamage = value;
+		return this;
+	}
+
+	public DrillHeadBuilder takeDamage(@ZenCodeType.OptionalBoolean(true) boolean value) {
+		return ignoreDamage(!value);
+	}
+
+	public DrillHeadBuilder infinite(@ZenCodeType.OptionalBoolean(true) boolean value) {
+		return ignoreDamage(value);
+	}
+
 	public static class CustomDrillHead extends DrillHeadItem implements IIsCotItem {
 		public int durability;
+		public boolean ignoreDamage;
 		protected DrillHeadBuilder builder;
 
-		public CustomDrillHead(Properties p_i48487_1_, int durability, ResourceLocation id, DrillHeadBuilder builder) {
+		public CustomDrillHead(Properties p_i48487_1_, int durability, boolean ignoreDamage, ResourceLocation id, DrillHeadBuilder builder) {
 			super(p_i48487_1_);
 			this.durability = durability;
 			this.builder = builder;
+			this.ignoreDamage = ignoreDamage;
 			setRegistryName(id);
 		}
 
 		@Override
 		public int getDurability() {
 			return durability;
+		}
+
+		@Override
+		public boolean shouldIgnoreDamage() {
+			return super.shouldIgnoreDamage() || ignoreDamage;
 		}
 
 		@Nonnull
