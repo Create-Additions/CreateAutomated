@@ -1,13 +1,13 @@
 package com.kotakotik.createautomated.compat.kubejs.item.drillHead.item;
 
 import com.kotakotik.createautomated.api.IDrillHead;
-import dev.latvian.kubejs.item.ItemJS;
+import net.minecraft.item.Item;
 
-public class DrillHeadItemJS extends ItemJS implements IDrillHead {
+public class DrillHeadItemJS extends Item implements IDrillHead {
 	public final DrillHeadBuilderJS properties;
 
 	public DrillHeadItemJS(DrillHeadBuilderJS p) {
-		super(p);
+		super(p.createItemProperties());
 		properties = p;
 	}
 

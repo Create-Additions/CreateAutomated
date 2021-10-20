@@ -32,8 +32,10 @@ public class CAKubeJS {
 
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerDrillHeads);
 
-		DeferredWorkQueue.runLater(() -> (new DrillHeadRegistryEventJS()).post(ScriptType.STARTUP, "item.registry.drillhead"));
-		DeferredWorkQueue.runLater(() -> new DrillPartialRegistryEventJS().post(ScriptType.CLIENT, "partial.registry.drillhead"));
+		DeferredWorkQueue.runLater(() -> {
+			new DrillHeadRegistryEventJS().post(ScriptType.STARTUP, "item.registry.drillhead");
+			new DrillPartialRegistryEventJS().post(ScriptType.CLIENT, "partial.registry.drillhead");
+		});
 	}
 
 	public void registerDrillHeads(final RegistryEvent.Register<Item> event) {
