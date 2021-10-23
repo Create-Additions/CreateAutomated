@@ -5,7 +5,7 @@ import com.kotakotik.createautomated.api.NodeInfo;
 import com.simibubi.create.content.contraptions.base.IRotate;
 import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.block.BlockStressValues;
-import com.simibubi.create.foundation.config.CKinetics;
+import com.simibubi.create.foundation.config.ContraptionMovementSetting;
 import com.simibubi.create.foundation.config.ui.ConfigAnnotations;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -35,7 +35,7 @@ public class ModServerConfig extends com.kotakotik.createautomated.register.conf
 		public ConfigInt drillDurability = i(300, 0, "drillDurability", "The durability of the default drill head");
 		public ConfigEnum<IRotate.SpeedLevel> requiredSpeed = e(IRotate.SpeedLevel.FAST, "requiredSpeed", "The speed requirement for the extractor. The exact number has to be configured in Create's config");
 		public ConfigEnum<MiningAbility> miningAbility = e(MiningAbility.NONE, "miningAbility", "What types of blocks the extractor can mine. NONE if you want it to only be able to break blocks, ORES for ores only, and ANY for any block");
-		public ConfigEnum<CKinetics.SpawnerMovementSetting> nodeMovement = e(CKinetics.SpawnerMovementSetting.UNMOVABLE, "nodeMovement", "Configure how node blocks can be moved by contraptions");
+		public ConfigEnum<ContraptionMovementSetting> nodeMovement = e(ContraptionMovementSetting.UNMOVABLE, "nodeMovement", "Configure how node blocks can be moved by contraptions");
 		public ConfigBool nodesDrop = b(false, "nodesDrop", "If enabled, nodes drop themselves, otherwise they drop nothing");
 
 		public enum MiningAbility {

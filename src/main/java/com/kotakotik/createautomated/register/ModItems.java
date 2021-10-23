@@ -27,7 +27,7 @@ public class ModItems {
 		PICKER = registrate.item("picker", PickerItem::new)
 				// pretty sure this is always gonna be the default 32, so this doesnt do anything but just in case
 				.properties(p -> p.durability(ModConfig.SERVER.machines.picker.durability.get()))
-				.transform(CreateRegistrate.customRenderedItem(() -> PickerRenderer.PickerModel::new))
+				.transform(CreateRegistrate.customRenderedItem(() -> PickerRenderer::new))
 				.recipe((ctx, prov) -> {
 					ShapedRecipeBuilder.shaped(ctx.get())
 							.pattern("si ")

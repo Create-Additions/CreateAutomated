@@ -6,7 +6,7 @@ import com.kotakotik.createautomated.register.ModTiles;
 import com.kotakotik.createautomated.register.config.ModConfig;
 import com.kotakotik.createautomated.register.config.ModServerConfig;
 import com.simibubi.create.foundation.block.ITE;
-import com.simibubi.create.foundation.config.CKinetics;
+import com.simibubi.create.foundation.config.ContraptionMovementSetting;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
@@ -23,7 +23,7 @@ public class NodeBlock extends Block implements INode, ITE<NodeTile> {
 
 	@Override
 	public PushReaction getPistonPushReaction(BlockState p_149656_1_) {
-		return ModConfig.SERVER.machines.extractor.nodeMovement.get() == CKinetics.SpawnerMovementSetting.UNMOVABLE ? PushReaction.BLOCK : PushReaction.NORMAL;
+		return ModConfig.SERVER.machines.extractor.nodeMovement.get() == ContraptionMovementSetting.UNMOVABLE ? PushReaction.BLOCK : PushReaction.NORMAL;
 	}
 
 	public ModServerConfig.Extractor.Nodes.Node getConfig() {

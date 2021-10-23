@@ -1,22 +1,24 @@
 package com.kotakotik.createautomated.content.processing.picker;
 
+import com.kotakotik.createautomated.CreateAutomated;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModel;
+import com.simibubi.create.foundation.item.render.CustomRenderedItemModelRenderer;
+import com.simibubi.create.foundation.item.render.PartialItemModelRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 
-public class PickerRenderer extends ItemStackTileEntityRenderer {
+public class PickerRenderer extends CustomRenderedItemModelRenderer<PickerRenderer.PickerModel> {
 	@Override
-	public void renderByItem(ItemStack stack, ItemCameraTransforms.TransformType transformType, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay) {
+	protected void render(ItemStack stack, PickerModel pickerModel, PartialItemModelRenderer partialItemModelRenderer, ItemCameraTransforms.TransformType transformType, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay) {
 		ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 		ClientPlayerEntity player = Minecraft.getInstance().player;
 		PickerRenderer.PickerModel mainModel = (PickerModel) itemRenderer.getModel(stack, Minecraft.getInstance().level, null);
@@ -25,7 +27,7 @@ public class PickerRenderer extends ItemStackTileEntityRenderer {
 		boolean firstPerson = leftHand || transformType == ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND;
 
 		ms.pushPose();
-		ms.translate(.5f, .5f, .5f);
+		//ms.translate(.5f, .5f, .5f);
 
 		CompoundNBT tag = stack.getOrCreateTag();
 
@@ -80,16 +82,14 @@ public class PickerRenderer extends ItemStackTileEntityRenderer {
 		ms.popPose();
 	}
 
+	@Override
+	public PickerModel createModel(IBakedModel iBakedModel) {
+		return new PickerModel(iBakedModel);
+	}
+
 	public static class PickerModel extends CustomRenderedItemModel {
-
 		public PickerModel(IBakedModel template) {
-			super(template, "");
+			super(template, CreateAutomated.MODID, "");
 		}
-
-		@Override
-		public PickerRenderer createRenderer() {
-			return new PickerRenderer();
-		}
-
 	}
 }
